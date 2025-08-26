@@ -1,492 +1,313 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from 'react-bootstrap';
-import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6';
-import { MdEmail } from 'react-icons/md';
-import axios from 'axios';
-import { useTranslation } from 'react-i18next';
+import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { Modal, Button, Form, InputGroup, Spinner } from "react-bootstrap";
+import {
+  FaFilePdf,
+  FaSearch,
+  FaFacebookF,
+  FaWhatsapp,
+  FaXTwitter,
+} from "react-icons/fa6";
+import { MdEmail } from "react-icons/md";
+import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import Sidebar from "../components/Sidebar";
 
-// Sidebar Components
-import LatestNewsCard from '../components/LatestNewsCard';
-import ChantiersCard from '../components/ChantiersCard';
-import StatsCard from '../components/StatsCard';
-import SocialsCard from '../components/SocialsCard';
+const STRAPI_API_URL = import.meta.env.VITE_STRAPI_API_URL;
 
-import './Rapports.css';
-
-// Strapi API configuration - USING ENVIRONMENT VARIABLES PROPERLY
-const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || window.location.origin;
-const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
-
-const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
-
-export default function Rapports() {
-  const { t, i18n } = useTranslation(['rapports', 'common']);
-  
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-  const [selectedRapport, setSelectedRapport] = useState(null);
-  const [selectedChart, setSelectedChart] = useState(null);
+const Rapport = () => {
+  const { t, i18n } = useTranslation(["rapport", "common"]);
+  const [search, setSearch] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [chartPage, setChartPage] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
-
-  const [pageData, setPageData] = useState({ title: '', description: '', chartsTitle: '' });
-  const [rapportsData, setRapportsData] = useState([]);
-  const [chartsData, setChartsData] = useState([]);
+  const [data, setData] = useState([]);
+  const [pageContent, setPageContent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const itemsPerPage = 6;
 
-  const primaryColor = 'rgb(5, 40, 106)';
-  const itemsPerPage = 7;
-  const chartsPerPage = 6;
-
-  // Handle resize
+  // Responsive
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 992);
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Debounce search
+  // Fetch rapports (collection)
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedSearch(search), 300);
-    return () => clearTimeout(handler);
-  }, [search]);
-
-  // Function to handle file download for all devices
-  const handleDownload = useCallback((pdfUrl, filename) => {
-    if (!pdfUrl) {
-      console.error('No PDF URL provided');
-      return;
-    }
-  
-    try {
-      const link = document.createElement('a');
-      fetch(pdfUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          link.href = blobUrl;
-          link.download = filename || 'document.pdf';
-          document.body.appendChild(link);
-          link.click();
-          window.URL.revokeObjectURL(blobUrl);
-          document.body.removeChild(link);
-        })
-        .catch(error => {
-          console.error('Error fetching the file:', error);
-          link.href = pdfUrl;
-          link.download = filename || 'document.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
-      
-    } catch (error) {
-      console.error('Error downloading the file:', error);
-      window.open(pdfUrl, '_blank');
-    }
-  }, []);
-
-  // Fetch data from Strapi with proper error handling
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchRapports = async () => {
       try {
         setLoading(true);
-        setError(null);
+        const query = [
+          `locale=${i18n.language}`,
+          "populate=*",
+          `pagination[page]=${currentPage}`,
+          `pagination[pageSize]=${itemsPerPage}`,
+          debouncedSearch
+            ? `filters[$or][0][title][$containsi]=${debouncedSearch}&filters[$or][1][description][$containsi]=${debouncedSearch}`
+            : "",
+        ].join("&");
 
-        // Fetch rapports list
-        const rapportsRes = await axios.get(
-          `${STRAPI_API_URL}/rapports?populate[0]=localizations&populate[1]=pdf&locale=${i18n.language}`,
-          { timeout: 10000 }
-        );
-
-        const formattedRapports = rapportsRes.data.data.map(item => {
-          const rapportData = item.attributes || item;
-          const pdfUrl = rapportData?.pdf?.data?.attributes?.url || null;
-
-          return {
-            id: item.id,
-            title: rapportData?.title ?? "Untitled Report",
-            description: rapportData?.description ?? "No description available",
-            date: rapportData?.date ?? "No Date",
-            pdf: pdfUrl ? `${STRAPI_BASE_URL}${pdfUrl}` : null,
-          };
-        });
-        setRapportsData(formattedRapports);
-
-        // Fetch charts/images
-        const chartsRes = await axios.get(
-          `${STRAPI_API_URL}/rapport-images?populate[0]=localizations&populate[1]=image&locale=${i18n.language}`,
-          { timeout: 10000 }
-        );
-
-        const formattedCharts = chartsRes.data.data.map(item => {
-          const chartData = item.attributes || item;
-          const imageUrl = chartData?.image?.data?.attributes?.url || null;
-
-          return {
-            id: item.id,
-            title: chartData?.title ?? "Untitled Chart",
-            image: imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null
-          };
-        });
-        setChartsData(formattedCharts);
-
-        // Fetch page header with error handling
-        try {
-          const pageRes = await axios.get(
-            `${STRAPI_API_URL}/rapport-page?locale=${i18n.language}`,
-            { timeout: 5000 }
-          );
-          const pageData = pageRes.data.data?.attributes || {};
-          
-          setPageData({
-            title: pageData?.title || t('rapports:title'),
-            description: pageData?.description || t('rapports:description'),
-            chartsTitle: pageData?.latestChartsTitle || t('rapports:latestChartsTitle')
-          });
-        } catch (pageError) {
-          console.warn("Could not fetch rapports page content:", pageError);
-          setPageData({
-            title: t('rapports:title'),
-            description: t('rapports:description'),
-            chartsTitle: t('rapports:latestChartsTitle')
-          });
-        }
-
+        const res = await axios.get(`${STRAPI_API_URL}/rapports?${query}`);
+        setData(res.data.data || []);
       } catch (err) {
-        console.error("API Error:", err);
-        
-        if (err.code === 'ECONNABORTED') {
-          setError(t("common:timeout_error") || "Request timeout. Please check your connection.");
-        } else if (err.response) {
-          setError(t("common:api_error") || `Server error: ${err.response.status}`);
-        } else if (err.request) {
-          setError(t("common:connection_error") || "Cannot connect to server. Please check if Strapi is running.");
-        } else {
-          setError(t("common:api_error") || "Failed to load reports");
-        }
-        
-        setRapportsData([]);
-        setChartsData([]);
+        setError(err.message || "Failed to fetch rapports");
       } finally {
         setLoading(false);
       }
     };
-    fetchData();
-  }, [i18n.language, t]);
+    fetchRapports();
+  }, [i18n.language, currentPage, debouncedSearch]);
 
-  const sortedRapports = [...rapportsData].sort(sortByDate);
-  const filteredRapports = sortedRapports.filter(rapport =>
-    (rapport.title || '').toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    (rapport.description || '').toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    (rapport.date || '').toLowerCase().includes(debouncedSearch.toLowerCase())
-  );
-
-  const totalPages = Math.ceil(filteredRapports.length / itemsPerPage);
-  const paginatedRapports = filteredRapports.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-  const totalChartPages = Math.ceil(chartsData.length / chartsPerPage);
-  const paginatedCharts = chartsData.slice((chartPage - 1) * chartsPerPage, chartPage * chartsPerPage);
-
-  // Modals
-  const handleOpenModal = useCallback((rapport) => setSelectedRapport(rapport), []);
-  const handleOpenChartModal = useCallback((chart) => setSelectedChart(chart), []);
-  const handleCloseModal = useCallback(() => { setSelectedRapport(null); setSelectedChart(null); }, []);
-
-  // Social share
-  const handleShare = async (platform) => {
-    const item = selectedRapport || selectedChart;
-    if (!item) return;
-
-    const shareUrl = window.location.origin + `/rapports?id=${item.id}`;
-    const shareTitle = item.title;
-    const shareText = item.description || '';
-
-    if (navigator.share) {
+  // Fetch rapport-page (single type)
+  useEffect(() => {
+    const fetchPageContent = async () => {
       try {
-        await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
-      } catch (error) {
-        console.error('Error sharing:', error);
+        const res = await axios.get(
+          `${STRAPI_API_URL}/rapport-page?locale=${i18n.language}`
+        );
+        setPageContent(res.data.data?.attributes || null);
+      } catch (err) {
+        console.error("Failed to fetch rapport-page:", err);
       }
-      return;
-    }
+    };
+    fetchPageContent();
+  }, [i18n.language]);
 
-    let intentUrl = '';
-    switch (platform) {
-      case 'facebook':
-        intentUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-        break;
-      case 'twitter':
-        intentUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`;
-        break;
-      case 'whatsapp':
-        intentUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`;
-        break;
-      case 'email':
-        intentUrl = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareText + '\n\n' + shareUrl)}`;
-        break;
-      default: break;
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
+  // Handle download
+  const handleDownload = async (fileUrl, fileName) => {
+    try {
+      const response = await axios.get(fileUrl, { responseType: "blob" });
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", fileName);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error("Download failed:", error);
+      window.open(fileUrl, "_blank");
     }
-    if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
   };
 
-  // Loading + Error states
+  // Share
+  const handleShare = (platform, item) => {
+    const shareUrl = window.location.href;
+    const text = `${item.attributes?.title} - ${shareUrl}`;
+    let url = "";
+    switch (platform) {
+      case "facebook":
+        url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+          shareUrl
+        )}`;
+        break;
+      case "twitter":
+        url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+          text
+        )}`;
+        break;
+      case "whatsapp":
+        url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+        break;
+      case "email":
+        url = `mailto:?subject=${encodeURIComponent(
+          item.attributes?.title
+        )}&body=${encodeURIComponent(text)}`;
+        break;
+      default:
+        return;
+    }
+    window.open(url, "_blank");
+  };
+
   if (loading) {
     return (
-      <div className="container text-center py-5">
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        <p className="mt-2">{t('common:loading') || "Loading..."}</p>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <Spinner animation="border" role="status" />
       </div>
     );
   }
-  
+
   if (error) {
-    return (
-      <div className="container text-center py-5">
-        <div className="alert alert-danger mx-3">
-          <i className="bi bi-exclamation-triangle-fill me-2"></i>
-          {error}
-        </div>
-        <Button 
-          variant="outline-primary" 
-          onClick={() => window.location.reload()}
-          className="mt-3"
-        >
-          <i className="bi bi-arrow-repeat me-2"></i>
-          {t('common:try_again') || "Try Again"}
-        </Button>
-        <div className="mt-4 text-start mx-auto" style={{maxWidth: '600px'}}>
-          <details>
-            <summary className="text-muted">Debug Information</summary>
-            <div className="mt-2 p-3 bg-light rounded">
-              <p><strong>API URL:</strong> {STRAPI_API_URL}/rapports</p>
-              <p><strong>Environment:</strong> {import.meta.env.MODE}</p>
-              <p><strong>Base URL:</strong> {STRAPI_BASE_URL}</p>
-            </div>
-          </details>
-        </div>
-      </div>
-    );
+    return <p className="text-danger text-center">{t("common:error")}</p>;
   }
 
   return (
-    <motion.div className="container my-5" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-      
-      {/* Title + Description */}
-      <h2 className="text-center mb-3" style={{ color: primaryColor }}>
-        <i className="bi bi-bar-chart-fill me-2"></i>{pageData.title}
-      </h2>
-      <p className="text-center text-muted mx-auto" style={{ maxWidth: '720px' }}>
-        {pageData.description}
-      </p>
+    <div className="container-fluid py-5">
+      <div className="row">
+        {/* Left side */}
+        <div className="col-lg-9">
+          <header className="text-center mb-5">
+            <h1 className="fw-bold">
+              {pageContent?.title || t("rapport:defaultTitle")}
+            </h1>
+            <p className="lead text-muted">
+              {pageContent?.description || t("rapport:defaultDescription")}
+            </p>
+          </header>
 
-      <div className="row mt-5">
-        <div className="col-lg-8 custom-width-73">
-          <div className="mb-4">
-            <input
-              type="text"
-              placeholder={t('rapports:searchPlaceholder')}
+          {/* Search */}
+          <InputGroup className="mb-4">
+            <Form.Control
+              placeholder={t("common:searchPlaceholder")}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="form-control w-100 mx-auto"
             />
-          </div>
+            <Button variant="outline-secondary">
+              <FaSearch />
+            </Button>
+          </InputGroup>
 
-          {/* Rapports List */}
-          <div className={`rapports-list-container bg-white rounded p-4 shadow-sm ${isMobile ? 'mobile-scrollable' : ''}`}>
-            {filteredRapports.length > 0 ? (
-              <ul className="list-unstyled mb-0">
-                {paginatedRapports.map(rapport => (
-                  <li key={rapport.id} className="rapport-item py-3">
-                    <div className="d-flex align-items-center flex-grow-1">
-                      <i className="bi bi-file-earmark-bar-graph me-3 rapport-item-icon"></i>
-                      <div>
-                        <h6 className="mb-0 rapport-item-title">{rapport.title}</h6>
-                        <small className="rapport-item-date">
-                          <i className="bi bi-calendar-event me-1"></i>{rapport.date}
-                        </small>
+          {/* Rapport list */}
+          <div className="row g-4">
+            {data.length > 0 ? (
+              data.map((item, idx) => {
+                const attrs = item.attributes;
+                const pdfFile = attrs.pdf?.data?.attributes?.url;
+                const pdfUrl = pdfFile ? `${STRAPI_API_URL}${pdfFile}` : null;
+
+                return (
+                  <motion.div
+                    key={item.id}
+                    className="col-md-6 col-lg-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: idx * 0.1 }}
+                  >
+                    <div
+                      className="card shadow-sm h-100 border-0"
+                      onClick={() => setSelectedItem(item)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <div className="card-body">
+                        <h5 className="card-title">{attrs.title}</h5>
+                        <p className="card-text text-muted text-truncate">
+                          {attrs.description}
+                        </p>
+                        {pdfUrl && (
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDownload(pdfUrl, attrs.title + ".pdf");
+                            }}
+                          >
+                            <FaFilePdf className="me-1" /> {t("common:download")}
+                          </Button>
+                        )}
                       </div>
                     </div>
-                    <div className="d-flex align-items-center gap-3 rapport-actions">
-                      <button className="consulter-link" onClick={() => handleOpenModal(rapport)}>
-                        <i className="bi bi-eye"></i>
-                        <span className="ms-1">{t('rapports:consult')}</span>
-                      </button>
-                      {rapport.pdf && (
-                        <button 
-                          onClick={() => handleDownload(rapport.pdf, `${rapport.title}.pdf`)} 
-                          className="btn btn-primary-custom btn-sm"
-                        >
-                          <i className="bi bi-download me-2"></i>{t('rapports:downloadPdf')}
-                        </button>
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+                  </motion.div>
+                );
+              })
             ) : (
-              <div className="alert alert-info text-center mt-4">{t('rapports:noResults')}</div>
+              <p className="text-center">{t("common:noResults")}</p>
             )}
           </div>
 
-          {/* Rapports Pagination */}
-          {totalPages > 1 && (
-            <div className="d-flex justify-content-center mt-4">
-              <ul className="pagination">
-                {[...Array(totalPages)].map((_, i) => (
-                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} onClick={() => setCurrentPage(i + 1)}>
-                    <button className="page-link">{i + 1}</button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {/* Charts Section */}
-          {currentPage === 1 && (
-            <div className="latest-charts-section">
-              <hr className="chart-section-divider" />
-              <h3 className="mb-4 text-center" style={{ color: primaryColor }}>
-                <i className="bi bi-graph-up-arrow me-2"></i>{pageData.chartsTitle}
-              </h3>
-              <div className="charts-scroll-wrapper">
-                <div className="row g-4">
-                  {paginatedCharts.map((chart, index) => (
-                    <React.Fragment key={index}>
-                      <div className="col-md-4 chart-slide-item" onClick={() => handleOpenChartModal(chart)}>
-                        <div className="chart-card bg-white p-4 rounded shadow-sm">
-                          <h5 className="chart-title text-center">{chart.title}</h5>
-                          <hr className="chart-divider" />
-                          {chart.image && <img src={chart.image} alt={chart.title} className="chart-card-image img-fluid" />}
-                        </div>
-                      </div>
-                      {(index + 1) % 3 === 0 && <hr className="w-100 my-4 chart-row-divider" />}
-                    </React.Fragment>
-                  ))}
-                </div>
-              </div>
-
-              {/* Charts Pagination */}
-              {totalChartPages > 1 && (
-                <div className="d-flex justify-content-center mt-4 chart-pagination">
-                  <ul className="pagination">
-                    {[...Array(totalChartPages)].map((_, i) => (
-                      <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
-                        <button className="page-link">{i + 1}</button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              <hr className="chart-section-divider-bottom" />
-            </div>
-          )}
+          {/* Pagination */}
+          <div className="d-flex justify-content-center mt-4">
+            <Button
+              variant="outline-primary"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((p) => p - 1)}
+              className="me-2"
+            >
+              {t("common:prev")}
+            </Button>
+            <Button
+              variant="outline-primary"
+              onClick={() => setCurrentPage((p) => p + 1)}
+            >
+              {t("common:next")}
+            </Button>
+          </div>
         </div>
 
         {/* Sidebar */}
-        <div className="col-lg-4 custom-width-27 mt-4 offset-lg-0">
-          <LatestNewsCard />
-          <ChantiersCard />
-          <StatsCard />
-          <SocialsCard />
-        </div>
+        {!isMobile && (
+          <div className="col-lg-3">
+            <Sidebar />
+          </div>
+        )}
       </div>
 
-      {/* Rapports Modal */}
+      {/* Modal */}
       <AnimatePresence>
-        {selectedRapport && (
-          <motion.div 
-            className="custom-modal-overlay" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            onClick={handleCloseModal}
+        {selectedItem && (
+          <Modal
+            show
+            onHide={() => setSelectedItem(null)}
+            centered
+            size="lg"
+            className="rounded-3"
           >
-            <motion.div 
-              className="custom-modal" 
-              initial={{ scale: 0.9, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.9, opacity: 0 }} 
-              onClick={(e) => e.stopPropagation()} 
-              style={{ display: 'flex', flexDirection: 'column', maxHeight: '95vh', maxWidth: '800px' }}
-            >
-              <button onClick={handleCloseModal} className="custom-modal-close-button">
-                <i className="bi bi-x-lg" style={{ color: 'black' }}></i>
-              </button>
+            <Modal.Header closeButton>
+              <Modal.Title>{selectedItem.attributes?.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>{selectedItem.attributes?.description}</p>
+              {selectedItem.attributes?.pdf?.data?.attributes?.url && (
+                <Button
+                  variant="danger"
+                  className="me-2"
+                  onClick={() =>
+                    handleDownload(
+                      `${STRAPI_API_URL}${selectedItem.attributes.pdf.data.attributes.url}`,
+                      selectedItem.attributes?.title + ".pdf"
+                    )
+                  }
+                >
+                  <FaFilePdf className="me-1" /> {t("common:downloadPdf")}
+                </Button>
+              )}
 
-              <div className="modal-header" style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderBottom: '1px solid #dee2e6' }}>
-                <div style={{ textAlign: 'left' }}>
-                  <h5 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{selectedRapport.title}</h5>
-                  <small className="text-muted d-block" style={{ fontSize: '0.9rem' }}>{selectedRapport.date}</small>
+              {/* Share buttons */}
+              <div className="mt-4">
+                <h6>{t("common:share")}</h6>
+                <div className="d-flex gap-3 mt-2">
+                  <Button
+                    variant="outline-primary"
+                    onClick={() => handleShare("facebook", selectedItem)}
+                  >
+                    <FaFacebookF />
+                  </Button>
+                  <Button
+                    variant="outline-info"
+                    onClick={() => handleShare("twitter", selectedItem)}
+                  >
+                    <FaXTwitter />
+                  </Button>
+                  <Button
+                    variant="outline-success"
+                    onClick={() => handleShare("whatsapp", selectedItem)}
+                  >
+                    <FaWhatsapp />
+                  </Button>
+                  <Button
+                    variant="outline-secondary"
+                    onClick={() => handleShare("email", selectedItem)}
+                  >
+                    <MdEmail />
+                  </Button>
                 </div>
               </div>
-
-              <div className="modal-body" style={{ flexGrow: 1, overflowY: 'auto', padding: '0.8rem 1rem' }}>
-                <p style={{ textAlign: "justify" }}>{selectedRapport.description}</p>
-              </div>
-
-              <div className="modal-footer" style={{ position: 'sticky', bottom: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderTop: '1px solid #dee2e6' }}>
-                <div className="d-flex justify-content-between align-items-center w-100">
-                  <div className="d-flex gap-2">
-                    <Button variant="secondary" onClick={handleCloseModal}>{t('rapports:close')}</Button>
-                    {selectedRapport.pdf && (
-                      <Button
-                        variant="primary"
-                        onClick={() => handleDownload(selectedRapport.pdf, `${selectedRapport.title}.pdf`)} 
-                        className="hover-green-btn"
-                      >
-                        <i className="bi bi-download me-2"></i>
-                        {t('rapports:downloadPdf')}
-                      </Button>
-                    )}
-                  </div>
-                  <div className="social-share-container d-flex gap-2">
-                    <button onClick={() => handleShare('facebook')} className="share-icon-button"><FaFacebookF className="share-icon facebook" /></button>
-                    <button onClick={() => handleShare('twitter')} className="share-icon-button"><FaXTwitter className="share-icon twitter" /></button>
-                    <button onClick={() => handleShare('whatsapp')} className="share-icon-button"><FaWhatsapp className="share-icon whatsapp" /></button>
-                    <button onClick={() => handleShare('email')} className="share-icon-button"><MdEmail className="share-icon email" /></button>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+            </Modal.Body>
+          </Modal>
         )}
       </AnimatePresence>
-      {/* Charts Modal */}
-      <AnimatePresence>
-        {selectedChart && (
-          <motion.div 
-            className="custom-modal-overlay" 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            exit={{ opacity: 0 }} 
-            onClick={handleCloseModal}
-          >
-            <motion.div 
-              className="custom-modal" 
-              initial={{ scale: 0.9, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.9, opacity: 0 }} 
-              onClick={(e) => e.stopPropagation()} 
-              style={{ display: 'flex', flexDirection: 'column', maxHeight: '95vh', maxWidth: '800px' }}
-            >
-              <button onClick={handleCloseModal} className="custom-modal-close-button">
-                <i className="bi bi-x-lg" style={{ color: 'black' }}></i>
-              </button>
-              <div className="modal-body" style={{ flexGrow: 1, overflowY: 'auto', padding: '0.8rem 1rem' }}>
-                <h5 className="text-center">{selectedChart.title}</h5>
-                {selectedChart.image && <img src={selectedChart.image} alt={selectedChart.title} className="img-fluid" />}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+    </div>
   );
-}
+};
+
+export default Rapport;
