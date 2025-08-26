@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import './LatestNewsCard.css';
 
-const STRAPI_BASE_URL = "http://localhost:1337";
+// Replace the hardcoded URL with the environment variable
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 // Remove the onArticleClick prop as it's no longer needed

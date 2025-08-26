@@ -3,7 +3,8 @@ import { Carousel } from "react-bootstrap";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 
-const STRAPI_BASE_URL = "http://localhost:1337";
+// Use the Vite environment variable instead of a hardcoded URL
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function CarouselSlider() {
@@ -21,15 +22,10 @@ export default function CarouselSlider() {
         );
         
         const fetchedSlides = response.data.data.map(item => {
-          const slideData = item.attributes || item; // Use the attributes directly
-
-          // The logic from your Actualites.jsx component
-          const imagePath = 
-            slideData?.image?.formats?.small?.url ||
-            slideData?.image?.formats?.medium?.url ||
-            slideData?.image?.formats?.large?.url ||
-            slideData?.image?.url || 
-            (slideData?.image?.data?.attributes?.url ? slideData.image.data.attributes.url : null)
+          const slideData = item.attributes;
+          
+          // Get the image URL from the 'attributes' object
+          const imagePath = slideData?.image?.data?.attributes?.url;
           
           return {
             id: item.id,
