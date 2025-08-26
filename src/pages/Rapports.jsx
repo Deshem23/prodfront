@@ -15,12 +15,11 @@ import SocialsCard from '../components/SocialsCard';
 
 import './Rapports.css';
 
-// Helper function to sort by date
-const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
-
-// Strapi API configuration - USING ENVIRONMENT VARIABLES PROPERLY
-const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || window.location.origin;
+// Strapi API configuration
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
+
+const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
 export default function Rapports() {
   const { t, i18n } = useTranslation(['rapports', 'common']);
@@ -31,139 +30,86 @@ export default function Rapports() {
   const [currentPage, setCurrentPage] = useState(1);
   const [chartPage, setChartPage] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
+
   const [rapportsData, setRapportsData] = useState([]);
   const [pageContent, setPageContent] = useState({ title: '', description: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const primaryColor = 'rgb(5, 40, 106)';
-  const itemsPerPage = 7;
+  const itemsPerPage = isMobile ? 5 : 15;
   const chartsPerPage = 6;
 
-  // Responsive listener
+  // Resize detection
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 992);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 992);
+    };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Debounce search
+  // Debounced search
   useEffect(() => {
-    const handler = setTimeout(() => setDebouncedSearch(search), 300);
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search);
+    }, 300);
     return () => clearTimeout(handler);
   }, [search]);
 
-  // Function to handle file download for all devices
-  const handleDownload = useCallback((pdfUrl, filename) => {
-    if (!pdfUrl) {
-      console.error('No PDF URL provided');
-      return;
-    }
-    
-    try {
-      // Create a temporary anchor tag
-      const link = document.createElement('a');
-      
-      // Force download by creating a blob URL
-      fetch(pdfUrl)
-        .then(response => response.blob())
-        .then(blob => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          link.href = blobUrl;
-          link.download = filename || 'document.pdf';
-          
-          // Append to body, click, and remove
-          document.body.appendChild(link);
-          link.click();
-          
-          // Clean up
-          window.URL.revokeObjectURL(blobUrl);
-          document.body.removeChild(link);
-        })
-        .catch(error => {
-          console.error('Error fetching the file:', error);
-          // Fallback to direct download if blob approach fails
-          link.href = pdfUrl;
-          link.download = filename || 'document.pdf';
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
-        });
-      
-    } catch (error) {
-      console.error('Error downloading the file:', error);
-      // Final fallback - open in new tab
-      window.open(pdfUrl, '_blank');
-    }
-  }, []);
-
-  // Fetch data from Strapi with proper error handling
+  // Fetch rapports + page content
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        setError(null);
 
-        console.log("Attempting to fetch from:", `${STRAPI_API_URL}/rapports?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf&populate[2]=image`);
-
-        // Fetch rapports list
+        // Fetch rapports (main content)
         const rapportsRes = await axios.get(
-          `${STRAPI_API_URL}/rapports?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf&populate[2]=image`,
-          { timeout: 10000 } // 10 second timeout
+          `${STRAPI_API_URL}/rapports?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf&populate[2]=image`
         );
 
         console.log("Rapports API response:", rapportsRes.data);
 
-        // Format data similar to Decisions component
+        // Debug: Check the first rapport's structure
+        if (rapportsRes.data.data.length > 0) {
+          const firstRapport = rapportsRes.data.data[0];
+          console.log("First rapport data:", firstRapport);
+          console.log("First rapport PDF URL:", firstRapport.attributes?.pdf?.url);
+          console.log("First rapport Image URL:", firstRapport.attributes?.image?.url);
+        }
+
         const formattedRapports = rapportsRes.data.data.map(item => {
           const rapportData = item.attributes || item;
-          const pdfUrl = rapportData?.pdf?.data?.attributes?.url || null;
-          const imageUrl = rapportData?.image?.data?.attributes?.url || null;
+
+          // Get PDF and image URLs
+          const pdfUrl = rapportData?.pdf?.url || null;
+          const imageUrl = rapportData?.image?.url || null;
 
           return {
             id: item.id,
-            title: rapportData?.title ?? "Untitled Rapport",
-            description: rapportData?.description ?? "No description available",
-            date: rapportData?.date ?? "No Date",
-            pdf: pdfUrl ? `${STRAPI_BASE_URL}${pdfUrl}` : null,
-            image: imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null
+            title: rapportData?.title || "Untitled Rapport",
+            description: rapportData?.description || "No description available",
+            date: rapportData?.date || "No date",
+            pdf: pdfUrl,
+            image: imageUrl
           };
         });
 
-        // Fetch page header with error handling
-        try {
-          const pageRes = await axios.get(
-            `${STRAPI_API_URL}/rapports-page?locale=${i18n.language}`,
-            { timeout: 5000 }
-          );
-          const pageData = pageRes.data.data || {};
-          
-          setPageContent({
-            title: pageData?.title || t('rapports:title'),
-            description: pageData?.description || t('rapports:description'),
-          });
-        } catch (pageError) {
-          console.warn("Could not fetch rapports page content:", pageError);
-          setPageContent({
-            title: t('rapports:title'),
-            description: t('rapports:description'),
-          });
-        }
+        // Fetch page content
+        const pageRes = await axios.get(
+          `${STRAPI_API_URL}/rapports-page?locale=${i18n.language}`
+        );
+        const pageData = pageRes.data.data;
 
         setRapportsData(formattedRapports);
+        setPageContent({
+          title: pageData?.title || '',
+          description: pageData?.description || '',
+        });
+
       } catch (err) {
         console.error("API Error:", err);
-        
-        if (err.code === 'ECONNABORTED') {
-          setError(t("common:timeout_error") || "Request timeout. Please check your connection.");
-        } else if (err.response) {
-          setError(t("common:api_error") || `Server error: ${err.response.status}`);
-        } else if (err.request) {
-          setError(t("common:connection_error") || "Cannot connect to server. Please check if Strapi is running.");
-        } else {
-          setError(t("common:api_error") || "Failed to load rapports");
-        }
-        
+        setError(t("common:api_error") || "Failed to load rapports");
         setRapportsData([]);
       } finally {
         setLoading(false);
@@ -173,7 +119,7 @@ export default function Rapports() {
     fetchData();
   }, [i18n.language, t]);
 
-  // Sort + filter
+  // Filter + paginate
   const sortedRapports = [...rapportsData].sort(sortByDate);
   const filteredRapports = sortedRapports.filter(rapport =>
     (rapport.title || '').toLowerCase().includes(debouncedSearch.toLowerCase()) ||
@@ -194,11 +140,41 @@ export default function Rapports() {
   );
 
   // Modal handlers
-  const handleOpenModal = useCallback((rapport) => setSelectedRapport(rapport), []);
-  const handleOpenChartModal = useCallback((chart) => setSelectedChart(chart), []);
+  const handleOpenModal = useCallback((rapport) => {
+    setSelectedRapport(rapport);
+  }, []);
+  
+  const handleOpenChartModal = useCallback((chart) => {
+    setSelectedChart(chart);
+  }, []);
+  
   const handleCloseModal = useCallback(() => {
     setSelectedRapport(null);
     setSelectedChart(null);
+  }, []);
+
+  // Function to handle file download for all devices
+  const handleDownload = useCallback((pdfUrl, filename) => {
+    if (!pdfUrl) {
+      console.error('No PDF URL provided');
+      return;
+    }
+    
+    try {
+      // Create a temporary anchor tag
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = filename || 'document.pdf';
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log('Download initiated for:', filename);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      window.open(pdfUrl, '_blank');
+    }
   }, []);
 
   // Share handler
@@ -212,11 +188,7 @@ export default function Rapports() {
 
     if (navigator.share) {
       try {
-        await navigator.share({
-          title: shareTitle,
-          text: shareText,
-          url: shareUrl,
-        });
+        await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
       } catch (error) {
         console.error('Error sharing:', error);
       }
@@ -240,10 +212,7 @@ export default function Rapports() {
       default:
         break;
     }
-
-    if (intentUrl) {
-      window.open(intentUrl, '_blank', 'noopener,noreferrer');
-    }
+    if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
   };
 
   // Loading + Error states
@@ -253,42 +222,19 @@ export default function Rapports() {
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
-        <p className="mt-2">{t('common:loading') || "Loading..."}</p>
       </div>
     );
   }
   
   if (error) {
     return (
-      <div className="container text-center py-5">
-        <div className="alert alert-danger mx-3">
-          <i className="bi bi-exclamation-triangle-fill me-2"></i>
-          {error}
-        </div>
-        <Button 
-          variant="outline-primary" 
-          onClick={() => window.location.reload()}
-          className="mt-3"
-        >
-          <i className="bi bi-arrow-repeat me-2"></i>
-          {t('common:try_again') || "Try Again"}
-        </Button>
-        
-        {/* Debug information */}
-        <div className="mt-4 text-start mx-auto" style={{maxWidth: '600px'}}>
-          <details>
-            <summary className="text-muted">Debug Information</summary>
-            <div className="mt-2 p-3 bg-light rounded">
-              <p><strong>API URL:</strong> {STRAPI_API_URL}/rapports</p>
-              <p><strong>Environment:</strong> {import.meta.env.MODE}</p>
-              <p><strong>Base URL:</strong> {STRAPI_BASE_URL}</p>
-            </div>
-          </details>
-        </div>
+      <div className="container text-center py-5 alert alert-danger">
+        {error}
       </div>
     );
   }
 
+  // Render UI
   return (
     <motion.div
       className="container my-5"
