@@ -1,0 +1,286 @@
+/* src/styles/global.css */
+
+/* --- General & Base Styles --- */
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #228B22; /* Force a green background */
+}
+
+/* This new rule forces text to be a readable dark color. */
+.force-dark-text {
+  color: #212529 !important;
+}
+
+/* --- Glass Card Base Style --- */
+.glass-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* Default padding for glass cards. Can be overridden by specific components if they manage internal padding. */
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  font-family: inherit;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.glass-card:hover {
+  transform: translateY(-5px); /* Lift the card slightly */
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+/* --- Text Justification --- */
+.justify-text {
+  text-align: justify;
+}
+
+/* --- Equal Height Cards (Crucial for height matching) --- */
+.equal-height-cards {
+  display: flex;
+  align-items: stretch; /* Makes children (cards) stretch to fill height */
+  gap: 2%; /* Consistent gap for rows using this class */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  margin-bottom: 2rem; /* Consistent bottom margin for card rows */
+}
+
+/* --- Top Section: Intro & Latest News Layout --- */
+.home-main-content-row {
+  justify-content: space-between;
+}
+
+.home-intro-column {
+  flex: 1 0 70%; /* Takes 70% width, flexible */
+  box-sizing: border-box;
+  min-width: 350px; /* Minimum width to prevent squishing */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes content and link apart */
+}
+
+.home-intro-column p {
+  flex-grow: 1; /* Allows paragraph to grow and push the "Learn More" link down */
+}
+
+.home-latest-news-column {
+  flex: 1 0 28%; /* Takes 28% width, flexible */
+  box-sizing: border-box;
+  min-width: 250px; /* Minimum width to prevent squishing */
+}
+
+/* Specific adjustment for latest news card: Remove default padding */
+.latest-news-card {
+  padding: 0; /* Override glass-card default, as content inside will manage its own padding */
+}
+
+/* No specific style needed for news-list-container beyond flex-grow-1 and p-4 from JSX */
+.news-list-container {
+  overflow-y: auto; /* Enable scroll if news list is too long */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- Mid-Section: Icons & Social Feed Layout --- */
+.mid-section-row {
+  justify-content: space-between;
+}
+
+.icons-section-column {
+  flex: 1 0 70%; /* Icons section takes 70% width, flexible */
+  box-sizing: border-box;
+  min-width: 300px;
+  padding: 0; /* Remove default glass-card padding, as content inside will manage its own */
+}
+
+.archives-card-column { /* Holds the SocialFeedCard */
+  flex: 1 0 28%; /* This column takes 28% width, flexible */
+  box-sizing: border-box;
+  min-width: 250px; /* Minimum width to prevent squishing */
+  overflow: hidden; /* Prevents social widget from overflowing its boundaries */
+}
+
+/* --- Social Feed Specific Styles --- */
+.social-feed-card-component {
+  padding: 0; /* Remove default padding from glass-card for this component */
+}
+
+.social-feed-card-component .social-feed-embed-container {
+  padding: 1rem;
+  overflow-y: auto; /* Scroll within the embed container */
+  -webkit-overflow-scrolling: touch;
+  max-height: 400px; /* Max height to constrain the embed, adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.social-feed-embed-container iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100% !important;
+}
+
+/* --- Styling for individual icon items (Adjusted for 3-in-a-line and hover) --- */
+.icons-single-line { /* New class for the inner icon container */
+  flex-wrap: nowrap; /* Forces icons to stay in one line horizontally */
+  overflow-x: auto; /* Add horizontal scroll if icons don't fit naturally */
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 10px; /* Prevent scrollbar from covering icons */
+}
+
+.icon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out; /* Keep transition on parent for text color */
+  flex-shrink: 0; /* Prevents items from shrinking too much if space is tight */
+  padding: 0.5rem;
+  margin: 0 0.25rem; /* Reduced margin between icons to make them closer */
+  min-width: 80px; /* Ensure icons don't become too small */
+  color: inherit; /* Ensure default text color comes from parent */
+}
+
+.icon-item i {
+  font-size: 2.2rem; /* Icon size */
+  transition: color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Add transform for icon movement */
+}
+
+/* Crucial for icon color hover: Target the icon (i) when its parent (icon-item) is hovered */
+.icon-item:hover i {
+  color: rgba(0, 123, 255, 0.8) !important; /* Use !important to override inline style for hover */
+  transform: scale(1.1); /* Slightly enlarge icon on hover for extra pop */
+}
+
+.icon-item p {
+  font-size: 0.8rem; /* Text size for icon labels */
+  line-height: 1.2;
+  text-align: center;
+  color: rgb(5, 40, 106); /* Consistent text color for labels */
+  transition: color 0.2s ease-in-out;
+}
+
+/* Optional: Make the text color also change slightly on hover */
+.icon-item:hover p {
+  color: rgba(5, 40, 106, 0.8);
+}
+
+/* --- Specific styling for the news list items from LatestNewsCard --- */
+.news-list li a {
+  transition: color 0.2s ease-in-out;
+}
+.news-list li a:hover {
+  color: rgb(5, 40, 106) !important;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 991.98px) { /* Laptops, Tablets */
+  .home-intro-column,
+  .home-latest-news-column,
+  .icons-section-column,
+  .archives-card-column {
+      flex: 0 0 100%; /* Stack all columns to full width */
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+  }
+
+  .equal-height-cards {
+      flex-direction: column; /* Stack cards vertically */
+      gap: 0; /* Remove gap when stacking */
+      align-items: stretch; /* Ensure they still stretch to full width */
+  }
+
+  .home-latest-news-column {
+      margin-top: 1rem; /* Add some space between stacked cards */
+  }
+
+  .icons-section-column {
+      margin-top: 2rem;
+      padding-top: 0; /* Adjust padding for stacked view */
+      padding-bottom: 0; /* Adjust padding for stacked view */
+  }
+
+  .archives-card-column {
+      margin-top: 1rem;
+  }
+
+  /* When stacked, icons can wrap again (preferred for small screens) */
+  .icons-single-line {
+      flex-wrap: wrap; /* Allow wrapping on smaller screens */
+      overflow-x: hidden; /* Remove horizontal scroll when wrapping */
+      justify-content: center; /* Center icons when wrapped */
+  }
+
+  .icon-item {
+      flex: 0 0 30%; /* Try to fit 3 per row on medium screens */
+      max-width: 32%;
+      margin: 0.5rem;
+  }
+
+  .social-feed-card-component .social-feed-embed-container {
+      max-height: 350px; /* Adjust max height for social feed on smaller screens */
+  }
+
+  /* This is the new rule to reduce space between the cards on mobile. */
+  .mid-section-row {
+      margin-top: -1rem !important; /* Adjust this value as needed. */
+  }
+
+  /* Add a corresponding negative margin to the top section's bottom margin if necessary */
+  .home-main-content-row {
+      margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 767.98px) { /* Smaller Tablets, Large Phones */
+  .glass-card {
+      padding: 1.5rem; /* Slightly reduced padding */
+  }
+  .icon-item {
+      flex: 0 0 45%; /* Now 2 per row */
+      max-width: 48%;
+  }
+}
+
+@media (max-width: 575.98px) { /* Small Phones */
+  .glass-card {
+      padding: 1rem; /* Further reduced padding */
+  }
+  .home-intro-column,
+  .home-latest-news-column,
+  .icons-section-column,
+  .archives-card-column {
+      min-width: unset; /* Allow columns to shrink further */
+  }
+  .icon-item {
+      flex: 0 0 100%; /* Stack icons vertically on very small screens */
+      margin: 0.5rem 0;
+  }
+  .social-feed-card-component .social-feed-embed-container {
+      max-height: 300px; /* Further adjust max height for social feed */
+  }
+}
+/* --- Custom Layout Classes for Main and Sidebar Content --- */
+.custom-width-73 {
+  flex: 0 0 73%;
+  max-width: 73%;
+}
+
+.custom-width-27 {
+  flex: 0 0 27%;
+  max-width: 27%;
+}
+
+@media (max-width: 991.98px) {
+  .custom-width-73, .custom-width-27 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+.mid-section-row {
+  margin-bottom: 0 !important;
+}

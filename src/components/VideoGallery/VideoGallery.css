@@ -1,0 +1,21 @@
+.video-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .video-item {
+    width: 100%;
+    /* Optional: Add a subtle transition for a nice effect */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+  
+  .video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  .video-item iframe {
+    border: none;
+    border-radius: 8px;
+  }

@@ -1,0 +1,26 @@
+/* src/components/SocialsCard.css */
+
+/* Base style for the icons */
+.social-icon {
+  font-size: 2rem !important; /* The !important rule forces the size */
+  color: var(--primary-color);
+  transition: all 0.3s ease-in-out;
+}
+
+/* General hover effect for all social icons */
+.glass-card a:hover .social-icon {
+  color: #007bff;
+  transform: scale(1.15);
+}
+
+/* Specific hover effect for the YouTube icon */
+.glass-card a:hover .bi-youtube {
+  color: red;
+  transform: scale(1.15);
+}
+
+/* Specific hover effect for the X (Twitter) icon */
+.glass-card a:hover .bi-twitter-x {
+  color: black;
+  transform: scale(1.15);
+}

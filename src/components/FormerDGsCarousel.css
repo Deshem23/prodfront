@@ -1,0 +1,236 @@
+/* --- New section wrapper to contain and center the carousel --- */
+.former-dgs-section {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* --- New Wrapper for Carousel and Arrows --- */
+.carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+ 
+/* --- Carousel Container and Scrolling --- */
+.carousel-container {
+  display: flex;
+  overflow-x: scroll;
+  padding: 10px 0;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth; 
+  position: relative; 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  flex-grow: 1;
+}
+
+.carousel-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* --- Carousel Fade Effect --- */
+.carousel-fade-wrapper {
+  position: relative;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.carousel-fade-wrapper::before,
+.carousel-fade-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 20px; 
+  pointer-events: none; 
+  z-index: 10;
+}
+
+.carousel-fade-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #f8f9fa, rgba(248, 249, 250, 0));
+}
+
+.carousel-fade-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #f8f9fa, rgba(248, 249, 250, 0));
+}
+
+/* --- Individual DG Item Styling --- */
+.dg-item-wrapper {
+  flex: 0 0 auto;
+  margin: 0 5px;
+  padding: 5px;
+  background-color: transparent; 
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.dg-item-wrapper:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
+}
+
+.dg-photo-placeholder {
+  width: 80px; 
+  height: 80px; 
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 3px; 
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  border: 2px solid white;
+  cursor: pointer;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem; 
+  color: #adb5bd; 
+}
+
+.dg-photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(80%) opacity(0.7);
+  transition: filter 0.3s ease-out, transform 0.3s ease-out;
+}
+
+.dg-item-wrapper:hover .dg-photo-placeholder img {
+  filter: grayscale(0%) opacity(1);
+  transform: scale(1.1);
+}
+
+.dg-info {
+  text-align: center;
+}
+
+.dg-info h6 {
+  font-weight: bold;
+  font-size: 0.8rem; 
+  color: var(--primary-color);
+  margin-bottom: 2px;
+  transition: color 0.3s ease-out;
+}
+
+.dg-profession {
+  font-size: 0.65rem;
+  margin-bottom: 0;
+  color: #6c757d;
+}
+
+.dg-title {
+  font-size: 0.65rem;
+  margin-bottom: 0;
+  color: #495057;
+  font-weight: bold;
+}
+
+.dg-info small {
+  font-size: 0.65rem; 
+  transition: opacity 0.3s ease-out;
+}
+
+.dg-item-wrapper:hover .dg-info h6 {
+  color: var(--danger-color);
+}
+
+.dg-item-wrapper:hover .dg-info small {
+  opacity: 0.8;
+}
+
+/* --- Arrows Styling --- */
+.carousel-arrow {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #ccc;
+  cursor: pointer;
+  /* Removed padding to move arrows much closer */
+  padding: 0;
+  transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  outline: none;
+  z-index: 20;
+}
+
+.carousel-arrow:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* --- Modal Styles for Small Card --- */
+.dg-carousel-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  z-index: 1050;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.dg-carousel-modal-content {
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  max-width: 350px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  cursor: default;
+}
+
+.modal-close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #6c757d;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.modal-close-button:hover {
+  color: #333;
+}
+
+.dg-modal-photo-wrapper {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles for the icon inside the modal */
+.dg-modal-photo-wrapper .dg-modal-icon {
+  font-size: 5rem;
+  color: #e9ecef;
+}
+
+.dg-modal-photo-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dg-modal-bio {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #495057;
+  text-align: justify;
+}

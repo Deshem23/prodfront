@@ -1,0 +1,86 @@
+{
+  "title": "Rapò",
+  "description": "Dekouvri rapò ak analiz detaye nou yo sou pèfòmans, pwojè, ak inisyativ enstitisyon an.",
+  "searchPlaceholder": "Chèche rapò...",
+  "noResults": "Pa gen rapò yo jwenn.",
+  "consult": "Gade",
+  "download": "Telechaje",
+  "downloadPdf": "Telechaje PDF la",
+  "close": "Fèmen",
+  "documentationTitle": "Dokiman ak Resous",
+  "latestChartsTitle": "Dènye Graf yo",
+  "data": [
+    {
+      "id": "rapport-1",
+      "title": "Rapo Anyèl 2024",
+      "description": "Yon apèsi konplè sou pèfòmans ak reyalizasyon nou yo nan ane 2024 la.",
+      "date": "2024-06-30",
+      "pdf": "/assets/pdf/rapport-2024.pdf",
+      "image": "https://picsum.photos/id/237/600/600"
+    },
+    {
+      "id": "rapport-2",
+      "title": "Analiz Finansye chak Trimès T1 2024",
+      "description": "Analiz detaye rezilta finansye nou yo pou premye trimès 2024.",
+      "date": "2024-04-15",
+      "pdf": "/assets/pdf/financial-q1-2024.pdf",
+      "image": "https://picsum.photos/id/238/600/600"
+    },
+    {
+      "id": "rapport-3",
+      "title": "Rapo sou Tandans Mache 2023",
+      "description": "Tandans kle ak apèsi sou mache a nan 2023.",
+      "date": "2023-12-05",
+      "pdf": "/assets/pdf/market-trends-2023.pdf",
+      "image": "https://picsum.photos/id/239/600/600"
+    },
+    {
+      "id": "rapport-4",
+      "title": "Etid sou Enpak Anviwònmantal 2022",
+      "description": "Yon analiz sou anprint anviwònmantal nou ak efò dirabilite nou yo nan 2022.",
+      "date": "2022-09-20",
+      "pdf": "/assets/pdf/environmental-2022.pdf",
+      "image": "https://picsum.photos/id/240/600/600"
+    },
+    {
+      "id": "rapport-5",
+      "title": "Odit Responsabilite Sosyal 2021",
+      "description": "Yon odi inisyativ ak enpak responsablite sosyal antrepriz nou an.",
+      "date": "2021-07-10",
+      "pdf": "/assets/pdf/social-audit-2021.pdf",
+      "image": "https://picsum.photos/id/241/600/600"
+    },
+    {
+      "id": "rapport-6",
+      "title": "Rapo sou Inovasyon 2020",
+      "description": "Pwen enpòtan sou inovasyon kle nou yo ak avansman teknolojik nan 2020.",
+      "date": "2020-03-25",
+      "pdf": "/assets/pdf/innovation-2020.pdf",
+      "image": "https://picsum.photos/id/242/600/600"
+    },
+    {
+      "id": "rapport-7",
+      "title": "Rezilta Sondaj Satisfaksyon Kliyan 2019",
+      "description": "Rezilta detaye ak analiz sondaj satisfaksyon kliyan nou an.",
+      "date": "2019-11-18",
+      "pdf": "/assets/pdf/customer-satisfaction-2019.pdf",
+      "image": "https://picsum.photos/id/243/600/600"
+    },
+    {
+      "id": "rapport-8",
+      "title": "Previzyon Kwasans 2025",
+      "description": "Yon previzyon pwograme kwasans konpayi nou an pou ane k ap vini an.",
+      "date": "2024-01-01",
+      "pdf": "/assets/pdf/growth-forecast-2025.pdf",
+      "image": "https://picsum.photos/id/244/600/600"
+    },
+    {
+      "id": "rapport-9",
+      "title": "Analiz Segmantasyon Mache 2024",
+      "description": "Yon analiz segman mache kle yo ak pozisyon estratejik nou an.",
+      "date": "2024-02-20",
+      "pdf": "/assets/pdf/market-segmentation-2024.pdf",
+      "image": "https://picsum.photos/id/245/600/600"
+    }
+  ]
+}

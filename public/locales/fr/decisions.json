@@ -1,0 +1,125 @@
+{
+  "title": "Décisions & Publications",
+  "description": "Retrouvez ici toutes les décisions réglementaires et publications officielles de l'autorité. Accédez aux documents pour une information complète et transparente.",
+  "searchPlaceholder": "Rechercher une décision...",
+  "consult": "Consulter",
+  "download": "Télécharger",
+  "noResults": "Aucune décision trouvée.",
+  "dateLabel": "Date de publication",
+  "close": "Fermer",
+  "downloadPdf": "Télécharger le PDF",
+  "data": [
+    {
+      "id": 16,
+      "title": "Décision 2025-001 : Règlement sur les Services Voix sur IP (VoIP)",
+      "date": "10 juillet 2025",
+      "pdf": "/decisions/decision2025-001.pdf",
+      "description": "Cette décision établit un cadre réglementaire complet pour les services de Voix sur IP (VoIP), incluant les conditions techniques, les obligations de qualité de service et les principes tarifaires. Elle vise à encourager l'innovation dans le secteur des télécommunications tout en garantissant la protection des consommateurs et une concurrence équitable sur le marché. Le nouveau règlement définit clairement les obligations des opérateurs en matière d'identification des abonnés, d'accès aux services d'urgence et d'interconnexion avec les réseaux traditionnels. L'objectif est de soutenir la transition numérique tout en assurant un service de communication fiable et sécurisé pour tous les citoyens. Ce texte est volontairement long pour démontrer la fonctionnalité de défilement du modal."
+    },
+    {
+      "id": 1,
+      "title": "Règlement sur l'Accès au Spectre Radioélectrique",
+      "date": "25 mars 2024",
+      "pdf": "/decisions/reglement1.pdf",
+      "description": "Le règlement sur l'accès au spectre radioélectrique est un document fondamental qui établit les principes et les procédures régissant l'utilisation des ondes électromagnétiques. Il a pour objectif principal d'assurer une gestion efficace et équitable de cette ressource nationale rare et vitale. Le document détaille les différentes bandes de fréquences allouées à des services spécifiques, tels que la radiodiffusion, les télécommunications mobiles, la communication par satellite et les services d'urgence. De plus, il précise les conditions d'attribution des licences et des autorisations, ainsi que les obligations qui incombent aux opérateurs en matière de qualité de service et de couverture. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication. Ce cadre réglementaire est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays. Ce texte est volontairement long pour démontrer la fonctionnalité de défilement du modal."
+    },
+    {
+      "id": 2,
+      "title": "Décision 2024-002 : Tarification des Services de Télécommunications",
+      "date": "15 février 2024",
+      "pdf": "/decisions/decision2024-002.pdf",
+      "description": "La décision 2024-002 établit un nouveau cadre tarifaire pour les services de télécommunications, dans l'objectif de favoriser la concurrence et de protéger les intérêts des consommateurs. Elle définit les conditions d'attribution des licences et des autorisations, ainsi que les obligations qui incombent aux opérateurs en matière de qualité de service et de couverture. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 3,
+      "title": "Décret sur la Protection des Données Personnelles",
+      "date": "10 janvier 2024",
+      "pdf": "/decisions/decret-donnees.pdf",
+      "description": "Ce décret renforce la protection des données personnelles en imposant des obligations strictes aux opérateurs concernant la collecte, le traitement et la conservation des informations des utilisateurs. Il est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 4,
+      "title": "Directive sur la Qualité de Service (QoS) des Opérateurs",
+      "date": "12 décembre 2023",
+      "pdf": "/decisions/directive-qos.pdf",
+      "description": "Cette directive fixe les normes minimales de qualité de service que les opérateurs doivent respecter, incluant la vitesse de connexion, la stabilité du réseau et les délais de latence. Elle est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 5,
+      "title": "Résolution sur la Numérotation des Services d'Urgence",
+      "date": "5 novembre 2023",
+      "pdf": "/decisions/resolution-urgence.pdf",
+      "description": "La résolution établit un plan national de numérotation pour les services d'urgence, facilitant l'accès aux secours pour tous les citoyens. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 6,
+      "title": "Circulaire sur la Gestion des Numéros de Téléphone",
+      "date": "18 octobre 2023",
+      "pdf": "/decisions/circulaire-numeros.pdf",
+      "description": "La circulaire clarifie les règles relatives à la portabilité des numéros de téléphone et à la gestion du plan de numérotation national. Ce cadre réglementaire est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 7,
+      "title": "Décision 2023-005 : Utilisation des Fréquences pour la 5G",
+      "date": "29 septembre 2023",
+      "pdf": "/decisions/decision2023-005.pdf",
+      "description": "Cette décision attribue des bandes de fréquences spécifiques pour le déploiement de la technologie 5G, tout en définissant les conditions techniques et les obligations de couverture. Elle est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 8,
+      "title": "Avis aux Consommateurs sur les Frais d'Itinérance",
+      "date": "11 août 2023",
+      "pdf": "/decisions/avis-itinerance.pdf",
+      "description": "Un avis informant les consommateurs sur les nouveaux plafonds et les conditions d'application des frais d'itinérance (roaming) en vigueur. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 9,
+      "title": "Décret sur les Licences de Radiodiffusion",
+      "date": "24 juillet 2023",
+      "pdf": "/decisions/decret-radiodiffusion.pdf",
+      "description": "Ce décret établit les procédures et les critères d'octroi et de renouvellement des licences de radiodiffusion et de télévision. Il est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 10,
+      "title": "Rapport Annuel sur la Concurrence dans le Secteur",
+      "date": "3 juin 2023",
+      "pdf": "/decisions/rapport-concurrence.pdf",
+      "description": "Le rapport annuel 2023 analyse l'état de la concurrence sur les marchés des télécommunications et des médias, en identifiant les défis et les opportunités. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 11,
+      "title": "Résolution sur l'Interconnexion des Réseaux",
+      "date": "15 mai 2023",
+      "pdf": "/decisions/resolution-interconnexion.pdf",
+      "description": "Cette résolution établit les règles pour l'interconnexion des réseaux entre les différents opérateurs, garantissant ainsi l'interopérabilité. Il est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 12,
+      "title": "Avis sur l'Obligation de Neutralité du Net",
+      "date": "20 avril 2023",
+      "pdf": "/decisions/avis-neutralite-net.pdf",
+      "description": "Cet avis clarifie le principe de la neutralité du net, pour empêcher les opérateurs de bloquer ou de ralentir le trafic de certains sites ou services. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 13,
+      "title": "Décret sur les Télévisions et Radios Communautaires",
+      "date": "12 mars 2023",
+      "pdf": "/decisions/decret-medias-communautaires.pdf",
+      "description": "Un décret réglementant l'activité des médias communautaires afin de favoriser le pluralisme et l'accès à l'information locale. Il est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    },
+    {
+      "id": 14,
+      "title": "Décision sur l'Attribution des Numéros à 4 Chiffres",
+      "date": "8 février 2023",
+      "pdf": "/decisions/decision-numeros-courts.pdf",
+      "description": "Décision régissant l'attribution et l'utilisation des numéros courts pour les services d'information et d'urgence. Ce cadre réglementaire est essentiel pour stimuler l'innovation, protéger les utilisateurs contre les interférences et garantir un accès large et non discriminatoire aux services de communication pour tous les citoyens. Il sert également de base pour les politiques futures concernant le déploiement de nouvelles technologies, comme la 5G et au-delà, en veillant à ce que le développement technologique soit aligné sur les priorités nationales en matière d'inclusivité et de souveraineté numérique. La mise en œuvre de ce règlement est une étape clé pour moderniser l'infrastructure de communication du pays et pour se positionner comme un leader régional dans le secteur des technologies de l'information et de la communication."
+    },
+    {
+      "id": 15,
+      "title": "Rapport Trimestriel sur la Couverture Réseau",
+      "date": "20 janvier 2023",
+      "pdf": "/decisions/rapport-trimestriel-couverture.pdf",
+      "description": "Un rapport détaillé sur l'état de la couverture des réseaux mobiles et Internet à travers le pays. Il est constamment mis à jour pour s'adapter aux évolutions technologiques rapides et aux nouveaux besoins du marché. Une revue régulière des attributions de fréquences permet d'optimiser leur utilisation et d'introduire de nouveaux services qui peuvent bénéficier à la population et à l'économie. Des consultations publiques sont organisées périodiquement pour recueillir les avis des parties prenantes, y compris les opérateurs, les associations de consommateurs et les experts techniques. Cette approche collaborative garantit que la réglementation reste pertinente et équilibrée. La protection des données des utilisateurs est également une préoccupation majeure, avec des dispositions strictes pour garantir la confidentialité et la sécurité des informations personnelles. En fin de compte, l'objectif est de créer un écosystème numérique solide et fiable pour le développement durable du pays."
+    }
+  ]
+}

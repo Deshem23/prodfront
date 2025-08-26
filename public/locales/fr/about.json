@@ -1,0 +1,84 @@
+{
+  "title": "À Propos du CONATEL",
+  "intro": "Le Conseil National des Télécommunications (CONATEL) est l'autorité nationale haïtienne chargée de la régulation du secteur des télécommunications. Il a été créé par décret du 27 septembre 1969, et publié dans le journal officiel Le Moniteur le 30 octobre 1969. Le CONATEL fonctionne sous la tutelle du Ministère des Travaux Publics, des Transports et des Communications. Sa mission est d'établir un cadre réglementaire moderne, robuste et équitable, afin de garantir un accès fiable, sécurisé et universel aux services de télécommunications pour tous les citoyens.",
+  "mission_title": "Notre Mission",
+  "mission": {
+    "full_text": "Notre mission en tant qu'organisme de régulation est d'assurer la transparence et la stabilité du marché des télécommunications tout en protégeant les droits et les intérêts des consommateurs. Nous nous efforçons de promouvoir une concurrence loyale entre les opérateurs et d'encourager le développement technologique durable. Un de nos objectifs principaux est de renforcer la connectivité nationale, en veillant à ce que les services de télécommunications soient accessibles même dans les zones les plus reculées du pays.",
+    "intro": "En tant qu'organisme de régulation, le CONATEL s'efforce de :",
+    "item1": "Assurer la transparence et la stabilité du marché des télécommunications",
+    "item2": "Protéger les droits et les intérêts des consommateurs",
+    "item3": "Promouvoir une concurrence loyale entre les opérateurs",
+    "item4": "Encourager le développement technologique durable",
+    "item5": "Renforcer la connectivité nationale, même dans les zones reculées."
+  },
+  "vision_title": "Notre Vision Stratégique",
+  "vision_text": "Le CONATEL vise à positionner Haïti comme un pôle régional pour les technologies numériques et les services de télécommunications innovants. Nous sommes ambitieux de construire un écosystème numérique inclusif, qui catalysera la croissance économique, la transformation sociale et l'ouverture sur le monde.",
+  "values_title": "Nos Valeurs Fondamentales",
+  "values": {
+    "full_text": "Nos actions sont guidées par nos valeurs fondamentales, à commencer par l'intégrité, qui nous pousse à agir avec honnêteté, transparence et impartialité. Nous soutenons l'innovation en favorisant l'adoption de technologies émergentes pour le bien de tous. Nous sommes animés par un fort sens de la responsabilité, favorisant une gouvernance proactive et redevable. L'accessibilité est une priorité absolue, car nous œuvrons pour que les services soient disponibles pour tous. Enfin, l'excellence nous inspire à promouvoir des normes de qualité et de performance élevées dans tout le secteur.",
+    "integrity": "Intégrité",
+    "innovation": "Innovation",
+    "responsibility": "Responsabilité",
+    "accessibility": "Accessibilité",
+    "excellence": "Excellence"
+  },
+  "download": "Télécharger le décret de création",
+  "timeline_title": "Chronologie Historique",
+  "timeline": {
+    "full_text": "Le CONATEL a une riche histoire de régulation des télécommunications en Haïti. Depuis sa création, l'institution a joué un rôle important dans le développement et la modernisation du secteur, s'adaptant aux défis technologiques et réglementaires pour assurer un service de qualité à la population. Ces dates clés mettent en lumière les principales étapes de notre évolution. En 1977, le CONATEL a adhéré à l'Union Internationale des Télécommunications (UIT). En 2006, il a mis en œuvre les premières licences de téléphonie mobile en Haïti. En 2012, il a adopté un nouveau plan national d'attribution des fréquences radioélectriques. Plus récemment, en 2020, le programme 'Haïti Connecté' a été lancé pour étendre l'accès à internet.",
+    "1977": "Le CONATEL adhère à l'Union Internationale des Télécommunications (UIT).",
+    "2006": "Mise en œuvre des premières licences de téléphonie mobile en Haïti.",
+    "2012": "Adoption d'un nouveau plan national d'attribution des fréquences radioélectriques.",
+    "2020": "Lancement du programme 'Haïti Connecté' pour étendre l'accès à internet."
+  },
+  "leadership_title": "Direction",
+  "leadership": {
+    "director": "Directeur Général",
+    "vice": "Directrice Générale Adjointe"
+  },
+  "biography_title": "Biographie",
+  "updates_title": "Dernières Mises à Jour",
+  "updates_placeholder_1": "Publication du nouveau rapport trimestriel sur le secteur.",
+  "updates_placeholder_2": "Cérémonie de remise des diplômes aux techniciens certifiés.",
+  "updates_placeholder_3": "Avis public concernant la consultation sur les fréquences 5G.",
+  "view_all_updates": "Voir toutes les actualités",
+  "laws_title": "Loi Organique du CONATEL",
+  "laws_intro": "Le CONATEL fonctionne conformément à un ensemble de lois et règlements visant à assurer le bon fonctionnement du secteur des télécommunications en Haïti. Ces lois définissent notre structure, nos responsabilités et le cadre légal de nos opérations.",
+  "organigram_title": "Organigramme du CONATEL",
+  "organigram_desc": "La structure organisationnelle du CONATEL illustre la répartition des rôles et des responsabilités au sein de l'institution.",
+  "organigram_view_full": "Voir l'image en grand",
+  "laws_description": "La Loi Organique du Conseil National des Télécommunications (CONATEL) est un décret fondamental qui redéfinit la mission, la structure et les attributions de l'institution responsable de la politique des télécommunications en Haïti. Ce décret assure une gouvernance claire et centralisée dans le secteur des télécommunications, garantissant la transparence, la régulation technique et la protection des intérêts publics et privés.",
+  "foundational_texts_title": "Textes de Loi Fondamentaux",
+  "creation_decree_title": "Décret de Création",
+  "organic_law_title": "Loi Organique du CONATEL",
+  "directors_general_title": "DIRECTEURS GÉNÉRAUX",
+  "current_dg": "DG Actuel",
+  "former_directors_general": "Anciens Directeurs Généraux",
+  "engineer_economist": "Ingénieur, Économiste",
+  "view_more": "Voir plus",
+ "directors": {
+  "previlon_huguens": {
+    "name": "PREVILON Huguens",
+    "title": "Ingénieur Économiste",
+    "role": "about:leadership.director",
+    "social": {
+      "linkedin": "https://www.linkedin.com/in/huguens-previlon/",
+      "facebook": "https://www.facebook.com/huguens.previlon",
+      "twitter": "https://x.com/hprevilon"
+    },
+    "bio": "Huguens Previlon est un économiste et ingénieur accompli, reconnu pour son leadership stratégique et sa profonde expertise dans le secteur des télécommunications. Son parcours académique, couronné par un diplôme d'ingénieur en génie électrique de l'Université d'État d'Haïti et une maîtrise en économie de l'Université de Floride, lui a conféré une perspective unique et intégrée, lui permettant d'aborder les défis complexes du secteur à l'intersection de la technologie, de la régulation et du développement économique.\n\nAvec plus de 20 ans d'expérience, il a occupé des postes de direction cruciaux au sein d'organisations nationales et internationales. Son parcours est marqué par des succès significatifs dans la gestion de projets de grande envergure, incluant la supervision de la modernisation des infrastructures numériques, l'expansion de la couverture réseau dans des régions historiquement mal desservies, et la mise en place de centres de données pour soutenir l'économie numérique émergente. Il a été un architecte clé dans l'implémentation de politiques publiques axées sur l'inclusion numérique, le renforcement de la cyber-sécurité et l'établissement d'un cadre réglementaire stable et transparent pour attirer les investissements directs étrangers.\n\nEn tant que Directeur Général du CONATEL, Huguens Previlon est résolument engagé à faire d'Haïti une nation numériquement compétitive. Sa vision s'articule autour de trois piliers fondamentaux : **l'Innovation**, en modernisant le cadre réglementaire pour l'adoption des technologies de nouvelle génération comme la 5G et l'Internet des Objets (IoT) ; **l'Inclusion**, en garantissant que les bénéfices de la révolution numérique atteignent chaque citoyen, quel que soit son emplacement géographique ou son niveau de revenu, à travers des programmes d'accès universel et d'alphabétisation numérique ; et **la Gouvernance**, en assurant une gestion transparente, éthique et redevable du secteur. Sa mission est de transformer le CONATEL en un moteur de la croissance économique et du progrès social, en construisant un écosystème numérique résilient et équitable qui propulsera le pays vers un avenir meilleur.En tant que Directeur Général du CONATEL, Huguens Previlon est résolument engagé à poursuivre sa mission de transformation. Il s'efforce de renforcer le cadre réglementaire pour s'adapter aux défis de la 5G et de l'Internet des objets (IoT), de promouvoir l'innovation technologique à travers des partenariats stratégiques, et d'assurer une gouvernance transparente et responsable. Sa vision est de faire du CONATEL un catalyseur de la transformation numérique d'Haïti, en construisant un écosystème numérique résilient, équitable et inclusif qui propulsera le développement socio-économique du pays et améliorera la qualité de vie de tous les citoyens."
+  }
+  },
+  "former_dgs": [
+    { "id": 1, "name": "Jacques Jean", "image": "/leaders/jean_david.jpg", "term": "2018 - 2022", "bio": "Jacques Jean est un ingénieur des télécommunications avec plus de 20 ans d'expérience dans le secteur public et privé. Il a dirigé le CONATEL pendant une période de modernisation des infrastructures numériques en Haïti." },
+    { "id": 2, "name": "Marie-Ange Joseph", "image": "/leaders/joseph_emmanuel.jpg", "term": "2014 - 2018", "bio": "Marie-Ange Joseph est une experte en politiques publiques et en régulation. Son mandat au CONATEL a été marqué par l'introduction de nouvelles réglementations visant à protéger les consommateurs et à encourager la concurrence." },
+    { "id": 3, "name": "Pierre Louis", "image": "/leaders/jacques_jean.jpg", "term": "2010 - 2014", "bio": "Pierre Louis a joué un rôle clé dans la reconstruction du secteur après les événements de 2010. Il a supervisé la mise en place de réseaux de télécommunications d'urgence et le renforcement des capacités techniques de l'institution." },
+    { "id": 4, "name": "Dominique François", "image": "/leaders/former_dg4.jpg", "term": "2005 - 2010", "bio": "Dominique François a une solide formation en économie des télécommunications. Il a travaillé sur la libéralisation progressive du marché et l'attraction de nouveaux investissements étrangers dans le secteur." },
+    { "id": 5, "name": "Martine Paul", "image": "/leaders/vice.jpg", "term": "2000 - 2005", "bio": "Martine Paul est reconnue pour ses initiatives de promotion de l'accès universel aux télécommunications. Sous sa direction, plusieurs projets ont été lancés pour étendre la couverture dans les zones rurales." },
+    { "id": 6, "name": "Jean Bernard", "image": "/leaders/former_dg1.jpg", "term": "1995 - 2000", "bio": "Jean Bernard, un pionnier du secteur, a supervisé les premiers grands investissements dans les infrastructures de télécommunications modernes en Haïti." },
+    { "id": 7, "name": "Rose Célestin", "image": "/leaders/former_dg2.jpg", "term": "1990 - 1995", "bio": "Rose Célestin est une figure historique du CONATEL. Elle a contribué à la rédaction des premières politiques nationales sur l'utilisation des fréquences radioélectriques." },
+    { "id": 8, "name": "Marc Dubois", "image": "/leaders/former_dg3.jpg", "term": "1985 - 1990", "bio": "Marc Dubois a mis l'accent sur la formation et le développement professionnel des équipes techniques du CONATEL, jetant les bases des compétences actuelles de l'institution." },
+    { "id": 9, "name": "Sylvie Charles", "image": "/leaders/former_dg4.jpg", "term": "1980 - 1985", "bio": "Sylvie Charles, ingénieure de formation, a dirigé plusieurs projets d'automatisation des services de télécommunications, préparant le terrain pour la transition numérique future." },
+    { "id": 10, "name": "Robert Michel", "image": "/leaders/vice.jpg", "term": "1975 - 1980", "bio": "Robert Michel a été l'un des premiers dirigeants à établir des partenariats internationaux avec d'autres organismes de régulation, renforçant la position d'Haïti sur la scène mondiale des télécommunications." }
+  ]
+}

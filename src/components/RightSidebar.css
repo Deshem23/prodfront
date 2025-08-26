@@ -1,0 +1,19 @@
+/* src/components/RightSidebar.css */
+
+.custom-width-27 {
+    flex: 0 0 27%; /* Sets the width for the sidebar */
+    max-width: 27%;
+}
+
+.custom-width-73 {
+    flex: 0 0 73%; /* Sets the width for the main content */
+    max-width: 73%;
+}
+
+/* On medium and smaller screens, the sidebar becomes full width */
+@media (max-width: 991.98px) {
+    .custom-width-27 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}

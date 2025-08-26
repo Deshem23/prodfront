@@ -1,0 +1,49 @@
+/* src/components/DGCard.css */
+
+/* --- Director General (DG) Card Styles --- */
+.dg-card {
+  border-radius: 20px;
+  position: relative;
+  padding-bottom: 60px;
+  min-height: 180px;
+  overflow: hidden;
+}
+
+.dg-card .dg-photo-container {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  top: 25px;
+  left: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: 3px solid white;
+  cursor: pointer;
+}
+
+.dg-card .dg-photo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.dg-card-content {
+  padding-left: 145px;
+  padding-top: 15px;
+  text-align: left;
+}
+
+.dg-card-content h6 {
+  font-size: 1.25rem;
+}
+
+.dg-card-content small {
+  font-size: 0.9rem;
+}
+
+.dg-card .dg-button-container {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+}

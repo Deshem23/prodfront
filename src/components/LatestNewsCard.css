@@ -1,0 +1,10 @@
+.latest-news-card {
+  border-radius: 8px;
+  background-color: #ffffff; /* A clean white background */
+  border: 1px solid #e0e0e0; /* A light gray border */
+}
+
+.news-list li {
+  margin-bottom: 15px !important;
+}
+/* No news-list-container styles are needed for this part */

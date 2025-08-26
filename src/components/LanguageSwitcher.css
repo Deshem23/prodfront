@@ -1,0 +1,69 @@
+/* src/components/LanguageSwitcher.css */
+
+.language-switcher-toggle {
+  background: none;
+  border: none;
+  color: #fff; /* Default icon color (for desktop header) */
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.language-switcher-toggle:hover {
+  color: #eee;
+}
+
+/* Sizing for the icon based on the 'size' prop */
+.language-switcher-extra-large.language-switcher-toggle {
+  font-size: 2.5rem;
+}
+
+.language-switcher-large.language-switcher-toggle {
+  font-size: 2rem;
+}
+
+.language-switcher-medium.language-switcher-toggle {
+  font-size: 1.75rem;
+}
+
+/* !!! IMPORTANT: ADD THIS MISSING CSS RULE !!! */
+.lang-text-mobile-blue {
+  color: rgb(5, 40, 106) !important; /* Your primary blue color */
+}
+/* !!! END OF IMPORTANT ADDITION !!! */
+
+
+.language-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1050;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.language-option {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.language-option:hover {
+  background-color: #f0f0f0;
+}
+
+.globe-icon {
+  margin-right: 0;
+}

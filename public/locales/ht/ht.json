@@ -1,0 +1,58 @@
+{
+  "navbar": {
+    "toggle": "Chanje meni an",
+    "home": "Akèy",
+    "about": "Sou nou",
+    "news": "Aktyalite",
+    "procedures": "Pwosedi yo",
+    "decisions": "Desizyon",
+    "chantiers": "Chantye",
+    "achievements": "Reyalizasyon",
+    "gallery": "Galri",
+    "archives": "Achiv",
+    "contact": "Kontak"
+  },
+  "header": {
+    "subtitle": "Conseil National des Télécommunications",
+    "searchPlaceholder": "Rechèch"
+  },
+  "home": {
+    "title": "Byenveni sou sit ofisyèl CONATEL",
+    "intro": "Kreye pa dekrè nan dat 27 septanm 1969 e ofisyalize nan Jounal ofisyèl repiblik la (Le Moniteur), nan dat 30 oktòb 1969, Konsèy Nasyonal Telekominikasyon (CONATEL) se otorite regilasyon ayisyèn nan domèn telekominikasyon. Misyon prensipal nou se garanti tout sitwayen Ayiti yon anviwonman teknolojik modèn, fyab ak aksèsib. Antanke ògàn regilasyon, nou jwe yon wòl kle nan devlopman ak sipèvizyon sektè a, nan ankouraje yon konpetisyon ekitab epi nan veye sou pwoteksyon dwa konsomatè yo. Fèmman angaje nan inovasyon, CONATEL ap travay pou ankouraje pwogrè teknolojik epi ranfòse konektivite bon kalite sou tout teritwa nasyonal la. <0>Li plis</0>",
+    "news": {
+      "title": "Nouvèl",
+      "desc": "Gade dènye nouvèl yo, avi yo ak kominike yo."
+    },
+    "archives": {
+      "title": "Achiv",
+      "desc": "Eksplore desizyon, dokiman ak dosye istorik yo."
+    },
+    "learn_more": "Li plis"
+  },
+  "contact": {
+    "page_title": "Kontakte Nou",
+    "intro_text": "Byenveni sou paj kontak CONATEL la. Nou angaje nou pou nou bay kominikasyon klè ak sèvis rapid pou piblik ayisyen an ak patnè nou yo. Kit ou gen kesyon sou sèvis telekominikasyon, zafè regilasyon, oswa bezwen asistans teknik, tanpri itilize enfòmasyon ki anba a pou kontakte nou. Kòmantè ak kesyon ou yo enpòtan pou nou.",
+    "title_form": "Kontakte Nou",
+    "intro_form": "Sèvi ak fòmilè anba a pou voye yon mesaj pou nou.",
+    "firstName_label": "Non",
+    "firstName_placeholder": "Non ou",
+    "lastName_label": "Siyati",
+    "lastName_placeholder": "Jan ou Siyen",
+    "email_label": "Adrès Imèl",
+    "email_placeholder": "non@egzanp.com",
+    "telephone_label": "Telefòn",
+    "telephone_placeholder": "Nimewo telefòn",
+    "subject_label": "Sijè",
+    "subject_placeholder": "Sijè mesaj la",
+    "message_label": "Mesaj",
+    "message_placeholder": "Mesaj ou...",
+    "char_limit": "Maksimòm {{count}} karaktè.",
+    "send_button": "Voye",
+    "details_title": "Enfòmasyon Kontak",
+    "address": "Pòtoprens, Ayiti",
+    "phone": "(+509) 22xx-xxxx",
+    "email": "contact@conatel.gouv.ht",
+    "follow_us": "Swiv Nou",
+    "form_submitted": "Mesaj ou a te voye avèk siksè!"
+  }
+}

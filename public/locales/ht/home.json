@@ -1,0 +1,34 @@
+{
+  "title": "Byenvini sou sit entènèt Konsèy Nasyonal Telekomunikasyon (CONATEL)",
+  "intro": "Kreye pa dekrè nan dat 27 septanm 1969 e ofisyalize nan jounal ofisyèl repiblik la (Le Moniteur), nan dat 30 oktòb 1969, Konsèy Nasyonal Telekomunikasyon (CONATEL) se otorite regilasyon Ayisyen an nan zafè telekominikasyon. Misyon prensipal nou se garanti tout sitwayen Ayiti yon anviwònman teknolojik modèn, fyab, ak aksesib. Kòm yon ògàn regilasyon, nou jwe yon wòl kle nan devlopman ak sipèvizyon sektè a, nan pwomouvwa yon konkirans ekitab epi nan veye sou pwoteksyon dwa konsomatè yo. Fèmman angaje nan inovasyon, CONATEL ap travay pou ankouraje pwogrè teknolojik epi ranfòse konektivite bon jan kalite sou tout teritwa nasyonal la.",
+  "news": {
+    "title": "Aktyalite",
+    "desc": "Gade dènye nouvèl, avi ak kominike yo."
+  },
+  "archives": {
+    "title": "Achiv",
+    "desc": "Eksplore desizyon, dokiman, ak achiv istorik yo.",
+    "viewAll": "Gade tout achiv yo"
+  },
+  "learn_more": "Aprann plis",
+  "latestNewsCard": {
+    "title": "Dènye Mizajou",
+    "date1": "10 Jen 2025",
+    "item1": "Nouvo politik enklizyon nimerik pou zòn riral yo",
+    "date2": "05 Jen 2025",
+    "item2": "Konsiltasyon piblik pou atribisyon spèktr 5G la",
+    "date3": "28 Me 2025",
+    "item3": "CONATEL fè patenarya ak FAI lokal yo pou amelyore konektivite",
+    "viewAll": "Gade tout mizajou yo"
+  },
+  "socialFeedCard": {
+    "title": "Rezo Sosyal"
+  },
+  "chantiers": {
+    "title": "Chantye",
+    "signature_electronique": "Siyati elektwonik",
+    "cybersecurite": "Sibèsekiite",
+    "transformation_numerique": "Transfòmasyon nimerik",
+    "qos": "Kalite sèvis"
+  }
+}

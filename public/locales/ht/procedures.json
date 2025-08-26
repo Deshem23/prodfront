@@ -1,0 +1,125 @@
+{
+  "title": "Pwosedi yo",
+  "description": "Seksyon sa a ba ou aksè a tout pwosedi administratif ak dokiman ofisyèl CONATEL yo. Resous sa yo enpòtan anpil pou konpayi ak sitwayen ki vle kominike ak sèvis nou yo.",
+  "searchPlaceholder": "Chèche yon pwosedi...",
+  "consult": "Gade",
+  "download": "Telechaje",
+  "downloadPdf": "Telechaje PDF la",
+  "close": "Fèmen",
+  "noResults": "Pa gen okenn rezilta ki matche ak rechèch ou a.",
+  "dateLabel": "Dat piblikasyon",
+  "data": [
+    {
+      "id": 1,
+      "title": "Pwosedi pou anrejistreman founisè sèvis yo",
+      "date": "21 Janvye 2025",
+      "description": "Pwosedi sa a detaye etap pou anrejistreman nouvo founisè sèvis telekominikasyon yo, ki gen ladan fòmilè obligatwa yo, dokiman pou soumèt, ak delè apwobasyon yo.",
+      "pdf": "/assets/procedures/procedure1.pdf"
+    },
+    {
+      "id": 2,
+      "title": "Pwosedi pou demann frekans radyo",
+      "date": "05 Fevriye 2025",
+      "description": "Gid konplè sa a dekri etap pou soumèt yon demann pou atribisyon frekans radyo, pandan l ap presize kondisyon teknik ak kritè elijibilite pou moun k ap emèt ak operatè yo.",
+      "pdf": "/assets/procedures/procedure2.pdf"
+    },
+    {
+      "id": 3,
+      "title": "Pwosedi sou itilizasyon bann frekans yo",
+      "date": "10 Mas 2025",
+      "description": "Dokiman sa a etabli règ ak direktiv teknik konsènan itilizasyon apwopriye e ki pa kreye entèferans pou tout bann frekans CONATEL bay yo.",
+      "pdf": "/assets/procedures/procedure3.pdf"
+    },
+    {
+      "id": 4,
+      "title": "Pwosedi pou lisans founisè sèvis Entènèt (FSI)",
+      "date": "15 Avril 2025",
+      "description": "Pwosedi sa a presize demach administratif ak egzijans legal pou jwenn epi renouvle yon lisans pou opere kòm yon Founisè Sèvis Entènèt (FSI) ann Ayiti.",
+      "pdf": "/assets/procedures/procedure4.pdf"
+    },
+    {
+      "id": 5,
+      "title": "Pwosedi pou enstalasyon ekipman telekominikasyon",
+      "date": "22 Me 2025",
+      "description": "Direktiv detaye sou nòm teknik, otorizasyon, ak enspeksyon obligatwa pou enstalasyon ekipman telekominikasyon sou teritwa nasyonal la.",
+      "pdf": "/assets/procedures/procedure5.pdf"
+    },
+    {
+      "id": 6,
+      "title": "Pwosedi pou sètifikasyon ekipman telekominikasyon",
+      "date": "01 Jen 2025",
+      "description": "Dokiman sa a dekri pwosesis ak egzijans pou sètifikasyon nouvo ekipman telekominikasyon yo pou itilizasyon sou rezo nasyonal la.",
+      "pdf": "/assets/procedures/procedure6.pdf"
+    },
+    {
+      "id": 7,
+      "title": "Pwosedi pou jere nimewo telefòn yo",
+      "date": "15 Jen 2025",
+      "description": "Direktiv sou atribisyon, pòtabilite ak jesyon nimewo telefòn pou operatè telefòn mobil ak fiks yo.",
+      "pdf": "/assets/procedures/procedure7.pdf"
+    },
+    {
+      "id": 8,
+      "title": "Pwosedi pou akòde lisans radyo-difizyon",
+      "date": "01 Jiyè 2025",
+      "description": "Pwosedi sa a etabli kritè ak demach pou jwenn lisans pou estasyon radyo ak televizyon.",
+      "pdf": "/assets/procedures/procedure8.pdf"
+    },
+    {
+      "id": 9,
+      "title": "Pwosedi pou rezoud diskisyon",
+      "date": "15 Jiyè 2025",
+      "description": "Règleman pou tretman plent ak rezolisyon diskisyon ant konsomatè ak founisè sèvis telekominikasyon yo.",
+      "pdf": "/assets/procedures/procedure9.pdf"
+    },
+    {
+      "id": 10,
+      "title": "Pwosedi pou odit operatè yo",
+      "date": "01 Out 2025",
+      "description": "Pwotokòl pou odit teknik ak finansye operatè yo pou asire konfòmite regilasyon.",
+      "pdf": "/assets/procedures/procedure10.pdf"
+    },
+    {
+      "id": 11,
+      "title": "Pwosedi pou deklare ensidan sekirite",
+      "date": "15 Out 2025",
+      "description": "Egzijans pou operatè yo nan domèn deklarasyon fay sekirite ak ensidan ki rive sou rezo yo.",
+      "pdf": "/assets/procedures/procedure11.pdf"
+    },
+    {
+      "id": 12,
+      "title": "Pwosedi pou mete kanpe rezo fib optik",
+      "date": "01 Septanm 2025",
+      "description": "Gid teknik ak administratif pou deplwaman enfrastrikti fib optik sou teritwa nasyonal la.",
+      "pdf": "/assets/procedures/procedure12.pdf"
+    },
+    {
+      "id": 13,
+      "title": "Pwosedi pou demann otorizasyon pou satelit",
+      "date": "15 Septanm 2025",
+      "description": "Règ ak etap pou otorizasyon itilizasyon tèminal ak sèvis kominikasyon pa satelit ann Ayiti.",
+      "pdf": "/assets/procedures/procedure13.pdf"
+    },
+    {
+      "id": 14,
+      "title": "Pwosedi pou renouvèlman lisans",
+      "date": "01 Oktòb 2025",
+      "description": "Dokiman sa a defini kondisyon ak pwosesis renouvèlman lisans eksplwatasyon pou founisè sèvis yo.",
+      "pdf": "/assets/procedures/procedure14.pdf"
+    },
+    {
+      "id": 15,
+      "title": "Pwosedi pou demantelman enfrastrikti",
+      "date": "15 Oktòb 2025",
+      "description": "Règlemantasyon sou pwosesis demantelman gwo kay won, antèn ak lòt enfrastrikti telekominikasyon ki rive nan fen lavi yo.",
+      "pdf": "/assets/procedures/procedure15.pdf"
+    },
+    {
+      "id": 16,
+      "title": "Pwosedi pou deklare revni ak taks",
+      "date": "01 Novanm 2025",
+      "description": "Pwotokòl finansye ak administratif pou deklarasyon revni ak peman taks ak redevans pa operatè yo.",
+      "pdf": "/assets/procedures/procedure16.pdf"
+    }
+  ]
+}

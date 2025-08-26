@@ -1,0 +1,31 @@
+{
+  "chantiers": {
+    "title": "Nos Chantiers",
+    "subtitle": "Découvrez les principaux chantiers sur lesquels nous travaillons pour moderniser nos services, les rendre plus efficaces et mieux adaptés aux besoins de la population.",
+    "documentationTitle": "Documentation et Ressources",
+    "close": "Fermer",
+    "moreInfoButton": "En savoir plus",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "cybersecurite": {
+      "shortTitle": "Cybersécurité",
+      "shortText": "Face à la multiplication des menaces en ligne, nous mettons en place des stratégies avancées pour protéger nos infrastructures numériques et les données sensibles de l'État. Nos efforts se concentrent sur la détection précoce des attaques, la résilience de nos systèmes d'information et la sensibilisation de nos employés.",
+      "longText": "La cybersécurité est devenue un enjeu majeur et incontournable pour l'administration publique. Notre chantier 'Cybersécurité' vise à établir une politique de sécurité rigoureuse et proactive, en s'appuyant sur les meilleures pratiques et normes internationales. Nous renforçons nos défenses techniques avec des pare-feux de nouvelle génération, des systèmes de détection d'intrusion sophistiqués et des audits de sécurité réguliers et approfondis. Parallèlement, un volet crucial de ce projet est la formation continue de nos équipes pour qu'elles puissent identifier, anticiper et réagir de manière efficace aux menaces, assurant ainsi une ligne de défense humaine solide. Ce chantier stratégique inclut également la mise en place d'un centre d'opérations de sécurité (SOC) moderne, opérationnel 24/7, pour une surveillance en temps réel de nos réseaux et une gestion rapide des incidents. L'objectif est de garantir l'intégrité, la confidentialité et la disponibilité des services numériques de l'État pour tous les citoyens."
+    },
+    "signatureElectronique": {
+      "shortTitle": "Signature Électronique",
+      "shortText": "Pour accélérer les processus administratifs et réduire notre empreinte écologique, nous déployons une solution de signature électronique fiable et juridiquement reconnue. Ce projet permet de valider des documents officiels à distance de manière sécurisée, tout en garantissant leur intégrité et leur authenticité.",
+      "longText": "Le chantier 'Signature Électronique' vise à moderniser en profondeur nos échanges de documents, en passant d'un modèle basé sur le papier à un modèle entièrement numérique. En adoptant une solution conforme aux standards internationaux et reconnue par la loi, nous simplifions la vie des citoyens et des entreprises, réduisant les délais et les coûts. Cette technologie permet de signer des contrats, des accords, des permis et d'autres documents administratifs en quelques clics, où que vous soyez. Elle est dotée de mécanismes de cryptage robustes, de certificats numériques et de processus de vérification d'identité pour garantir que chaque signature est unique, infalsifiable et a une valeur légale. Nous menons un travail d'intégration méticuleux avec nos plateformes existantes pour que l'outil soit accessible et simple d'utilisation pour tous nos services et partenaires, tout en favorisant un environnement 'zéro papier'."
+    },
+    "transformationNumerique": {
+      "shortTitle": "Transformation Numérique",
+      "shortText": "Ce chantier est le moteur de notre modernisation. Nous réinventons nos services en intégrant les technologies numériques pour les rendre plus accessibles, plus transparents et plus efficaces. L'objectif est de créer une administration 'zéro papier' où les démarches sont simplifiées et les informations circulent de manière fluide.",
+      "longText": "La 'Transformation Numérique' est un projet d'envergure nationale qui repense l'intégralité de nos processus et de notre relation avec les usagers. Nous numérisons l'ensemble de nos archives historiques et actives pour les rendre plus faciles d'accès, d'utilisation et de partage, tout en assurant leur conservation à long terme. Des outils d'automatisation des flux de travail (workflow automation) sont mis en place pour réduire les délais de traitement des demandes et éliminer les tâches répétitives. Nous développons de nouvelles plateformes en ligne et applications mobiles pour offrir aux citoyens une expérience utilisateur intuitive et complète, leur permettant d'effectuer leurs démarches 24/7. En s'appuyant sur l'analyse des données massives (Big Data), nous prenons des décisions plus éclairées et orientons nos politiques publiques vers les besoins réels et précis de la population. C'est une démarche continue d'innovation, d'amélioration et de co-construction avec nos partenaires pour bâtir un État plus agile et réactif."
+    },
+    "qualiteDeService": {
+      "shortTitle": "Qualité de Service \"QoS\"",
+      "shortText": "Notre objectif est d'offrir des services publics exemplaires. Ce chantier est dédié à l'amélioration continue de la qualité de nos prestations, en mesurant la satisfaction des usagers, en optimisant nos processus internes et en réduisant les délais de réponse. Nous nous engageons à être plus à l'écoute et plus performants.",
+      "longText": "Le chantier 'Qualité de Service (QoS)' est au cœur de notre engagement envers l'excellence et la satisfaction des citoyens. Nous avons établi des indicateurs de performance clés (KPI) rigoureux pour évaluer la rapidité, l'efficacité et la clarté de nos services. Des enquêtes de satisfaction régulières sont menées à travers différents canaux pour recueillir les retours d'information des usagers et identifier de manière proactive les points à améliorer. Nous utilisons ces informations pour optimiser nos processus internes, former nos équipes aux meilleures pratiques et mettre en place des outils de communication plus performants et transparents. L'objectif final est de créer une relation de confiance et de proximité avec le public, en garantissant un niveau de service irréprochable et constant. Ce chantier inclut également la mise en place d'un observatoire de la qualité pour suivre les progrès et partager les résultats avec les parties prenantes."
+    }
+  }
+}

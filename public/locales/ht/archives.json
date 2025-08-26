@@ -1,0 +1,26 @@
+{
+  "archives": {
+    "title": "Achiv",
+    "subtitle": "Navige nan koleksyon achiv nou an pou w ka jwenn dokiman, imaj ak lòt dosye enpòtan.",
+    "filterTitle": "Filtre Achiv yo",
+    "searchPlaceholder": "Chèche...",
+    "download": "Telechaje",
+    "view": "Gade",
+    "view_document": "Gade dokiman an",
+    "close": "Fèmen",
+    "date": "Dat",
+    "description": "Deskripsyon",
+    "file_missing": "Fichye a pa disponib",
+    "noFilesFound": "Pa gen okenn fichye nan fòma sa.",
+    "list": {
+      "allArchives": "Tout Achiv yo",
+      "documentFiles": "Dokiman",
+      "excelFiles": "Fichye Excel",
+      "imageFiles": "Imaj",
+      "pdfFiles": "Dokiman PDF",
+      "pptFiles": "Prezantasyon",
+      "from": "apati",
+      "searchResultsFor": "Rezilta rechèch pou"
+    }
+  }
+}

@@ -1,0 +1,213 @@
+/* Navbar wrapper */
+.custom-navbar {
+  position: sticky;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  top: 0;
+  z-index: 1030;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: box-shadow 0.3s ease;
+  width: 100%;
+}
+.custom-navbar::after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Base navbar-nav styling */
+.navbar-nav {
+  justify-content: center; /* Default for mobile/smaller screens */
+  align-items: stretch;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav .nav-item {
+  flex-grow: 1; /* This will make items expand to fill space, good for mobile */
+  margin: 0;
+  padding: 0;
+}
+
+/* Full-width nav-link with minimal spacing */
+.nav-hover {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 0.5rem; /* Tighter padding for desktop nav items */
+  color: rgb(5, 40, 106) !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out,
+    border-bottom 0.3s ease-in-out;
+  border: 2px solid transparent; /* Keep this as a base, but it will be overridden */
+  border-radius: 0;
+}
+
+/* Hover Effect (MODIFIED for compact look) */
+.nav-hover:hover {
+  background-color: rgba(5, 40, 106, 0.08); /* A very subtle transparent blue tint */
+  color: rgb(5, 40, 106) !important; /* Keep original text color on hover */
+  border: none; /* Remove all borders on hover to make it seamless */
+  border-bottom: 2px solid rgba(5, 40, 106, 0.5); /* Subtle border-bottom on hover */
+}
+
+/* Active Link (MODIFIED for compact look) */
+.active-link {
+  background-color: rgb(5, 40, 106) !important;
+  color: white !important;
+  font-weight: 600;
+  border: none !important; /* Remove all borders to make it seamless */
+  border-bottom: 2px solid white !important; /* Stronger border-bottom for active state */
+}
+
+/* --- Mobile Elements on Scroll --- */
+
+.navbar-mobile-elements {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-20px);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-mobile-elements.show-on-scroll {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    display: flex !important;
+}
+
+.mobile-brand {
+    color: rgb(5, 40, 106);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.mobile-icons-wrapper {
+  color: rgb(5, 40, 106);
+  font-size: 1.2rem;
+}
+
+.language-switcher-mobile-icon i {
+  color: rgb(5, 40, 106) !important;
+}
+
+.language-switcher-mobile-icon {
+  color: rgb(5, 40, 106) !important;
+}
+
+.mobile-sticky-brand {
+    color: rgb(5, 40, 106);
+    font-weight: bold;
+    font-size: 1.2rem;
+    opacity: 0;
+    transform: translateX(-50%) translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    left: 50%;
+    pointer-events: none;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+.mobile-sticky-brand.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+
+/* ======= NEW STYLES FOR EXPANDED MOBILE MENU ======= */
+
+/* Target the expanded menu container */
+@media (max-width: 991.98px) { /* Applies only on mobile/tablet screens */
+  .navbar-collapse {
+    background-color: rgba(255, 255, 255, 0.98); /* Near-opaque white background */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* More prominent shadow */
+    position: absolute; /* To flow correctly below the sticky header */
+    top: 100%; /* Place it right below the navbar */
+    left: 0;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.1); /* Subtle top border */
+    padding-bottom: 0.5rem; /* Padding at the bottom of the expanded menu */
+  }
+
+  /* Adjustments for the nav links inside the expanded menu */
+  .navbar-nav .nav-item {
+    width: 100%; /* Make each nav item take full width */
+    text-align: left; /* Align text to the left */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Separator between links */
+  }
+
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none; /* No border for the last item */
+  }
+
+  /* Mobile Hover and Active (MODIFIED to remove side borders) */
+  .nav-hover {
+    padding: 0.8rem 1.5rem; /* More generous padding for touch targets */
+    text-align: left; /* Ensure text is left-aligned */
+    font-size: 1.1rem; /* Slightly larger font size for readability */
+    color: rgb(5, 40, 106) !important; /* Ensure consistent color */
+    border: none; /* Remove base border on mobile */
+  }
+
+  .nav-hover:hover {
+    background-color: rgb(5, 40, 106); /* Solid background on hover */
+    color: white !important;
+    border: none; /* No borders on mobile hover */
+    border-bottom: 5px solid white; /* Thicker border on hover for emphasis */
+  }
+
+  .active-link {
+    background-color: rgb(5, 40, 106) !important;
+    color: white !important;
+    border: none !important; /* No borders on mobile active */
+    border-bottom: 5px solid white !important; /* Thicker active border */
+    font-weight: 600;
+  }
+}
+
+/* ====== DESKTOP ALIGNMENT STYLES (MODIFIED FOR UNIFORM BACKGROUNDS) ====== */
+@media (min-width: 992px) {
+  .navbar-collapse {
+    display: flex;
+    justify-content: center; /* Center the entire block of nav items */
+    width: 100%;
+  }
+
+  .navbar-nav {
+    /* Revert to default flex-start or center, as flex-grow on items will spread them */
+    justify-content: flex-start; /* Or 'center' - with flex-grow on children, it often behaves similarly */
+    width: 100%; /* Ensure the ul takes full width to distribute space */
+    flex-wrap: nowrap;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar-nav .nav-item {
+    flex-grow: 1; /* This is the key: Make each nav item take up equal available space */
+    /* Remove any explicit margin-right here if it was present, as flex-grow will distribute space */
+    margin: 0; /* Ensures items touch side-by-side */
+  }
+
+  .navbar-nav .nav-item:not(:last-child) {
+    margin-right: 0; /* Remove explicit margins that would create separation */
+  }
+
+  .nav-hover {
+    padding: 0.75rem 0; /* Adjust horizontal padding within the item if needed, but 0.5rem was fine */
+    text-align: center; /* Center text within its equally-sized item */
+  }
+}

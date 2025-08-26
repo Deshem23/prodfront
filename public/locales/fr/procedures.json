@@ -1,0 +1,125 @@
+{
+  "title": "Procédures",
+  "description": "Cette section vous donne accès à toutes les procédures administratives et documents officiels du CONATEL. Ces ressources sont essentielles pour les entreprises et les citoyens souhaitant interagir avec nos services.",
+  "searchPlaceholder": "Rechercher une procédure...",
+  "consult": "Consulter",
+  "download": "Télécharger",
+  "downloadPdf": "Télécharger le PDF",
+  "close": "Fermer",
+  "noResults": "Aucun résultat ne correspond à votre recherche.",
+  "dateLabel": "Date de publication",
+  "data": [
+    {
+      "id": 1,
+      "title": "Procédure d'enregistrement des fournisseurs de services",
+      "date": "21 Janvier 2025",
+      "description": "Cette procédure détaille les étapes pour l'enregistrement des nouveaux fournisseurs de services de télécommunications, y compris les formulaires requis, les documents à soumettre et les délais d'approbation.",
+      "pdf": "/assets/procedures/procedure1.pdf"
+    },
+    {
+      "id": 2,
+      "title": "Procédure de demande de fréquence radio",
+      "date": "05 Février 2025",
+      "description": "Ce guide complet décrit les étapes pour soumettre une demande d'attribution de fréquences radio, en précisant les conditions techniques et les critères d'éligibilité pour les diffuseurs et opérateurs.",
+      "pdf": "/assets/procedures/procedure2.pdf"
+    },
+    {
+      "id": 3,
+      "title": "Procédure pour l'utilisation des bandes de fréquences",
+      "date": "10 Mars 2025",
+      "description": "Ce document établit les règles et directives techniques concernant l'utilisation appropriée et non interférente de toutes les bandes de fréquences allouées par la CONATEL.",
+      "pdf": "/assets/procedures/procedure3.pdf"
+    },
+    {
+      "id": 4,
+      "title": "Procédure de licence des fournisseurs de services Internet (FSI)",
+      "date": "15 Avril 2025",
+      "description": "Cette procédure précise les démarches administratives et les exigences légales pour l'obtention et le renouvellement d'une licence d'exploitation en tant que Fournisseur de Services Internet (FSI) en Haïti.",
+      "pdf": "/assets/procedures/procedure4.pdf"
+    },
+    {
+      "id": 5,
+      "title": "Procédure pour l'installation d'équipements de télécommunication",
+      "date": "22 Mai 2025",
+      "description": "Directives détaillées sur les normes techniques, les autorisations et les inspections obligatoires pour l'installation d'équipements de télécommunication sur le territoire national.",
+      "pdf": "/assets/procedures/procedure5.pdf"
+    },
+    {
+      "id": 6,
+      "title": "Procédure de certification des équipements de télécommunication",
+      "date": "01 Juin 2025",
+      "description": "Ce document décrit le processus et les exigences pour la certification des nouveaux équipements de télécommunication pour une utilisation sur le réseau national.",
+      "pdf": "/assets/procedures/procedure6.pdf"
+    },
+    {
+      "id": 7,
+      "title": "Procédure de gestion des numéros de téléphone",
+      "date": "15 Juin 2025",
+      "description": "Directives sur l'attribution, la portabilité et la gestion des numéros de téléphone pour les opérateurs de téléphonie mobile et fixe.",
+      "pdf": "/assets/procedures/procedure7.pdf"
+    },
+    {
+      "id": 8,
+      "title": "Procédure d'octroi de licences de radio-diffusion",
+      "date": "01 Juillet 2025",
+      "description": "Cette procédure établit les critères et les démarches pour l'obtention de licences pour les stations de radio et de télévision.",
+      "pdf": "/assets/procedures/procedure8.pdf"
+    },
+    {
+      "id": 9,
+      "title": "Procédure de résolution des litiges",
+      "date": "15 Juillet 2025",
+      "description": "Règlement pour le traitement des plaintes et la résolution des litiges entre les consommateurs et les fournisseurs de services de télécommunication.",
+      "pdf": "/assets/procedures/procedure9.pdf"
+    },
+    {
+      "id": 10,
+      "title": "Procédure d'audit des opérateurs",
+      "date": "01 Août 2025",
+      "description": "Protocole pour les audits techniques et financiers des opérateurs afin d'assurer la conformité réglementaire.",
+      "pdf": "/assets/procedures/procedure10.pdf"
+    },
+    {
+      "id": 11,
+      "title": "Procédure de déclaration d'incidents de sécurité",
+      "date": "15 Août 2025",
+      "description": "Exigences pour les opérateurs en matière de déclaration des failles de sécurité et des incidents survenus sur leurs réseaux.",
+      "pdf": "/assets/procedures/procedure11.pdf"
+    },
+    {
+      "id": 12,
+      "title": "Procédure de mise en place de réseaux de fibre optique",
+      "date": "01 Septembre 2025",
+      "description": "Guide technique et administratif pour le déploiement de l'infrastructure de fibre optique sur le territoire national.",
+      "pdf": "/assets/procedures/procedure12.pdf"
+    },
+    {
+      "id": 13,
+      "title": "Procédure de demande d'autorisation pour les satellites",
+      "date": "15 Septembre 2025",
+      "description": "Règles et étapes pour l'autorisation de l'utilisation des terminaux et des services de communication par satellite en Haïti.",
+      "pdf": "/assets/procedures/procedure13.pdf"
+    },
+    {
+      "id": 14,
+      "title": "Procédure de renouvellement des licences",
+      "date": "01 Octobre 2025",
+      "description": "Ce document définit les conditions et le processus de renouvellement des licences d'exploitation pour les fournisseurs de services.",
+      "pdf": "/assets/procedures/procedure14.pdf"
+    },
+    {
+      "id": 15,
+      "title": "Procédure de démantèlement des infrastructures",
+      "date": "15 Octobre 2025",
+      "description": "Règlementation sur le processus de démantèlement des tours, antennes et autres infrastructures de télécommunication arrivées en fin de vie.",
+      "pdf": "/assets/procedures/procedure15.pdf"
+    },
+    {
+      "id": 16,
+      "title": "Procédure de déclaration des revenus et taxes",
+      "date": "01 Novembre 2025",
+      "description": "Protocole financier et administratif pour la déclaration des revenus et le paiement des taxes et redevances par les opérateurs.",
+      "pdf": "/assets/procedures/procedure16.pdf"
+    }
+  ]
+}

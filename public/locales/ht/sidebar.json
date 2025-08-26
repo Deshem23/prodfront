@@ -1,0 +1,43 @@
+{
+  "latestNewsCard": {
+    "title": "Dènye Nouvèl",
+    "viewAll": "Gade tout",
+    "date1": "15 mas 2024",
+    "item1": "CONATEL ranfòse mezi sibèsekirite pou pwoteje done nasyonal yo.",
+    "date2": "12 mas 2024",
+    "item2": "Lanse yon nouvo inisyativ pou amelyore aksè entènèt nan zòn riral yo.",
+    "date3": "8 mas 2024",
+    "item3": "Konsèy la akeyi yon delegasyon entènasyonal pou diskite sou nòm telekominikasyon."
+  },
+  "stats": {
+    "title": "Statistik Enpòtan",
+    "mobile_subscribers": "Abonnè Mobil",
+    "mobile_subscribers_value": "11.2",
+    "mobile_subscribers_unit": "milyon abònen",
+    "service_distribution": "Distribisyon Sèvis yo",
+    "fixed_broadband": "Gwo Vitès Fiks",
+    "fixed_broadband_value": "48.7",
+    "fixed_broadband_unit": "%",
+    "mobile_broadband": "Gwo Vitès Mobil",
+    "mobile_broadband_value": "98.5",
+    "mobile_broadband_unit": "%",
+    "other_services": "Lòt Sèvis"
+  },
+  "socials": {
+    "title": "Rezo Sosyal",
+    "links": {
+      "facebook": "https://www.facebook.com/conatelhaiti",
+      "twitter": "https://twitter.com/conatelhaiti",
+      "youtube": "https://www.youtube.com/@CONATELHAITI",
+      "linkedin": "https://www.linkedin.com/company/conatelhaiti"
+    }
+  },
+  "chantiers": {
+    "title": "Chantye",
+    "signature_electronique": "Siyati Elek..",
+    "cybersecurite": "Sibèsekirite",
+    "transformation_numerique": "Transfòmasyon Ni..",
+    "qos": "(QoS)",
+    "viewAll": "Gade tout chnatye yo"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "navbar": {
+    "toggle": "Basculer la navigation",
+    "home": "Accueil",
+    "about": "À propos de nous",
+    "news": "Actualités",
+    "procedures": "Procédures",
+    "decisions": "Décisions",
+    "chantiers": "Chantiers",
+    "achievements": "Réalisations",
+    "gallery": "Galerie",
+    "archives": "Archives",
+    "contact": "Contact"
+  },
+  "header": {
+    "subtitle": "Conseil National des Télécommunications",
+    "searchPlaceholder": "Rechercher"
+  },
+  "home": {
+    "title": "Bienvenue sur le site officiel du CONATEL",
+    "intro": "Créé par décret le 27 septembre 1969 et officialisé dans Le journal officiel de la répubique (Le Moniteur), en date du 30 octobre 1969, le Conseil National des Télécommunications (CONATEL) est l'autorité réglementaire haïtienne en matière de télécommunications. Notre mission principale est de garantir à tous les citoyens d’Haïti un environnement technologique moderne, fiable et accessible. En tant qu’organe de régulation, nous jouons un rôle clé dans le développement et la supervision du secteur, en promouvant une concurrence équitable et en veillant à la protection des droits des consommateurs. Fermement engagé dans l’innovation, le CONATEL travaille à favoriser le progrès technologique et à renforcer la connectivité de qualité sur l’ensemble du territoire national. <0>En savoir plus</0>",
+    "news": {
+      "title": "Actualités",
+      "desc": "Voir les dernières nouvelles, avis et communiqués."
+    },
+    "archives": {
+      "title": "Archives",
+      "desc": "Explorer les décisions, documents et archives historiques."
+    },
+    "learn_more": "En savoir plus"
+  },
+  "contact": {
+    "page_title": "Nous Contacter",
+    "intro_text": "Bienvenue sur la page de contact du CONATEL. Nous nous engageons à fournir une communication claire et un service rapide au public haïtien et à nos partenaires. Que vous ayez des questions sur les services de télécommunications, les questions réglementaires ou que vous ayez besoin d'une assistance technique, veuillez utiliser les informations ci-dessous pour nous contacter. Vos commentaires et questions sont importants pour nous.",
+    "title_form": "Nous Contacter",
+    "intro_form": "Utilisez le formulaire ci-dessous pour nous envoyer un message.",
+    "firstName_label": "Prénom",
+    "firstName_placeholder": "Votre prénom",
+    "lastName_label": "Nom de famille",
+    "lastName_placeholder": "Votre nom de famille",
+    "email_label": "Adresse E-mail",
+    "email_placeholder": "nom@exemple.com",
+    "telephone_label": "Téléphone",
+    "telephone_placeholder": "Numéro de téléphone",
+    "subject_label": "Sujet",
+    "subject_placeholder": "Sujet du message",
+    "message_label": "Mesaj",
+    "message_placeholder": "Votre message...",
+    "char_limit": "Maximum {{count}} caractères.",
+    "send_button": "Envoyer",
+    "details_title": "Informations de Contact",
+    "address": "Port-au-Prince, Haïti",
+    "phone": "(+509) 22xx-xxxx",
+    "email": "contact@conatel.gouv.ht",
+    "follow_us": "Suivez-nous",
+    "form_submitted": "Votre message a été envoyé avec succès!"
+  }
+}

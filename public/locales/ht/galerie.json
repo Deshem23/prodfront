@@ -1,0 +1,37 @@
+{
+  "main_title": "Galeri Miltimedya",
+  "main_description": "Dekouvri koleksyon foto ak videyo nou pou reviv pi bèl moman nan evènman, atelye ak konferans nou yo. Galeri sa a montre dinamism ak inovasyon nan kominote nou an.",
+  "photos_title": "Galeri Foto",
+  "videos_title": "Galeri Videyo",
+  "activities": "Aktivite",
+  "previous": "Anvan",
+  "next": "Apre",
+  "events": {
+    "conference": "Konferans 2024",
+    "workshop": "Atelye IA",
+    "hackathon": "Hackathon",
+    "summit": "Somè Dijital",
+    "pitch": "Konkou Startups",
+    "expo": "Expo Tech",
+    "innovation": "Semèn Inovasyon",
+    "bootcamp": "Bootcamp Kodaj",
+    "cyber": "Fowòm Sibersekirite",
+    "robotics": "Salon Robotik",
+    "science": "Fwa Syantifik",
+    "meetup": "Rankont Devlopè"
+  },
+  "videos": {
+    "startup": "Kòman pou devlope startup ou",
+    "aiApp": "Kreye yon app ak IA",
+    "futureWeb": "Avni devlopman web",
+    "cybersecurity": "Bon pratik sibersekirite",
+    "conatelIsoc": "CONATEL, FRDDH onore ISOC",
+    "other": "Yon lòt bèl videyo",
+    "innovationDay": "Jounen Inovasyon",
+    "techSummit": "Somè Teknoloji",
+    "roboticsShow": "Ekspozisyon Robotik",
+    "dataScience": "Syans Done",
+    "iotTalk": "Konferans IoT",
+    "blockchain": "Blokchèn pou tout moun"
+  }
+}

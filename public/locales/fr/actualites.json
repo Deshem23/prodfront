@@ -1,0 +1,70 @@
+{
+  "actualites": {
+    "title": "Actualités",
+    "subtitle": "Suivez nos dernières publications, projets et interventions dans le domaine des télécommunications. Toutes les actualités officielles du CONATEL sont disponibles ici.",
+    "searchPlaceholder": "Rechercher un article...",
+    "readMore": "Lire plus",
+    "pdf": "PDF",
+    "close": "Fermer",
+    "downloadPdf": "Télécharger PDF",
+    "viewImage": "Voir l'image",
+    "backToText": "Retour au texte",
+    "articles": [
+      {
+        "title": "Lancement de la couverture Wi-Fi publique",
+        "fullExcerpt": "Le CONATEL a lancé une initiative ambitieuse pour fournir un accès Wi-Fi gratuit sur les places publiques à travers le pays. Ce projet novateur vise à combler la fracture numérique et à favoriser le développement économique et social en offrant une connectivité de base à tous les citoyens.",
+        "fullText": "Le CONATEL a lancé une initiative ambitieuse pour fournir un accès Wi-Fi gratuit sur les places publiques à travers le pays, débutant par Fort Liberté. Ce projet novateur vise à combler la fracture numérique et à favoriser le développement économique et social en offrant une connectivité de base à tous les citoyens. Le déploiement se fera en plusieurs phases, avec une couverture progressive des principales villes. Ce projet est une étape clé pour l'intégration numérique du pays et le renforcement des services de télécommunications."
+      },
+      {
+        "title": "Formation en cybersécurité",
+        "fullExcerpt": "Une série de formations est en cours pour renforcer la sécurité numérique des institutions haïtiennes. Cette initiative vise à sensibiliser les professionnels et les citoyens aux risques en ligne et à leur fournir les outils nécessaires pour se protéger efficacement.",
+        "fullText": "Une série de formations est en cours pour renforcer la sécurité numérique des institutions haïtiennes. Cette initiative vise à sensibiliser les professionnels et les citoyens aux risques en ligne et à leur fournir les outils nécessaires pour se protéger efficacement. Les sessions de formation couvrent des sujets variés, allant de la protection des données personnelles à la gestion des cyberattaques. L'objectif est de créer un écosystème numérique plus sûr pour tous."
+      },
+      {
+        "title": "Partenariat avec l’Union Internationale",
+        "fullExcerpt": "Le CONATEL a signé un accord de collaboration avec l’Union Internationale des Télécommunications (UIT) pour renforcer l’infrastructure locale. Ce partenariat stratégique permettra d'accélérer l l'innovation et l'adoption des nouvelles technologies en Haïti.",
+        "fullText": "Le CONATEL a signé un accord de collaboration avec l’Union Internationale des Télécommunications (UIT) pour renforcer l’infrastructure locale et promouvoir le développement durable. Ce partenariat stratégique permettra d'accélérer l'innovation et l'adoption des nouvelles technologies en Haïti, tout en garantissant un accès équitable aux services de télécommunications pour tous les citoyens."
+      },
+      {
+        "title": "Nouvelle réglementation des télécommunications",
+        "fullExcerpt": "Le cadre légal des télécommunications évolue avec de nouvelles lois adoptées en mars 2025 pour faciliter l'accès équitable et la régulation du marché. Ces nouvelles mesures sont conçues pour encourager la concurrence et protéger les consommateurs.",
+        "fullText": "Le CONATEL a adopté de nouvelles lois en mars 2025 pour faciliter l'accès équitable et la régulation du marché. Ces nouvelles mesures sont conçues pour encourager la concurrence, protéger les consommateurs et moderniser le secteur. Elles visent également à attirer des investissements étrangers pour le développement de l'infrastructure numérique du pays."
+      },
+      {
+        "title": "Extension du réseau de fibre optique",
+        "fullExcerpt": "Un nouveau projet d'extension du réseau de fibre optique dans le Nord du pays est en cours. L'objectif est d'améliorer la vitesse et la fiabilité de la connexion internet pour les résidents et les entreprises de la région.",
+        "fullText": "Un nouveau projet d'extension du réseau de fibre optique dans le Nord du pays est en cours. L'objectif est d'améliorer la vitesse et la fiabilité de la connexion internet pour les résidents et les entreprises de la région. Le projet, réalisé en partenariat avec des opérateurs locaux, vise à renforcer l'infrastructure de télécommunication et à soutenir la croissance économique locale."
+      },
+      {
+        "title": "Campagne de sensibilisation à la sécurité en ligne",
+        "fullExcerpt": "Le CONATEL lance une campagne nationale pour informer le public sur les bonnes pratiques de sécurité en ligne. La campagne couvrira les risques liés au phishing, aux malwares et à la protection des données personnelles.",
+        "fullText": "Le CONATEL lance une campagne nationale pour informer le public sur les bonnes pratiques de sécurité en ligne. La campagne couvrira les risques liés au phishing, aux malwares et à la protection des données personnelles, à travers des ateliers, des guides en ligne et des messages dans les médias. L'objectif est de créer un environnement numérique plus sûr et plus conscient pour tous les utilisateurs en Haïti."
+      },
+      {
+        "title": "Projet de déploiement de l'internet haut débit",
+        "fullExcerpt": "Un grand projet pour étendre l'accès à l'internet haut débit dans les zones rurales est en cours. Le projet vise à connecter les communautés isolées et à leur donner accès à de nouvelles opportunités éducatives et économiques.",
+        "fullText": "Un grand projet pour étendre l'accès à l'internet haut débit dans les zones rurales est en cours. Le projet, financé par un partenariat public-privé, vise à connecter les communautés isolées et à leur donner accès à de nouvelles opportunités éducatives et économiques. L'installation de nouvelles infrastructures de réseau est prévue dans plusieurs départements pour garantir un accès universel aux services numériques."
+      },
+      {
+        "title": "Adoption de nouvelles technologies pour la gestion du spectre",
+        "fullExcerpt": "Le CONATEL modernise ses outils pour une gestion plus efficace du spectre radioélectrique. Cela permettra d'optimiser l'utilisation des fréquences et de faciliter le déploiement de services de nouvelle génération.",
+        "fullText": "Le CONATEL modernise ses outils pour une gestion plus efficace du spectre radioélectrique en Haïti. L'adoption de nouvelles technologies de surveillance et d'analyse permettra d'optimiser l'utilisation des fréquences et de faciliter le déploiement de services de nouvelle génération, y compris la 5G, dans un futur proche."
+      },
+      {
+        "title": "Partenariat avec les universités locales",
+        "fullExcerpt": "Un partenariat a été établi entre le CONATEL et plusieurs universités pour encourager la recherche en télécommunications. L'objectif est de former les futurs leaders du secteur et de stimuler l'innovation en Haïti.",
+        "fullText": "Un patenariat a été établi entre le CONATEL et plusieurs universités locales pour encourager la recherche en télécommunications. Des programmes de stages, des bourses de recherche et des ateliers de développement seront mis en place pour former les futurs leaders du secteur et stimuler l'innovation technologique dans le pays."
+      },
+      {
+        "title": "Mise en place d'un centre d'appels pour les consommateurs",
+        "fullExcerpt": "Le CONATEL ouvre un nouveau centre d'appels pour mieux répondre aux questions et aux plaintes des consommateurs. Ce service vise à améliorer la protection des droits des utilisateurs de télécommunications en Haïti.",
+        "fullText": "Le CONATEL ouvre un nouveau centre d'appels pour mieux répondre aux questions et aux plaintes des consommateurs concernant les services de télécommunications. Ce service vise à améliorer la protection des droits des utilisateurs et à garantir que leurs préoccupations sont prises en compte de manière efficace et rapide. Une équipe d'experts est disponible pour fournir des informations et résoudre les problèmes liés aux opérateurs."
+      },
+      {
+        "title": "Séminaire sur les infrastructures de télécommunications du futur",
+        "fullExcerpt": "Le CONATEL a organisé un séminaire réunissant des experts pour discuter des tendances et des défis des infrastructures de télécommunications du futur. L'événement s'est concentré sur les réseaux intelligents et la résilience face aux catastrophes naturelles.",
+        "fullText": "Le CONATEL a organisé un séminaire réunissant des experts du secteur pour discuter des tendances et des défis des infrastructures de télécommunications du futur. L'événement s'est concentré sur des sujets clés tels que les réseaux intelligents, la cybersécurité et la résilience des infrastructures face aux catastrophes naturelles, qui sont un enjeu majeur pour Haïti. Les discussions ont permis de définir une feuille de route pour la modernisation des réseaux."
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "archives": {
+    "title": "Archives",
+    "subtitle": "Accédez à notre collection de documents et de fichiers filtrables par type ou par date.",
+    "filterTitle": "Filtres et recherche",
+    "searchPlaceholder": "Rechercher un document...",
+    "download": "Télécharger",
+    "view": "Consulter",
+    "view_document": "Consulter le document",
+    "close": "Fermer",
+    "date": "Date",
+    "description": "Description",
+    "file_missing": "Fichier non disponible",
+    "noFilesFound": "Aucun fichier trouvé.",
+    "list": {
+      "allArchives": "Toutes les Archives",
+      "documentFiles": "Documents",
+      "excelFiles": "Fichiers Excel",
+      "imageFiles": "Images",
+      "pdfFiles": "Documents PDF",
+      "pptFiles": "Présentations",
+      "from": "de",
+      "searchResultsFor": "Résultats de recherche pour"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+/* Global Reset & Font */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', sans-serif;
+  background-color: #ffffff;
+  color: #333;
+}
+
+/* Page titles */
+h1, h2, h3 {
+  color: rgb(5, 40, 106);
+  font-weight: 600;
+}
+
+/* Links */
+a {
+  color: rgb(5, 40, 106);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Card-like sections */
+.glass-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Footer */
+footer {
+  background-color: #f5f5f5;
+  color: #444;
+}

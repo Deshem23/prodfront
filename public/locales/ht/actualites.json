@@ -1,0 +1,70 @@
+{
+  "actualites": {
+    "title": "Aktyalite",
+    "subtitle": "Swiv dènye piblikasyon, pwojè, ak entèvansyon nou yo nan domèn telekominikasyon. Tout aktyalite ofisyèl CONATEL disponib isit la.",
+    "searchPlaceholder": "Chèche yon atik...",
+    "readMore": "Li plis",
+    "pdf": "PDF",
+    "close": "Fèmen",
+    "downloadPdf": "Telechaje PDF",
+    "viewImage": "Gade imaj la",
+    "backToText": "Retounen nan tèks la",
+    "articles": [
+      {
+        "title": "Lanse kouvèti Wi-Fi piblik",
+        "fullExcerpt": "CONATEL te lanse yon inisyativ anbisye pou bay aksè Wi-Fi gratis nan tout plas piblik atravè peyi a. Pwojè inovatè sa a vize pou elimine divizyon dijital la epi ankouraje devlopman ekonomik ak sosyal lè li bay tout sitwayen koneksyon de baz.",
+        "fullText": "CONATEL te lanse yon inisyativ anbisye pou bay aksè Wi-Fi gratis nan tout plas piblik atravè peyi a, kòmanse pa Fòlibète. Pwojè inovatè sa a vize pou elimine divizyon dijital la epi ankouraje devlopman ekonomik ak sosyal lè li bay tout sitwayen koneksyon de baz. Desandan ap fèt nan plizyè faz, ak kouvèti gradyèl nan gwo vil yo. Pwojè sa a se yon etap kle pou entegrasyon dijital peyi a ak ranfòsman sèvis telekominikasyon yo."
+      },
+      {
+        "title": "Fòmasyon nan sekirite sibènetik",
+        "fullExcerpt": "Yon seri fòmasyon ap fèt pou ranfòse sekirite dijital enstitisyon Ayisyen yo. Inisyativ sa a vize pou sansibilize pwofesyonèl ak sitwayen yo sou risk ki genyen sou entènèt epi ba yo zouti ki nesesè pou pwoteje tèt yo yon fason efikas.",
+        "fullText": "Yon seri fòmasyon ap fèt pou ranfòse sekirite dijital enstitisyon Ayisyen yo. Inisyativ sa a vize pou sansibilize pwofesyonèl ak sitwayen yo sou risk ki genyen sou entènèt epi ba yo zouti ki nesesè pou pwoteje tèt yo yon fason efikas. Sesyon fòmasyon yo kouvri sijè varye, soti nan pwoteksyon done pèsonèl rive nan jesyon atak sibènetik. Objektif la se kreye yon ekosistèm dijital ki pi an sekirite pou tout moun."
+      },
+      {
+        "title": "Patnarya ak Inyon Entènasyonal",
+        "fullExcerpt": "CONATEL te siyen yon akò kolaborasyon ak Inyon Entènasyonal Telekominikasyon (UIT) pou ranfòse enfrastrikti lokal la. Patnarya estratejik sa a pral pèmèt akselerasyon inovasyon ak adopsyon nouvo teknoloji nan Ayiti.",
+        "fullText": "CONATEL te siyen yon akò kolaborasyon ak Inyon Entènasyonal Telekominikasyon (UIT) pou ranfòse enfrastrikti lokal la epi ankouraje devlopman dirab. Patnarya estratejik sa a pral pèmèt akselerasyon inovasyon ak adopsyon nouvo teknoloji nan Ayiti, pandan li asire yon aksè ekitab nan sèvis telekominikasyon pou tout sitwayen yo."
+      },
+      {
+        "title": "Nouvo règleman telekominikasyon",
+        "fullExcerpt": "Kadr legal telekominikasyon an ap evolye ak nouvo lwa ki te adopte an mas 2025 pou fasilite aksè ekitab ak regilasyon mache a. Nouvo mezi sa yo fèt pou ankouraje konpetisyon ak pwoteje konsomatè yo.",
+        "fullText": "CONATEL te adopte nouvo lwa an mas 2025 pou fasilite aksè ekitab ak regilasyon mache a. Nouvo mezi sa yo fèt pou ankouraje konpetisyon, pwoteje konsomatè yo, ak modènize sektè a. Yo vize tou pou atire envestisman etranje pou devlopman enfrastrikti dijital peyi a."
+      },
+      {
+        "title": "Ekstansyon rezo fib optik",
+        "fullExcerpt": "Yon nouvo pwojè ekstansyon rezo fib optik nan Nò peyi a ap fèt. Objektif la se amelyore vitès ak fyabilite koneksyon entènèt la pou rezidan yo ak antrepriz nan rejyon an.",
+        "fullText": "Yon nouvo pwojè ekstansyon rezo fib optik nan Nò peyi a ap fèt. Objektif la se amelyore vitès ak fyabilite koneksyon entènèt la pou rezidan yo ak antrepriz nan rejyon an. Pwojè a, ki reyalize an patenarya ak operatè lokal yo, vize pou ranfòse enfrastrikti telekominikasyon yo epi sipòte kwasans ekonomik lokal la."
+      },
+      {
+        "title": "Kanpay sansibilizasyon sou sekirite sou entènèt",
+        "fullExcerpt": "CONATEL lanse yon kanpay nasyonal pou enfòme piblik la sou bon pratik sekirite sou entènèt. Kanpay la ap kouvri risk ki gen rapò ak phishing, malwares, ak pwoteksyon done pèsonèl.",
+        "fullText": "CONATEL lanse yon kanpay nasyonal pou enfòme piblik la sou bon pratik sekirite sou entènèt. Kanpay la ap kouvri risk ki gen rapò ak phishing, malwares, ak pwoteksyon done pèsonèl, atravè atelye, gid sou entènèt, ak mesaj nan medya yo. Objektif la se kreye yon anviwònman dijital ki pi an sekirite ak pi konsyan pou tout itilizatè nan Ayiti."
+      },
+      {
+        "title": "Pwojè deplwaman entènèt gwo vitès",
+        "fullExcerpt": "Yon gwo pwojè pou etann aksè a entènèt gwo vitès nan zòn riral yo ap fèt. Pwojè a vize pou konekte kominote izole yo epi ba yo aksè a nouvo opòtinite edikasyon ak ekonomik.",
+        "fullText": "Yon gwo pwojè pou etann aksè a entènèt gwo vitès nan zòn riral yo ap fèt. Pwojè a, ki finanse pa yon patenarya piblik-prive, vize pou konekte kominote izole yo epi ba yo aksè a nouvo opòtinite edikasyon ak ekonomik. Yo prevwa enstalasyon nouvo enfrastrikti rezo nan plizyè depatman pou garanti aksè inivèsèl nan sèvis dijital yo."
+      },
+      {
+        "title": "Adopsyon nouvo teknoloji pou jesyon spèk",
+        "fullExcerpt": "CONATEL ap modènize zouti li yo pou yon jesyon pi efikas nan spèk radyo-elektrik la. Sa pral pèmèt optimize itilizasyon frekans yo epi fasilite deplwaman sèvis nouvo jenerasyon.",
+        "fullText": "CONATEL ap modènize zouti li yo pou yon jesyon pi efikas nan spèk radyo-elektrik nan Ayiti. Adopsyon nouvo teknoloji siveyans ak analiz yo pral pèmèt optimize itilizasyon frekans yo epi fasilite deplwaman sèvis nouvo jenerasyon, enkli 5G, nan yon fiti prè."
+      },
+      {
+        "title": "Patnarya ak inivèsite lokal yo",
+        "fullExcerpt": "Yon patnarya te etabli ant CONATEL ak plizyè inivèsite pou ankouraje rechèch nan telekominikasyon. Objektif la se fòme lidè sektè yo nan lavni epi ankouraje inovasyon nan Ayiti.",
+        "fullText": "Yon patnarya te etabli ant CONATEL ak plizyè inivèsite lokal yo pou ankouraje rechèch nan telekominikasyon. Pwogram estaj, bous rechèch, ak atelye devlopman ap mete an plas pou fòme lidè sektè yo nan lavni epi ankouraje inovasyon teknolojik nan peyi a."
+      },
+      {
+        "title": "Mete an plas yon sant apèl pou konsomatè yo",
+        "fullExcerpt": "CONATEL ap louvri yon nouvo sant apèl pou pi byen reponn a kesyon ak plent konsomatè yo. Sèvis sa a vize pou amelyore pwoteksyon dwa itilizatè telekominikasyon yo nan Ayiti.",
+        "fullText": "CONATEL ap louvri yon nouvo sant apèl pou pi byen reponn a kesyon ak plent konsomatè yo konsènan sèvis telekominikasyon yo. Sèvis sa a vize pou amelyore pwoteksyon dwa itilizatè yo epi asire ke enkyetid yo pran an kont yon fason efikas ak rapid. Yon ekip ekspè disponib pou bay enfòmasyon ak rezoud pwoblèm ki gen rapò ak operatè yo."
+      },
+      {
+        "title": "Seminè sou enfrastrikti telekominikasyon nan lavni",
+        "fullExcerpt": "CONATEL te òganize yon seminè ki rasanble ekspè pou diskite sou tandans ak defi enfrastrikti telekominikasyon nan lavni. Evènman an te konsantre sou rezo entelijan ak rezilyans devan dezas natirèl.",
+        "fullText": "CONATEL te òganize yon seminè ki rasanble ekspè nan sektè a pou diskite sou tandans ak defi enfrastrikti telekominikasyon nan lavni. Evènman an te konsantre sou sijè kle tankou rezo entelijan, sekirite sibènetik, ak rezilyans enfrastrikti yo devan dezas natirèl, ki se yon gwo defi pou Ayiti. Diskisyon yo te pèmèt defini yon plan pou modènizasyon rezo yo."
+      }
+    ]
+  }
+}

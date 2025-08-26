@@ -1,0 +1,31 @@
+{
+  "chantiers": {
+    "title": "Chantye Nou yo",
+    "subtitle": "Dekouvri gwo pwojè kote n'ap travay pou modènize sèvis nou yo, pou rann yo pi efikas epi pi byen adapte ak bezwen popilasyon an.",
+    "documentationTitle": "Dokimantasyon ak Resous",
+    "close": "Fèmen",
+    "moreInfoButton": "Aprann plis",
+    "previous": "Anvan",
+    "next": "Pwochen",
+    "cybersecurite": {
+      "shortTitle": "Sibèsekirite",
+      "shortText": "Akòz menas sou entènèt yo ap miltipliye, n'ap mete estrateji avanse an plas pou pwoteje enfrastrikti nimerik nou yo ak done sansib Leta. Efò nou yo konsantre sou detekte atak yo bonè, sou rann sistèm enfòmasyon nou yo pi rezistan ak sou sansibilize anplwaye nou yo.",
+      "longText": "Sibèsekirite vin tounen yon gwo defi ak yon bagay ki enpòtan anpil pou administrasyon piblik la. Pwojè 'Sibèsekirite' nou an gen pou objektif mete yon politik sekirite ki rijid ak proaktif an plas, ki baze sou pi bon pratik ak nòm entènasyonal yo. N'ap ranfòse defans teknik nou yo ak pare-fe (firewall) nouvo jenerasyon, ak sistèm sofistike pou deteksyon entrizyon, epi n'ap fè odit sekirite regilyèman ak an pwofondè. An menm tan, yon pati enpòtan nan pwojè sa a se fòmasyon kontinyèl ekip nou yo pou yo kapab idantifye, prevwa ak reyaji efikasman devan menas yo, sa ki asire yon liy defans imen ki solid. Pwojè estratejik sa a gen ladan tou kreyasyon yon sant operasyon sekirite (SOC) ki modèn, ki fonksyone 24/7, pou siveyans rezo nou yo an tan reyèl ak yon jesyon rapid nan ensidan yo. Objektif la se garanti entegrite, konfidansyalite ak disponiblite sèvis nimerik Leta yo pou tout sitwayen."
+    },
+    "signatureElectronique": {
+      "shortTitle": "Siyati Elektwonik",
+      "shortText": "Pou akselere pwosesis administratif yo epi redwi enpak ekolojik nou an, n'ap deplwaye yon solisyon siyati elektwonik ki fyab e ki rekonèt legalman. Pwojè sa a pèmèt valide dokiman ofisyèl yo a distans yon fason ki an sekirite, toutpandan li garanti entegrite ak otantisite yo.",
+      "longText": "Pwojè 'Siyati Elektwonik' la gen kòm objektif modènize an pwofondè echanj dokiman nou yo, pou n' kapab pase soti nan yon modèl ki baze sou papye pou ale nan yon modèl ki totalman nimerik. Lè n'ap adopte yon solisyon ki konfòm ak estanda entènasyonal yo epi ki rekonèt pa lalwa, n'ap rann lavi sitwayen yo ak antrepriz yo pi fasil, sa ki ap diminye delè yo ak depans yo. Teknoloji sa a pèmèt siyen kontra, akò, pèmi ak lòt dokiman administratif an kèk klik, kèlkeswa kote ou ye. Li gen mekanis kriptaj ki solid, sètifika nimerik ak pwosesis verifikasyon idantite pou garanti chak siyati inik, li pa ka falsifye epi li gen yon valè legal. N'ap fè yon travay entegrasyon metikuleu ak platfòm ki deja egziste yo pou zouti a kapab aksesib e fasil pou tout sèvis ak patnè nou yo itilize, toutpandan n'ap ankouraje yon anviwònman 'zewo papye'."
+    },
+    "transformationNumerique": {
+      "shortTitle": "Transfòmasyon Nimerik",
+      "shortText": "Chantye sa a se motè modènizasyon nou an. N'ap envante nouvo fason pou bay sèvis nou yo lè n'ap entegre teknoloji nimerik yo pou rann yo pi aksesib, pi transparan e pi efikas. Objektif la se kreye yon administrasyon 'zewo papye' kote demach yo senplifye epi enfòmasyon yo sikile fasil.",
+      "longText": "'Transfòmasyon Nimerik' se yon pwojè enpòtan sou nivo nasyonal ki repanse tout pwosesis nou yo ak relasyon nou ak itilizatè yo. N'ap nimerize tout achiv istorik ak achiv ki aktif yo pou rann yo pi fasil pou jwenn, pou itilize ak pou pataje, toutpandan n'ap asire konsèvasyon yo pou alontèm. Zouti pou otomatizasyon sik travay (workflow automation) yo mete an plas pou redwi delè pou trete demann yo epi elimine travay ki repete. N'ap devlope nouvo platfòm sou entènèt ak aplikasyon mobil pou ofri sitwayen yo yon eksperyans itilizatè ki entwisyon ak konplè, ki pèmèt yo fè demach yo 24/7. Lè n'ap itilize analiz gwo done (Big Data), n'ap pran desizyon ki pi byen enfòme epi n'ap oryante politik piblik nou yo pou reponn ak bezwen reyèl ak presi popilasyon an. Se yon apwòch inovasyon, amelyorasyon ak kreyasyon an kolaborasyon ak patnè nou yo pou bati yon Leta ki pi ajil e ki reyaji pi vit."
+    },
+    "qualiteDeService": {
+      "shortTitle": "Kalite Sèvis 'QoS'",
+      "shortText": "Objektif nou se ofri sèvis piblik ki egzanplè. Pwojè sa a dedye a amelyore kalite sèvis nou yo kontinyèlman, lè n'ap mezire satisfaksyon itilizatè yo, optimize pwosesis entèn nou yo epi redwi delè pou repons. Nou pran angajman pou n' koute plis epi pou n' pi pèfòman.",
+      "longText": "Pwojè 'Kalite Sèvis (QoS)' la nan kè angajman nou pou ekselans ak satisfaksyon sitwayen yo. Nou te etabli endikatè pèfòmans kle (KPI) ki rijid pou evalye rapidite, efikasite ak klète sèvis nou yo. Sondaj satisfaksyon regilye yo fèt atravè divès chanèl pou kolekte fidbak itilizatè yo epi idantifye alavans pwen pou amelyore yo. N'ap itilize enfòmasyon sa yo pou optimize pwosesis entèn nou yo, fòme ekip nou yo sou pi bon pratik yo epi mete zouti kominikasyon ki pi pèfòman ak transparan an plas. Objektif final la se kreye yon relasyon konfyans ak pwoksimite ak piblik la, lè n'ap garanti yon nivo sèvis ki parfè e konstan. Pwojè sa a gen ladan tou kreyasyon yon obsèvatwa kalite pou swiv pwogrè yo epi pataje rezilta yo ak tout moun konsène yo."
+    }
+  }
+}

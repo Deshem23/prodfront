@@ -1,0 +1,36 @@
+{
+  "navbar": {
+    "toggle": "Chanje meni an",
+    "home": "Akèy",
+    "about": "Sou nou",
+    "news": "Aktyalite",
+    "procedures": "Pwosedi yo",
+    "decisions": "Desizyon",
+    "chantiers": "Chantye",
+    "reports": "Rapò",
+    "gallery": "Galri",
+    "archives": "Achiv",
+    "contact": "Kontak"
+  },
+  "header": {
+    "subtitle": "Conseil National des Télécommunications",
+    "searchPlaceholder": "Rechèch"
+  },
+  "footer_contact_title": "Enfòmasyon sou kontak",
+  "footer_address_line1": "#2, fragneau-ville1, Delmas 75",
+  "footer_address_line2": "Delmas, Haïti",
+  "footer_phone": "(509) 2914-6666, 2227-5454",
+  "footer_email": "info@conatel.gouv.ht",
+  "footer_links_title": "Lyen rapid",
+  "footer_news": "Nouvèl ak mizajou",
+  "footer_about": "Konsènan nou",
+  "footer_services": "Sèvis",
+  "footer_publications": "Piblikasyon",
+  "footer_resources_title": "Resous legal",
+  "footer_laws": "Lwa ak règleman",
+  "footer_reports": "Rapò anyèl",
+  "footer_faqs": "Kesyon yo poze souvan",
+  "footer_contact_page": "Paj kontak",
+  "footer_copyright_conatel": "CONATEL - Konsèy Nasyonal Telekominikasyon",
+  "footer_rights": "Tout dwa rezève"
+}

@@ -1,0 +1,19 @@
+/* src/layout/Header.css */
+.header {
+  padding: 0.5rem;
+  position: relative;
+  text-align: center;
+}
+
+.logo {
+  height: 60px;
+  width: auto;
+}
+
+.header-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: fit-content;
+}

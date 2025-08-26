@@ -1,0 +1,107 @@
+/* Import Roboto font from Google Fonts */
+@import url('http://googleusercontent.com/css2?family=Roboto:wght@400;700&display=swap');
+
+/* Global CSS Variables for color and glass effect */
+:root {
+  --primary-blue: rgb(5, 40, 106);
+  --glass-bg: rgba(255, 255, 255, 0.4);
+}
+
+/* Apply Roboto font and existing body styles */
+body {
+  font-family: 'Roboto', sans-serif;
+  padding-top: 90px; /* Adjust based on navbar height */
+}
+
+/* Apply blue color variable to headers globally */
+h1, h2, h3, h4, h5, h6, .text-primary {
+  color: var(--primary-blue);
+}
+
+/* Global styling for the root element (if applicable) */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center; /* Note: This will center align all content inside #root */
+}
+
+/* Global Glass Card Styling and Hover Effect */
+.glass-card {
+    background-color: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px); /* Slight lift effect on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* --- Latest Updates List Item Hover Styling has been removed --- */
+
+
+/* Contact Page Intro Mobile Responsiveness (add here if in the same file) */
+@media (max-width: 767.98px) {
+  .contact-intro .display-4 {
+    font-size: 2.5rem !important;
+  }
+  .contact-intro .lead {
+    font-size: 1rem !important;
+  }
+  
+  /* Center align the content inside the Contact Info card on mobile */
+  .col-lg-5 .glass-card {
+    text-align: center;
+  }
+  
+  /* Adjust list items for centering (if needed) on mobile */
+  .col-lg-5 .glass-card ul {
+    display: inline-block; 
+    text-align: left;
+  }
+  
+  /* Center social icons on mobile */
+  .col-lg-5 .glass-card .mt-4 {
+    text-align: center;
+  }
+}
+
+/* Existing code from your original snippet */
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}

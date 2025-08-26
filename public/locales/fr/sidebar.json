@@ -1,0 +1,43 @@
+{
+  "latestNewsCard": {
+    "title": "Dernières Nouvelles",
+    "viewAll": "Voir tout",
+    "date1": "15 mars 2024",
+    "item1": "Le CONATEL renforce les mesures de cybersécurité pour protéger les données nationales.",
+    "date2": "12 mars 2024",
+    "item2": "Lancement d'une nouvelle initiative pour améliorer l'accès à Internet dans les zones rurales.",
+    "date3": "8 mars 2024",
+    "item3": "Le Conseil accueille une délégation internationale pour discuter des normes de télécommunication."
+  },
+  "stats": {
+    "title": "Statistiques Clés",
+    "mobile_subscribers": "Abonnés Mobiles",
+    "mobile_subscribers_value": "11.2",
+    "mobile_subscribers_unit": "millions d'abonnés",
+    "service_distribution": "Distribution des Services",
+    "fixed_broadband": "Haut débit fixe",
+    "fixed_broadband_value": "48.7",
+    "fixed_broadband_unit": "%",
+    "mobile_broadband": "Haut débit mobile",
+    "mobile_broadband_value": "98.5",
+    "mobile_broadband_unit": "%",
+    "other_services": "Autres Services"
+  },
+  "socials": {
+    "title": "Réseaux Sociaux",
+    "links": {
+      "facebook": "https://www.facebook.com/conatelhaiti",
+      "twitter": "https://twitter.com/conatelhaiti",
+      "youtube": "https://www.youtube.com/@CONATELHAITI",
+      "linkedin": "https://www.linkedin.com/company/conatelhaiti"
+    }
+  },
+  "chantiers": {
+    "title": "Chantiers",
+    "signature_electronique": "Signature Élec..",
+    "cybersecurite": "Cybersécurité",
+    "transformation_numerique": "Transformation Nu...",
+    "qos": "(QoS)",
+    "viewAll": "Voir tous les Chantiers"
+  }
+}

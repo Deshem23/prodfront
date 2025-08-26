@@ -1,0 +1,36 @@
+{
+  "navbar": {
+    "toggle": "Basculer la navigation",
+    "home": "Accueil",
+    "about": "À propos de nous",
+    "news": "Actualités",
+    "procedures": "Procédures",
+    "decisions": "Décisions",
+    "chantiers": "Chantiers",
+    "reports": "Rapports",
+    "gallery": "Galerie",
+    "archives": "Archives",
+    "contact": "Contact"
+  },
+  "header": {
+    "subtitle": "Conseil National des Télécommunications",
+    "searchPlaceholder": "Rechercher"
+  },
+  "footer_contact_title": "Informations de contact",
+  "footer_address_line1": "#2, fragneau-ville1, Delmas 75",
+  "footer_address_line2": "Delmas, Haïti",
+  "footer_phone": "(509) 2914-6666, 2227-5454 ",
+  "footer_email": "infol@conatel.gouv.ht",
+  "footer_links_title": "Liens rapides",
+  "footer_news": "Actualités et mises à jour",
+  "footer_about": "À propos de nous",
+  "footer_services": "Services",
+  "footer_publications": "Publications",
+  "footer_resources_title": "Ressources légales",
+  "footer_laws": "Lois et réglementations",
+  "footer_reports": "Rapports annuels",
+  "footer_faqs": "FAQ",
+  "footer_contact_page": "Page de contact",
+  "footer_copyright_conatel": "CONATEL - Conseil National des Télécommunications",
+  "footer_rights": "Tous droits réservés"
+}

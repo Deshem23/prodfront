@@ -1,0 +1,128 @@
+/* src/components/ChantiersCard.css */
+
+/* Add these two lines for react-slick styles */
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+
+/* Base style for the icon */
+.chantier-icon {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+  width: 3.5rem;
+  text-align: center;
+}
+
+/* Base style for the icon text */
+.glass-card .card-body span {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #555;
+  margin-top: 5px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- HOVER EFFECTS --- */
+
+/* Hover effect on the link container */
+.glass-card a:hover {
+  cursor: pointer;
+}
+
+/* General hover effect for all icons and text */
+.glass-card a:hover .chantier-icon,
+.glass-card a:hover span {
+  color: #007bff;
+  transform: scale(1.15);
+}
+
+/* Specific hover effect for the Signature Électronique icon */
+.glass-card a:hover .bi-pen-fill {
+  color: #ffc107;
+}
+
+/* Specific hover effect for the Cybersecurity icon */
+.glass-card a:hover .bi-shield-shaded {
+  color: #28a745;
+}
+
+/* Specific hover effect for the Transformation Numérique icon */
+.glass-card a:hover .bi-gear-wide-connected {
+  color: #6f42c1;
+}
+
+/* Specific hover effect for the QoS icon */
+.glass-card a:hover .bi-speedometer2 {
+  color: #fd7e14;
+}
+
+/* --- DESKTOP VIEW REFINEMENTS (Vertical Lines) --- */
+@media (min-width: 768px) {
+  .slide-item:not(:last-child) {
+    border-right: 1px solid #ddd;
+    /* You may need to adjust padding in ChantiersCard.js
+       to provide space on both sides of the line. */
+  }
+}
+
+/* --- MOBILE VIEW RESPONSIVENESS --- */
+@media (max-width: 767px) {
+  .chantier-icon {
+    font-size: 2rem;
+    width: 3rem;
+  }
+  
+  /* Add padding below the dots to separate them from the line */
+  .slick-dots {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 0.5rem;
+  }
+
+  /* Add margin to the card body to create space below the line */
+  .glass-card .card-body {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* --- SLIDER REFINEMENTS FOR SMOOTH MOVEMENT --- */
+.slick-list {
+  /* Hides any overflow to prevent horizontal scrollbars */
+  overflow: hidden;
+}
+
+.slick-slide {
+  /* Ensures padding is part of the element's total size */
+  box-sizing: border-box;
+}
+
+.slick-track {
+  /* Helps the browser optimize the sliding animation */
+  will-change: transform;
+}
+
+/* --- ARROW STYLING --- */
+.chantiers-slider .slick-prev,
+.chantiers-slider .slick-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.chantiers-slider .slick-prev {
+    left: -25px; /* Adjust as needed */
+    color: var(--primary-color);
+}
+
+.chantiers-slider .slick-next {
+    right: -25px; /* Adjust as needed */
+    color: var(--primary-color);
+}
+
+.chantiers-slider .slick-prev:before,
+.chantiers-slider .slick-next:before {
+  font-size: 30px; /* Increase size of the arrow icons */
+  color: var(--primary-color);
+  opacity: 1; /* Make sure they are not transparent */
+}

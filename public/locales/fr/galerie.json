@@ -1,0 +1,37 @@
+{
+  "main_title": "Galerie Multimédia",
+  "main_description": "Explorez notre collection de photos et de vidéos pour revivre les moments forts de nos événements, ateliers et conférences. Cette galerie met en lumière le dynamisme et l'innovation au sein de notre communauté.",
+  "photos_title": "Galerie Photos",
+  "videos_title": "Galerie Vidéos",
+  "activities": "Activités",
+  "previous": "Précédent",
+  "next": "Suivant",
+  "events": {
+    "conference": "Conférence 2024",
+    "workshop": "Atelier IA",
+    "hackathon": "Hackathon",
+    "summit": "Sommet Digital",
+    "pitch": "Concours de Startups",
+    "expo": "Expo Tech",
+    "innovation": "Semaine de l’Innovation",
+    "bootcamp": "Bootcamp de Codage",
+    "cyber": "Forum Cybersécurité",
+    "robotics": "Salon Robotique",
+    "science": "Foire Scientifique",
+    "meetup": "Rencontre Développeurs"
+  },
+  "videos": {
+    "startup": "Comment développer votre startup",
+    "aiApp": "Créer une app avec l’IA",
+    "futureWeb": "L’avenir du développement web",
+    "cybersecurity": "Bonnes pratiques de cybersécurité",
+    "conatelIsoc": "CONATEL, FRDDH honore ISOC",
+    "other": "Une autre belle vidéo",
+    "innovationDay": "Journée de l'Innovation",
+    "techSummit": "Sommet Technologique",
+    "roboticsShow": "Salon de la Robotique",
+    "dataScience": "Science des Données",
+    "iotTalk": "Conférence sur l'IoT",
+    "blockchain": "La Blockchain pour tous"
+  }
+}
