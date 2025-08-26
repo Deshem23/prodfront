@@ -15,7 +15,8 @@ import SocialsCard from '../components/SocialsCard';
 
 import './Rapports.css';
 
-const API_URL = "http://localhost:1337/api";
+// Updated API URL to point to your Strapi cloud instance
+const API_URL = "https://pretty-novelty-2b255ff22b.strapiapp.com/api";
 
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
@@ -29,6 +30,7 @@ export default function Rapports() {
   const [currentPage, setCurrentPage] = useState(1);
   const [chartPage, setChartPage] = useState(1);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
+  const [loading, setLoading] = useState(true);
 
   const [pageData, setPageData] = useState({ title: '', description: '', chartsTitle: '' });
   const [rapportsData, setRapportsData] = useState([]);
@@ -42,36 +44,40 @@ export default function Rapports() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+        
         // Page title + description (single type)
-        const pageRes = await axios.get(`${API_URL}/rapport-page?locale=${i18n.language}`);
+        const pageRes = await axios.get(`${API_URL}/rapport-page?populate=*&locale=${i18n.language}`);
         const page = pageRes.data.data || {};
         setPageData({
-          title: page.title,
-          description: page.description,
-          chartsTitle: page.latestChartsTitle || t('latestChartsTitle')
+          title: page.attributes?.title || t('defaultTitle'),
+          description: page.attributes?.description || '',
+          chartsTitle: page.attributes?.chartsTitle || t('latestChartsTitle')
         });
 
         // Rapports list
-        const rapportsRes = await axios.get(`${API_URL}/rapports?populate=pdf&locale=${i18n.language}`);
+        const rapportsRes = await axios.get(`${API_URL}/rapports?populate=*&locale=${i18n.language}&pagination[pageSize]=100`);
         const rapports = rapportsRes.data.data.map(r => ({
           id: r.id,
-          title: r.title,
-          description: r.description,
-          date: r.date,
-          pdf: r.pdf?.url ? `http://localhost:1337${r.pdf.url}` : null
+          title: r.attributes?.title,
+          description: r.attributes?.description,
+          date: r.attributes?.date,
+          pdf: r.attributes?.pdf?.data?.attributes?.url || null
         }));
         setRapportsData(rapports);
 
         // Charts / Images
-        const chartsRes = await axios.get(`${API_URL}/rapport-images?populate=image&locale=${i18n.language}`);
+        const chartsRes = await axios.get(`${API_URL}/rapport-images?populate=*&locale=${i18n.language}`);
         const charts = chartsRes.data.data.map(img => ({
           id: img.id,
-          title: img.title,
-          image: img.image?.url ? `http://localhost:1337${img.image.url}` : null
+          title: img.attributes?.title,
+          image: img.attributes?.image?.data?.attributes?.url || null
         }));
         setChartsData(charts);
       } catch (err) {
         console.error("API Error:", err);
+      } finally {
+        setLoading(false);
       }
     };
     fetchData();
@@ -111,7 +117,10 @@ export default function Rapports() {
   // New function to handle file download
   const handleDownload = async (url, filename) => {
     try {
-      const response = await fetch(url);
+      // If the URL is relative, prepend the Strapi base URL
+      const fullUrl = url.startsWith('http') ? url : `https://pretty-novelty-2b255ff22b.strapiapp.com${url}`;
+      
+      const response = await fetch(fullUrl);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -153,6 +162,17 @@ export default function Rapports() {
     }
     if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
   };
+
+  if (loading) {
+    return (
+      <div className="container my-5 text-center">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="mt-3">Loading reports...</p>
+      </div>
+    );
+  }
 
   return (
     <motion.div className="container my-5" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
@@ -219,18 +239,20 @@ export default function Rapports() {
           </div>
 
           {/* Rapports Pagination */}
-          <div className="d-flex justify-content-center mt-4">
-            <ul className="pagination">
-              {[...Array(totalPages)].map((_, i) => (
-                <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} onClick={() => setCurrentPage(i + 1)}>
-                  <button className="page-link">{i + 1}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center mt-4">
+              <ul className="pagination">
+                {[...Array(totalPages)].map((_, i) => (
+                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} onClick={() => setCurrentPage(i + 1)}>
+                    <button className="page-link">{i + 1}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Charts Section */}
-          {currentPage === 1 && (
+          {currentPage === 1 && chartsData.length > 0 && (
             <div className="latest-charts-section">
               <hr className="chart-section-divider" />
               <h3 className="mb-4 text-center" style={{ color: primaryColor }}>
@@ -254,15 +276,17 @@ export default function Rapports() {
               </div>
 
               {/* Charts Pagination */}
-              <div className="d-flex justify-content-center mt-4 chart-pagination">
-                <ul className="pagination">
-                  {[...Array(totalChartPages)].map((_, i) => (
-                    <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
-                      <button className="page-link">{i + 1}</button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {totalChartPages > 1 && (
+                <div className="d-flex justify-content-center mt-4 chart-pagination">
+                  <ul className="pagination">
+                    {[...Array(totalChartPages)].map((_, i) => (
+                      <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
+                        <button className="page-link">{i + 1}</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <hr className="chart-section-divider-bottom" />
             </div>
           )}
