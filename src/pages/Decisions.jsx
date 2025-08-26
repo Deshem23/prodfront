@@ -51,28 +51,48 @@ export default function Decisions() {
   }, [search]);
 
   // Function to handle file download for all devices
-  const handleDownload = useCallback((pdfUrl, filename) => {
-    if (!pdfUrl) {
-      console.error('No PDF URL provided');
-      return;
-    }
+const handleDownload = useCallback((pdfUrl, filename) => {
+  if (!pdfUrl) {
+    console.error('No PDF URL provided');
+    return;
+  }
+  
+  try {
+    // Create a temporary anchor tag
+    const link = document.createElement('a');
     
-    try {
-      // Create a temporary anchor tag
-      const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.download = filename || 'document.pdf';
-      link.target = '_blank';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      console.log('Download initiated for:', filename);
-    } catch (error) {
-      console.error('Error downloading the file:', error);
-      window.open(pdfUrl, '_blank');
-    }
-  }, []);
+    // Force download by creating a blob URL
+    fetch(pdfUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const blobUrl = window.URL.createObjectURL(blob);
+        link.href = blobUrl;
+        link.download = filename || 'document.pdf';
+        
+        // Append to body, click, and remove
+        document.body.appendChild(link);
+        link.click();
+        
+        // Clean up
+        window.URL.revokeObjectURL(blobUrl);
+        document.body.removeChild(link);
+      })
+      .catch(error => {
+        console.error('Error fetching the file:', error);
+        // Fallback to direct download if blob approach fails
+        link.href = pdfUrl;
+        link.download = filename || 'document.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      });
+    
+  } catch (error) {
+    console.error('Error downloading the file:', error);
+    // Final fallback - open in new tab
+    window.open(pdfUrl, '_blank');
+  }
+}, []);
 
   // Fetch data from Strapi with proper error handling
   useEffect(() => {
