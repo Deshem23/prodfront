@@ -7,7 +7,7 @@ import { useSearchParams } from "react-router-dom";
 
 // Import social media icons
 import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
-import { FaXTwitter } from 'react-icons/fa6'; // Correct import for the new X icon
+import { FaXTwitter } from 'react-icons/fa6';
 import { MdEmail } from 'react-icons/md';
 
 import LatestNewsCard from '../components/LatestNewsCard';
@@ -18,6 +18,7 @@ import RightSidebar from '../components/RightSidebar';
 
 import './Actualites.css';
 
+// Strapi API configuration
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
@@ -52,16 +53,13 @@ export default function Actualites() {
         const fetchedArticles = response.data.data.map(item => {
           const articleData = item.attributes || item;
 
-          const imagePath =
-            articleData?.image?.formats?.small?.url ||
-            articleData?.image?.formats?.medium?.url ||
-            articleData?.image?.formats?.large?.url ||
-            articleData?.image?.url ||
-            (articleData?.image?.data?.attributes?.url ? articleData.image.data.attributes.url : null)
+          // CORRECTED LOGIC FOR IMAGE URL
+          const imageAttr = articleData?.image?.data?.attributes;
+          const imagePath = imageAttr?.url;
 
-          const pdfPath =
-            articleData?.pdf?.url ||
-            (articleData?.pdf?.data?.attributes?.url ? articleData.pdf.data.attributes.url : null);
+          // CORRECTED LOGIC FOR PDF URL
+          const pdfAttr = articleData?.pdf?.data?.attributes;
+          const pdfPath = pdfAttr?.url;
 
           return {
             id: item.id,
@@ -101,7 +99,6 @@ export default function Actualites() {
     setSearchParams({});
   };
 
-  // New function to handle social media sharing
   const handleShare = async (platform) => {
     if (!selectedArticle) return;
 
@@ -109,7 +106,6 @@ export default function Actualites() {
     const shareTitle = `Check out this article: ${selectedArticle.title}`;
     const shareText = selectedArticle.fullExcerpt;
 
-    // Use Web Share API if available
     if (navigator.share) {
       try {
         await navigator.share({
@@ -124,7 +120,6 @@ export default function Actualites() {
       return;
     }
 
-    // Fallback for different platforms on desktop
     let intentUrl = '';
     switch (platform) {
       case 'facebook':
