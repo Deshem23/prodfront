@@ -12,7 +12,7 @@ import SocialsCard from "../components/SocialsCard";
 import ChantiersCard from "../components/ChantiersCard";
 
 // Strapi API configuration
-const STRAPI_BASE_URL = "http://localhost:1337";
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function Home() {

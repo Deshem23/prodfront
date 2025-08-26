@@ -15,7 +15,8 @@ import SocialsCard from '../components/SocialsCard';
 
 import './Rapports.css';
 
-const API_URL = "http://localhost:1337/api";
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
+const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 

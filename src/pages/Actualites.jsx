@@ -18,7 +18,7 @@ import RightSidebar from '../components/RightSidebar';
 
 import './Actualites.css';
 
-const STRAPI_BASE_URL = "http://localhost:1337";
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function Actualites() {

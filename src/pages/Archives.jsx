@@ -6,7 +6,7 @@ import { Button, Pagination } from "react-bootstrap";
 
 import './Archives.css';
 
-const STRAPI_BASE_URL = "http://localhost:1337";
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 const ITEMS_PER_PAGE = 7; // Set the number of items per page
