@@ -48,29 +48,19 @@ export default function Actualites() {
     const fetchArticles = async () => {
       try {
         setLoading(true);
-    
-        const response = await axios.get(
-          `${STRAPI_API_URL}/articles?locale=${i18n.language}&populate=localizations,image,file`
-        );
-    
+        const response = await axios.get(`${STRAPI_API_URL}/articles?locale=${i18n.language}&populate=*`);
+
         const fetchedArticles = response.data.data.map(item => {
-          let articleData = item.attributes || item;
-    
-          // ✅ Fallback if no content in current locale
-          if (!articleData.title && articleData.localizations?.data?.length > 0) {
-            articleData = articleData.localizations.data[0].attributes;
-          }
-    
-          // ✅ Get image & pdf/file
+          const articleData = item.attributes || item;
+
+          // CORRECTED LOGIC FOR IMAGE URL
           const imageUrl = articleData?.image?.url || null;
-          const pdfUrl = articleData?.file?.url || null;
+          const pdfUrl = articleData?.file?.url || null; // in your response it's "file", not "pdf"
     
           return {
             id: item.id,
             date: articleData?.date ?? "No Date",
-            image:
-              imageUrl ||
-              "https://via.placeholder.com/600x400.png?text=No+Image",
+            image: imageUrl || "https://via.placeholder.com/600x400.png?text=No+Image",
             pdf: pdfUrl || null,
             title: articleData?.title ?? "Untitled",
             fullExcerpt: articleData?.fullExcerpt ?? "No excerpt available.",
@@ -78,11 +68,11 @@ export default function Actualites() {
             publishedAt: articleData?.publishedAt,
           };
         });
-    
-        // ✅ Sort newest first
+
         fetchedArticles.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
+
         setArticles(fetchedArticles);
+
       } catch (err) {
         setError("Failed to fetch articles. Please check the API URL and permissions.");
         console.error(err);
