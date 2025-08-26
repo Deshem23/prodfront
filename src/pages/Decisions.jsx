@@ -18,11 +18,12 @@ import './Decisions.css';
 // Helper function to sort by date
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
-const STRAPI_API_URL = "http://localhost:1337/api";
-const STRAPI_BASE_URL = "http://localhost:1337";
+// Strapi API configuration - USING ENVIRONMENT VARIABLES
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
+const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function Decisions() {
-  const { t, i18n } = useTranslation('decisions');
+  const { t, i18n } = useTranslation(['decisions', 'common']);
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState('');
   const [selectedDecision, setSelectedDecision] = useState(null);
@@ -49,43 +50,91 @@ export default function Decisions() {
     return () => clearTimeout(handler);
   }, [search]);
 
-  // Fetch data from Strapi
+  // Function to handle file download for all devices
+  const handleDownload = useCallback((pdfUrl, filename) => {
+    if (!pdfUrl) {
+      console.error('No PDF URL provided');
+      return;
+    }
+    
+    try {
+      // Create a temporary anchor tag
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = filename || 'document.pdf';
+      link.target = '_blank'; // Open in new tab for better UX
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log('Download initiated for:', filename);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      // Fallback: open in new tab if download fails
+      window.open(pdfUrl, '_blank');
+    }
+  }, []);
+
+  // Fetch data from Strapi - USING ACTUALITES/PROCEDURES LOGIC
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
 
-        // Fetch decisions list (collection type) with PDF populate
+        // Fetch decisions list with proper population (same as procedures)
         const decisionsRes = await axios.get(
-          `${STRAPI_API_URL}/decisions?locale=${i18n.language}&populate=pdf`
+          `${STRAPI_API_URL}/decisions?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`
         );
-        
-        const formattedDecisions = (decisionsRes.data.data || []).map(item => ({
-          id: item.id,
-          title: item.title || "No title",
-          description: item.description || "",
-          date: item.date || "",
-          pdf: item.pdf?.url ? `${STRAPI_BASE_URL}${item.pdf.url}` : null,
-        }));
 
-        // Fetch page header (single type)
- // Fetch page header (single type)
-const pageRes = await axios.get(
-  `${STRAPI_API_URL}/decisions-page`,
-  {
-    params: { locale: i18n.language },
-  }
-);
-const pageData = pageRes.data.data ?? {};
-setPageContent({
-  title: pageData.title ?? t('title'),
-  description: pageData.description ?? t('description'),
-});
+        console.log("Decisions API response:", decisionsRes.data);
+
+        // Debug: Check the first decision's PDF structure
+        if (decisionsRes.data.data.length > 0) {
+          const firstDecision = decisionsRes.data.data[0];
+          console.log("First decision data:", firstDecision);
+          console.log("First decision PDF URL:", firstDecision.attributes?.pdf?.url);
+        }
+
+        // USING ACTUALITES/PROCEDURES LOGIC FOR DATA MAPPING
+        const formattedDecisions = decisionsRes.data.data.map(item => {
+          const decisionData = item.attributes || item;
+
+          // USING ACTUALITES/PROCEDURES LOGIC FOR PDF URL
+          const pdfUrl = decisionData?.pdf?.url || null;
+
+          return {
+            id: item.id,
+            title: decisionData?.title ?? "Untitled Decision",
+            description: decisionData?.description ?? "No description available",
+            date: decisionData?.date ?? "No Date",
+            pdf: pdfUrl // No need to prepend STRAPI_BASE_URL - URL is already complete
+          };
+        });
+
+        // Fetch page header (single type) with proper error handling
+        try {
+          const pageRes = await axios.get(
+            `${STRAPI_API_URL}/decisions-page?locale=${i18n.language}`
+          );
+          const pageData = pageRes.data.data || {};
+          
+          setPageContent({
+            title: pageData?.title || t('decisions:title'),
+            description: pageData?.description || t('decisions:description'),
+          });
+        } catch (pageError) {
+          console.warn("Could not fetch decisions page content:", pageError);
+          setPageContent({
+            title: t('decisions:title'),
+            description: t('decisions:description'),
+          });
+        }
 
         setDecisionsData(formattedDecisions);
       } catch (err) {
         console.error("API Error:", err);
-        setError("Failed to load decisions");
+        setError(t("common:api_error") || "Failed to load decisions");
+        setDecisionsData([]);
       } finally {
         setLoading(false);
       }
@@ -112,7 +161,7 @@ setPageContent({
   const handleOpenModal = useCallback(decision => setSelectedDecision(decision), []);
   const handleCloseModal = useCallback(() => setSelectedDecision(null), []);
 
-  // Share
+  // Share handler
   const handleShare = async (platform) => {
     if (!selectedDecision) return;
 
@@ -150,6 +199,25 @@ setPageContent({
     if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
   };
 
+  // Loading + Error states
+  if (loading) {
+    return (
+      <div className="container text-center py-5">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error) {
+    return (
+      <div className="container text-center py-5 alert alert-danger">
+        {error}
+      </div>
+    );
+  }
+
   return (
     <motion.div
       className="container my-5"
@@ -171,7 +239,7 @@ setPageContent({
           <div className="mb-4">
             <input
               type="text"
-              placeholder={t('searchPlaceholder')}
+              placeholder={t('decisions:searchPlaceholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="form-control w-100 mx-auto"
@@ -179,11 +247,7 @@ setPageContent({
           </div>
 
           <div className={`decisions-list-container bg-white rounded p-4 shadow-sm ${isMobile ? 'mobile-scrollable' : ''}`}>
-            {loading ? (
-              <div className="text-center">{t('loading') || "Loading..."}</div>
-            ) : error ? (
-              <div className="alert alert-danger text-center mt-4">{error}</div>
-            ) : filteredDecisions.length > 0 ? (
+            {filteredDecisions.length > 0 ? (
               <ul className="list-unstyled mb-0">
                 {paginatedDecisions.map(decision => (
                   <li key={decision.id} className="decision-item py-3">
@@ -197,14 +261,17 @@ setPageContent({
                       </div>
                     </div>
                     <div className="d-flex align-items-center gap-3">
-                      <a href="#" className="consulter-link" onClick={(e) => { e.preventDefault(); handleOpenModal(decision); }}>
+                      <button className="consulter-link" onClick={() => handleOpenModal(decision)}>
                         <i className="bi bi-eye"></i>
-                        <span className="ms-1">{t('consult')}</span>
-                      </a>
+                        <span className="ms-1">{t('decisions:consult')}</span>
+                      </button>
                       {decision.pdf && (
-                        <a href={decision.pdf} download className="btn btn-primary-custom btn-sm">
-                          <i className="bi bi-download me-2"></i>{t('download')}
-                        </a>
+                        <button 
+                          onClick={() => handleDownload(decision.pdf, `${decision.title}.pdf`)}
+                          className="btn btn-primary-custom btn-sm"
+                        >
+                          <i className="bi bi-download me-2"></i>{t('decisions:download')}
+                        </button>
                       )}
                     </div>
                   </li>
@@ -212,25 +279,27 @@ setPageContent({
               </ul>
             ) : (
               <div className="alert alert-info text-center mt-4">
-                {t('noResults')}
+                {t('decisions:noResults')}
               </div>
             )}
           </div>
 
           {/* Pagination */}
-          <div className="d-flex justify-content-center mt-4">
-            <ul className="pagination">
-              {[...Array(totalPages)].map((_, i) => (
-                <li
-                  key={i}
-                  className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
-                  onClick={() => setCurrentPage(i + 1)}
-                >
-                  <button className="page-link">{i + 1}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center mt-4">
+              <ul className="pagination">
+                {[...Array(totalPages)].map((_, i) => (
+                  <li
+                    key={i}
+                    className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    <button className="page-link">{i + 1}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -268,7 +337,7 @@ setPageContent({
                 <i className="bi bi-x-lg" style={{ color: 'black' }}></i>
               </button>
 
-              <div className="modal-header" style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderBottom: '1px solid dee2e6' }}>
+              <div className="modal-header" style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderBottom: '1px solid #dee2e6' }}>
                 <div style={{ textAlign: 'left' }}>
                   <h5 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{selectedDecision.title}</h5>
                   <small className="text-muted d-block" style={{ fontSize: '0.9rem' }}>{selectedDecision.date}</small>
@@ -283,17 +352,17 @@ setPageContent({
                 <div className="d-flex justify-content-between align-items-center w-100">
                   <div className="d-flex gap-2">
                     <Button variant="secondary" onClick={handleCloseModal} className="hover-red-btn">
-                      {t('close')}
+                      {t('decisions:close')}
                     </Button>
                     {selectedDecision.pdf && (
-                      <a
-                        href={selectedDecision.pdf}
-                        download
-                        className="btn btn-secondary hover-green-btn"
-                        style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }}
+                      <Button
+                        variant="primary"
+                        onClick={() => handleDownload(selectedDecision.pdf, `${selectedDecision.title}.pdf`)}
+                        className="hover-green-btn"
                       >
-                        {t('downloadPdf')}
-                      </a>
+                        <i className="bi bi-download me-2"></i>
+                        {t('decisions:downloadPdf')}
+                      </Button>
                     )}
                   </div>
                   

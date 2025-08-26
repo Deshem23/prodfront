@@ -54,32 +54,42 @@ export default function Procedures() {
     return () => clearTimeout(handler);
   }, [search]);
 
-  // Fetch procedures + page content - USING ACTUALITES LOGIC
+  // Fetch procedures + page content
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
 
-        // Using the same populate pattern as Actualites
         const proceduresRes = await axios.get(
           `${STRAPI_API_URL}/procedures?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`
         );
 
         console.log("Procedures API response:", proceduresRes.data);
 
-        // USING ACTUALITES LOGIC FOR DATA MAPPING
+        // Debug: Check the first procedure's PDF structure
+        if (proceduresRes.data.data.length > 0) {
+          const firstProcedure = proceduresRes.data.data[0];
+          console.log("First procedure data:", firstProcedure);
+          console.log("First procedure PDF URL:", firstProcedure.attributes?.pdf?.url);
+          
+          // Test if the PDF loads
+          if (firstProcedure.attributes?.pdf?.url) {
+            console.log("PDF URL structure is correct:", firstProcedure.attributes.pdf.url);
+          }
+        }
+
         const formattedProcedures = proceduresRes.data.data.map(item => {
           const procedureData = item.attributes || item;
 
-          // USING ACTUALITES LOGIC FOR PDF URL
+          // CORRECTED LOGIC FOR PDF URL (same as image URL logic)
           const pdfUrl = procedureData?.pdf?.url || null;
 
           return {
             id: item.id,
-            title: procedureData?.title ?? "Untitled",
-            description: procedureData?.description ?? "No description available",
-            date: procedureData?.date ?? "No Date",
-            pdf: pdfUrl // Using the same logic as Actualites
+            title: procedureData?.title || "Untitled Procedure",
+            description: procedureData?.description || "No description available",
+            date: procedureData?.date || "No date",
+            pdf: pdfUrl // No need to prepend STRAPI_BASE_URL - URL is already complete
           };
         });
 
@@ -127,18 +137,30 @@ export default function Procedures() {
     setSelectedProcedure(null);
   }, []);
 
-  // SIMPLIFIED DOWNLOAD FUNCTION - USING ACTUALITES LOGIC
-  const handleDownload = (pdfUrl, filename) => {
-    if (!pdfUrl) return;
+  // Function to handle file download for all devices - NOW BEING USED
+  const handleDownload = useCallback((pdfUrl, filename) => {
+    if (!pdfUrl) {
+      console.error('No PDF URL provided');
+      return;
+    }
     
-    // Create a temporary anchor tag - same as Actualites approach
-    const link = document.createElement('a');
-    link.href = pdfUrl;
-    link.download = filename || 'document.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+    try {
+      // Create a temporary anchor tag
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = filename || 'document.pdf';
+      link.target = '_blank'; // Open in new tab for better UX
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      console.log('Download initiated for:', filename);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      // Fallback: open in new tab if download fails
+      window.open(pdfUrl, '_blank');
+    }
+  }, []);
 
   // Share handler
   const handleShare = async (platform) => {
@@ -242,17 +264,12 @@ export default function Procedures() {
                         <span className="ms-1">{t('consult')}</span>
                       </a>
                       {procedure.pdf && (
-                        <a 
-                          href={procedure.pdf}
-                          download={`${procedure.title}.pdf`}
+                        <button 
+                          onClick={() => handleDownload(procedure.pdf, `${procedure.title}.pdf`)}
                           className="btn btn-primary-custom btn-sm"
-                          onClick={(e) => {
-                            // Optional: Add analytics or tracking here
-                            console.log('Downloading:', procedure.title);
-                          }}
                         >
                           <i className="bi bi-download me-2"></i>{t('download')}
-                        </a>
+                        </button>
                       )}
                     </div>
                   </li>
@@ -331,14 +348,14 @@ export default function Procedures() {
                       {t('close')}
                     </Button>
                     {selectedProcedure.pdf && (
-                      <a
-                        href={selectedProcedure.pdf}
-                        download={`${selectedProcedure.title}.pdf`}
-                        className="btn btn-primary hover-green-btn"
+                      <Button
+                        variant="primary"
+                        onClick={() => handleDownload(selectedProcedure.pdf, `${selectedProcedure.title}.pdf`)}
+                        className="hover-green-btn"
                       >
                         <i className="bi bi-download me-2"></i>
                         {t('downloadPdf')}
-                      </a>
+                      </Button>
                     )}
                   </div>
 
