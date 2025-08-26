@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Carousel, Button, Alert, Card, Badge } from "react-bootstrap";
+import { Carousel, Button, Alert } from "react-bootstrap";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
@@ -18,36 +18,31 @@ export default function CarouselSlider() {
       try {
         setLoading(true);
         const response = await axios.get(
-          `${STRAPI_API_URL}/carousel-slides?locale=${i18n.language}&populate=*`
+          `${STRAPI_API_URL}/carousel-slides?locale=${i18n.language}&populate[0]=localizations&populate[1]=image`
         );
         
         console.log("Carousel API response:", response.data);
         
-        if (!response.data.data || response.data.data.length === 0) {
-          setSlides([]);
-          setLoading(false);
-          return;
-        }
-        
+        // Using the EXACT same logic as your articles fetch
         const fetchedSlides = response.data.data.map(item => {
-          const slideData = item.attributes;
-          
-          // Extract image URL - your images are directly at slideData.image.url
+          const slideData = item.attributes || item;
+
+          // CORRECTED LOGIC FOR IMAGE URL (same as articles)
           const imageUrl = slideData?.image?.url || null;
-          
+    
           return {
             id: item.id,
-            title: slideData?.title || 'Untitled Slide',
-            subtitle: slideData?.subtitle || 'No subtitle available',
+            title: slideData?.title ?? "Untitled Slide",
+            subtitle: slideData?.subtitle ?? "No subtitle available",
             image: imageUrl
           };
         });
-        
+
         setSlides(fetchedSlides);
+
       } catch (err) {
-        const errorMsg = "Failed to fetch carousel slides. Please check the API URL and permissions.";
-        setError(errorMsg);
-        console.error("Error fetching carousel:", err);
+        setError("Failed to fetch carousel slides. Please check the API URL and permissions.");
+        console.error(err);
       } finally {
         setLoading(false);
       }
@@ -107,7 +102,7 @@ export default function CarouselSlider() {
                 style={imageStyle}
                 onError={(e) => {
                   console.error(`Failed to load image: ${slide.image}`);
-                  // Remove the broken image icon entirely
+                  // Hide broken images completely
                   e.target.style.display = 'none';
                 }}
               />
