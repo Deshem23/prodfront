@@ -8,7 +8,7 @@ const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function CarouselSlider() {
-  const { t, i18n } = useTranslation('home');
+  const {  i18n } = useTranslation('home');
   const [slides, setSlides] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
