@@ -61,16 +61,37 @@ export default function Procedures() {
         setLoading(true);
 
         const proceduresRes = await axios.get(
-          `${STRAPI_API_URL}/procedures?locale=${i18n.language}&populate=pdf`
+          `${STRAPI_API_URL}/procedures?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`
         );
 
-        const formattedProcedures = proceduresRes.data.data.map(item => ({
-          id: item.id,
-          title: item.title,
-          description: item.description,
-          date: item.date,
-          pdf: item.pdf?.url ? `${STRAPI_BASE_URL}${item.pdf.url}` : null,
-        }));
+        console.log("Procedures API response:", proceduresRes.data);
+
+        // Debug: Check the first procedure's PDF structure
+        if (proceduresRes.data.data.length > 0) {
+          const firstProcedure = proceduresRes.data.data[0];
+          console.log("First procedure data:", firstProcedure);
+          console.log("First procedure PDF URL:", firstProcedure.attributes?.pdf?.url);
+          
+          // Test if the PDF loads
+          if (firstProcedure.attributes?.pdf?.url) {
+            console.log("PDF URL structure is correct:", firstProcedure.attributes.pdf.url);
+          }
+        }
+
+        const formattedProcedures = proceduresRes.data.data.map(item => {
+          const procedureData = item.attributes || item;
+
+          // CORRECTED LOGIC FOR PDF URL (same as image URL logic)
+          const pdfUrl = procedureData?.pdf?.url || null;
+
+          return {
+            id: item.id,
+            title: procedureData?.title || "Untitled Procedure",
+            description: procedureData?.description || "No description available",
+            date: procedureData?.date || "No date",
+            pdf: pdfUrl // No need to prepend STRAPI_BASE_URL - URL is already complete
+          };
+        });
 
         const pageRes = await axios.get(
           `${STRAPI_API_URL}/procedures-page?locale=${i18n.language}`
@@ -119,18 +140,27 @@ export default function Procedures() {
   // Function to handle file download for all devices
   const handleDownload = async (url, filename) => {
     try {
-      const response = await fetch(url);
+      // For Strapi Cloud, we need to handle authentication if required
+      const response = await fetch(url, {
+        credentials: 'include' // Include cookies for authentication
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = blobUrl;
-      a.download = filename;
+      a.download = filename || 'document.pdf';
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Error downloading the file:', error);
+      alert('Failed to download the file. Please try again.');
     }
   };
 
@@ -324,17 +354,14 @@ export default function Procedures() {
                       {t('close')}
                     </Button>
                     {selectedProcedure.pdf && (
-                      <a
-                        href="#"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleDownload(selectedProcedure.pdf, `${selectedProcedure.title}.pdf`);
-                        }}
-                        className="btn btn-secondary hover-green-btn"
-                        style={{ padding: '0.3rem 0.6rem', fontSize: '0.8rem' }}
+                      <Button
+                        variant="primary"
+                        onClick={() => handleDownload(selectedProcedure.pdf, `${selectedProcedure.title}.pdf`)}
+                        className="hover-green-btn"
                       >
+                        <i className="bi bi-download me-2"></i>
                         {t('downloadPdf')}
-                      </a>
+                      </Button>
                     )}
                   </div>
 
