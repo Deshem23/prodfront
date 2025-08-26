@@ -47,9 +47,9 @@ export default function Actualites() {
   useEffect(() => {
     const fetchArticles = async () => {
       try {
-        setLoading(true);
-        const response = await axios.get(`${STRAPI_API_URL}/articles?locale=${i18n.language}&populate=*`);
-
+        const response = await axios.get(
+          `${STRAPI_API_URL}/articles?locale=${i18n.language}&populate[0]=localizations&populate[1]=image&populate[2]=file`
+        );
         const fetchedArticles = response.data.data.map(item => {
           const articleData = item.attributes || item;
 
