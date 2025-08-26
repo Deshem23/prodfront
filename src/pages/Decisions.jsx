@@ -18,8 +18,8 @@ import './Decisions.css';
 // Helper function to sort by date
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
-// Strapi API configuration - USING ENVIRONMENT VARIABLES
-const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
+// Strapi API configuration - USING ENVIRONMENT VARIABLES PROPERLY
+const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || window.location.origin;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
 export default function Decisions() {
@@ -62,7 +62,7 @@ export default function Decisions() {
       const link = document.createElement('a');
       link.href = pdfUrl;
       link.download = filename || 'document.pdf';
-      link.target = '_blank'; // Open in new tab for better UX
+      link.target = '_blank';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -70,36 +70,30 @@ export default function Decisions() {
       console.log('Download initiated for:', filename);
     } catch (error) {
       console.error('Error downloading the file:', error);
-      // Fallback: open in new tab if download fails
       window.open(pdfUrl, '_blank');
     }
   }, []);
 
-  // Fetch data from Strapi - USING ACTUALITES/PROCEDURES LOGIC
+  // Fetch data from Strapi with proper error handling
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);
 
-        // Fetch decisions list with proper population (same as procedures)
+        console.log("Attempting to fetch from:", `${STRAPI_API_URL}/decisions?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`);
+
+        // Fetch decisions list
         const decisionsRes = await axios.get(
-          `${STRAPI_API_URL}/decisions?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`
+          `${STRAPI_API_URL}/decisions?locale=${i18n.language}&populate[0]=localizations&populate[1]=pdf`,
+          { timeout: 10000 } // 10 second timeout
         );
 
         console.log("Decisions API response:", decisionsRes.data);
 
-        // Debug: Check the first decision's PDF structure
-        if (decisionsRes.data.data.length > 0) {
-          const firstDecision = decisionsRes.data.data[0];
-          console.log("First decision data:", firstDecision);
-          console.log("First decision PDF URL:", firstDecision.attributes?.pdf?.url);
-        }
-
         // USING ACTUALITES/PROCEDURES LOGIC FOR DATA MAPPING
         const formattedDecisions = decisionsRes.data.data.map(item => {
           const decisionData = item.attributes || item;
-
-          // USING ACTUALITES/PROCEDURES LOGIC FOR PDF URL
           const pdfUrl = decisionData?.pdf?.url || null;
 
           return {
@@ -107,14 +101,15 @@ export default function Decisions() {
             title: decisionData?.title ?? "Untitled Decision",
             description: decisionData?.description ?? "No description available",
             date: decisionData?.date ?? "No Date",
-            pdf: pdfUrl // No need to prepend STRAPI_BASE_URL - URL is already complete
+            pdf: pdfUrl
           };
         });
 
-        // Fetch page header (single type) with proper error handling
+        // Fetch page header with error handling
         try {
           const pageRes = await axios.get(
-            `${STRAPI_API_URL}/decisions-page?locale=${i18n.language}`
+            `${STRAPI_API_URL}/decisions-page?locale=${i18n.language}`,
+            { timeout: 5000 }
           );
           const pageData = pageRes.data.data || {};
           
@@ -133,7 +128,17 @@ export default function Decisions() {
         setDecisionsData(formattedDecisions);
       } catch (err) {
         console.error("API Error:", err);
-        setError(t("common:api_error") || "Failed to load decisions");
+        
+        if (err.code === 'ECONNABORTED') {
+          setError(t("common:timeout_error") || "Request timeout. Please check your connection.");
+        } else if (err.response) {
+          setError(t("common:api_error") || `Server error: ${err.response.status}`);
+        } else if (err.request) {
+          setError(t("common:connection_error") || "Cannot connect to server. Please check if Strapi is running.");
+        } else {
+          setError(t("common:api_error") || "Failed to load decisions");
+        }
+        
         setDecisionsData([]);
       } finally {
         setLoading(false);
@@ -206,14 +211,38 @@ export default function Decisions() {
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>
         </div>
+        <p className="mt-2">{t('common:loading') || "Loading..."}</p>
       </div>
     );
   }
   
   if (error) {
     return (
-      <div className="container text-center py-5 alert alert-danger">
-        {error}
+      <div className="container text-center py-5">
+        <div className="alert alert-danger mx-3">
+          <i className="bi bi-exclamation-triangle-fill me-2"></i>
+          {error}
+        </div>
+        <Button 
+          variant="outline-primary" 
+          onClick={() => window.location.reload()}
+          className="mt-3"
+        >
+          <i className="bi bi-arrow-repeat me-2"></i>
+          {t('common:try_again') || "Try Again"}
+        </Button>
+        
+        {/* Debug information */}
+        <div className="mt-4 text-start mx-auto" style={{maxWidth: '600px'}}>
+          <details>
+            <summary className="text-muted">Debug Information</summary>
+            <div className="mt-2 p-3 bg-light rounded">
+              <p><strong>API URL:</strong> {STRAPI_API_URL}/decisions</p>
+              <p><strong>Environment:</strong> {import.meta.env.MODE}</p>
+              <p><strong>Base URL:</strong> {STRAPI_BASE_URL}</p>
+            </div>
+          </details>
+        </div>
       </div>
     );
   }
