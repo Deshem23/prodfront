@@ -64,19 +64,21 @@ export default function Galerie() {
           { timeout: 10000 }
         );
         
-        const fetchedEvents = eventsRes.data.data.map((e) => {
-          const eventData = e.attributes || e;
-          return {
-            id: e.id,
-            title: eventData?.title || "No title",
-            images: eventData?.images?.data?.map(img => {
-              const imageData = img.attributes || img;
-              const imageUrl = imageData?.url;
-              // Prepend the base URL if the path is relative
-              return imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null;
-            }) || []
-          };
-        });
+   //...
+const fetchedEvents = eventsRes.data.data.map((e) => {
+  const eventData = e.attributes || e;
+  return {
+    id: e.id,
+    title: eventData?.title || "No title",
+    images: eventData?.images?.data?.map(img => {
+      const imageData = img.attributes || img;
+      const imageUrl = imageData?.url;
+      // Prepend the base URL if the path is relative
+      return imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null;
+    }) || []
+  };
+});
+//...
         
         setEvents(fetchedEvents);
         setSelectedEvent(fetchedEvents[0] || null);
