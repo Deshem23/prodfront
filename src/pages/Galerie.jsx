@@ -71,7 +71,9 @@ export default function Galerie() {
             title: eventData?.title || "No title",
             images: eventData?.images?.data?.map(img => {
               const imageData = img.attributes || img;
-              return imageData?.url || null; // Use URL as-is (already absolute from Strapi Cloud)
+              const imageUrl = imageData?.url;
+              // Prepend the base URL if the path is relative
+              return imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null;
             }) || []
           };
         });
