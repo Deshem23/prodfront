@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
+import { FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 
 // Sidebar Components
@@ -29,6 +30,8 @@ export default function Galerie() {
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
   const videosPerPage = isMobile ? 5 : 9;
 
@@ -58,45 +61,43 @@ export default function Galerie() {
           description: pageData?.description || t('galerie:main_description')
         });
 
-// Fetch events
-const eventsRes = await axios.get(
-  `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}`,
-  { timeout: 10000 }
-);
+        // Fetch events
+        const eventsRes = await axios.get(
+          `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}`,
+          { timeout: 10000 }
+        );
+        
+        const fetchedEvents = eventsRes.data.data.map((e) => {
+          const eventData = e.attributes || e;
+          
+          // Handle different Strapi response structures
+          let imageUrls = [];
+          
+          if (eventData.images && eventData.images.data) {
+            // New Strapi v4 format: images.data[].attributes.url
+            imageUrls = eventData.images.data.map(img => {
+              const imageAttributes = img.attributes || {};
+              return imageAttributes.url || null;
+            }).filter(url => url !== null);
+          } else if (eventData.images && Array.isArray(eventData.images)) {
+            // Old Strapi v3 format or direct array
+            imageUrls = eventData.images.map(img => {
+              return img.url || img;
+            }).filter(url => url !== null);
+          } else if (eventData.image) {
+            // Single image field
+            imageUrls = [eventData.image.url || eventData.image];
+          }
 
-console.log("Events API response:", eventsRes.data); // Debug log
-
-const fetchedEvents = eventsRes.data.data.map((e) => {
-  const eventData = e.attributes || e;
-  
-  // Handle different Strapi response structures
-  let imageUrls = [];
-  
-  if (eventData.images && eventData.images.data) {
-    // New Strapi v4 format: images.data[].attributes.url
-    imageUrls = eventData.images.data.map(img => {
-      const imageAttributes = img.attributes || {};
-      return imageAttributes.url || null;
-    }).filter(url => url !== null);
-  } else if (eventData.images && Array.isArray(eventData.images)) {
-    // Old Strapi v3 format or direct array
-    imageUrls = eventData.images.map(img => {
-      return img.url || img;
-    }).filter(url => url !== null);
-  } else if (eventData.image) {
-    // Single image field
-    imageUrls = [eventData.image.url || eventData.image];
-  }
-
-  return {
-    id: e.id,
-    title: eventData?.title || "No title",
-    images: imageUrls
-  };
-});
-
-setEvents(fetchedEvents);
-setSelectedEvent(fetchedEvents[0] || null);
+          return {
+            id: e.id,
+            title: eventData?.title || "No title",
+            images: imageUrls
+          };
+        });
+        
+        setEvents(fetchedEvents);
+        setSelectedEvent(fetchedEvents[0] || null);
 
         // Fetch videos
         const videosRes = await axios.get(
@@ -160,6 +161,16 @@ setSelectedEvent(fetchedEvents[0] || null);
       prev === 0 ? selectedEvent.images.length - 1 : prev - 1
     );
   }, [selectedEvent]);
+
+  const handleImageClick = useCallback((imageUrl) => {
+    setSelectedImage(imageUrl);
+    setIsImageModalOpen(true);
+  }, []);
+
+  const handleCloseImageModal = useCallback(() => {
+    setSelectedImage(null);
+    setIsImageModalOpen(false);
+  }, []);
 
   const getThumbnailUrl = useCallback((youtubeId) =>
     youtubeId
@@ -290,7 +301,9 @@ setSelectedEvent(fetchedEvents[0] || null);
                           height: "300px",
                           overflow: "hidden",
                           borderRadius: "8px",
+                          cursor: "pointer"
                         }}
+                        onClick={() => handleImageClick(selectedEvent.images[currentSlide])}
                       >
                         <img
                           src={selectedEvent.images[currentSlide]}
@@ -439,6 +452,139 @@ setSelectedEvent(fetchedEvents[0] || null);
           <SocialsCard />
         </div>
       </div>
+
+      {/* Image Modal */}
+      <AnimatePresence>
+        {isImageModalOpen && selectedImage && (
+          <motion.div
+            className="custom-modal-overlay"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.9)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 1050,
+              padding: '20px'
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleCloseImageModal}
+          >
+            <motion.div
+              className="custom-modal"
+              style={{
+                backgroundColor: 'transparent',
+                maxWidth: '90vw',
+                maxHeight: '90vh',
+                position: 'relative'
+              }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <button
+                onClick={handleCloseImageModal}
+                className="custom-modal-close-button"
+                style={{
+                  position: 'absolute',
+                  top: '-40px',
+                  right: '0',
+                  background: 'rgba(255, 255, 255, 0.9)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  width: '40px',
+                  height: '40px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  zIndex: 1060
+                }}
+              >
+                <FaTimes size={20} color="#000" />
+              </button>
+
+              {/* Image */}
+              <img
+                src={selectedImage}
+                alt="Enlarged view"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  borderRadius: '8px'
+                }}
+              />
+
+              {/* Navigation Arrows */}
+              {selectedEvent && selectedEvent.images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrev();
+                      setSelectedImage(selectedEvent.images[currentSlide === 0 ? selectedEvent.images.length - 1 : currentSlide - 1]);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      left: '20px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '50px',
+                      height: '50px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      fontSize: '24px',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNext();
+                      setSelectedImage(selectedEvent.images[currentSlide === selectedEvent.images.length - 1 ? 0 : currentSlide + 1]);
+                    }}
+                    style={{
+                      position: 'absolute',
+                      right: '20px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'rgba(255, 255, 255, 0.8)',
+                      border: 'none',
+                      borderRadius: '50%',
+                      width: '50px',
+                      height: '50px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      fontSize: '24px',
+                      fontWeight: 'bold'
+                    }}
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

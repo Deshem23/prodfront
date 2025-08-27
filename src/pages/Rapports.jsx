@@ -2,7 +2,9 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { Button } from 'react-bootstrap';
-import { FaTimes } from 'react-icons/fa';
+import { FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
 import axios from 'axios';
 
 // Sidebar Components
@@ -11,36 +13,93 @@ import ChantiersCard from '../components/ChantiersCard';
 import StatsCard from '../components/StatsCard';
 import SocialsCard from '../components/SocialsCard';
 
-import './Galerie.css';
+import './Rapports.css';
+
+// Helper function to sort by date
+const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
 // Strapi API configuration - USING ENVIRONMENT VARIABLES PROPERLY
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL || window.location.origin;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
-export default function Galerie() {
-  const { t, i18n } = useTranslation(['galerie', 'common']);
-  const primaryColor = "rgb(5, 40, 106)";
-
-  const [pageData, setPageData] = useState({ title: "", description: "" });
-  const [events, setEvents] = useState([]);
-  const [videos, setVideos] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+export default function Rapports() {
+  const { t, i18n } = useTranslation(['rapports', 'common']);
+  const [search, setSearch] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  const [selectedRapport, setSelectedRapport] = useState(null);
+  const [selectedChart, setSelectedChart] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [chartPage, setChartPage] = useState(1);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 992);
+  const [rapportsData, setRapportsData] = useState([]);
+  const [chartsData, setChartsData] = useState([]);
+  const [pageContent, setPageContent] = useState({ 
+    title: '', 
+    description: '',
+    chartsTitle: '' 
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [isImageModalOpen, setIsImageModalOpen] = useState(false);
 
-  const videosPerPage = isMobile ? 5 : 9;
+  const primaryColor = 'rgb(5, 40, 106)';
+  const itemsPerPage = isMobile ? 5 : 7;
+  const chartsPerPage = 6;
 
-  // Handle mobile resize
+  // Responsive listener
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", checkMobile);
-    checkMobile();
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => setIsMobile(window.innerWidth < 992);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Debounce search
+  useEffect(() => {
+    const handler = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(handler);
+  }, [search]);
+
+  // Function to handle file download for all devices
+  const handleDownload = useCallback((pdfUrl, filename) => {
+    if (!pdfUrl) {
+      console.error('No PDF URL provided');
+      return;
+    }
+    
+    try {
+      // Create a temporary anchor tag
+      const link = document.createElement('a');
+      
+      // Force download by creating a blob URL
+      fetch(pdfUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          link.href = blobUrl;
+          link.download = filename || 'document.pdf';
+          
+          // Append to body, click, and remove
+          document.body.appendChild(link);
+          link.click();
+          
+          // Clean up
+          window.URL.revokeObjectURL(blobUrl);
+          document.body.removeChild(link);
+        })
+        .catch(error => {
+          console.error('Error fetching the file:', error);
+          // Fallback to direct download if blob approach fails
+          link.href = pdfUrl;
+          link.download = filename || 'document.pdf';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        });
+      
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      // Final fallback - open in new tab
+      window.open(pdfUrl, '_blank');
+    }
   }, []);
 
   // Fetch data from Strapi with proper error handling
@@ -50,72 +109,73 @@ export default function Galerie() {
         setLoading(true);
         setError(null);
 
-        // Fetch page data
-        const pageRes = await axios.get(
-          `${STRAPI_API_URL}/galerie-page?locale=${i18n.language}`,
-          { timeout: 10000 }
-        );
-        const pageData = pageRes.data.data || {};
-        setPageData({
-          title: pageData?.title || t('galerie:main_title'),
-          description: pageData?.description || t('galerie:main_description')
-        });
+        console.log("Attempting to fetch from:", `${STRAPI_API_URL}/rapports?locale=${i18n.language}&populate=*`);
 
-        // Fetch events
-        const eventsRes = await axios.get(
-          `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}`,
+        // Fetch rapports list
+        const rapportsRes = await axios.get(
+          `${STRAPI_API_URL}/rapports?locale=${i18n.language}&populate=*`,
           { timeout: 10000 }
         );
-        
-        const fetchedEvents = eventsRes.data.data.map((e) => {
-          const eventData = e.attributes || e;
-          
-          // Handle different Strapi response structures
-          let imageUrls = [];
-          
-          if (eventData.images && eventData.images.data) {
-            // New Strapi v4 format: images.data[].attributes.url
-            imageUrls = eventData.images.data.map(img => {
-              const imageAttributes = img.attributes || {};
-              return imageAttributes.url || null;
-            }).filter(url => url !== null);
-          } else if (eventData.images && Array.isArray(eventData.images)) {
-            // Old Strapi v3 format or direct array
-            imageUrls = eventData.images.map(img => {
-              return img.url || img;
-            }).filter(url => url !== null);
-          } else if (eventData.image) {
-            // Single image field
-            imageUrls = [eventData.image.url || eventData.image];
-          }
+
+        console.log("Rapports API response:", rapportsRes.data);
+
+        // Format rapports data
+        const formattedRapports = rapportsRes.data.data.map(item => {
+          const rapportData = item.attributes || item;
+          const pdfUrl = rapportData?.pdf?.url || null;
 
           return {
-            id: e.id,
-            title: eventData?.title || "No title",
-            images: imageUrls
+            id: item.id,
+            title: rapportData?.title ?? "Untitled Rapport",
+            description: rapportData?.description ?? "No description available",
+            date: rapportData?.date ?? "No Date",
+            pdf: pdfUrl
           };
         });
-        
-        setEvents(fetchedEvents);
-        setSelectedEvent(fetchedEvents[0] || null);
 
-        // Fetch videos
-        const videosRes = await axios.get(
-          `${STRAPI_API_URL}/videos?locale=${i18n.language}`,
-          { timeout: 10000 }
-        );
-        
-        const fetchedVideos = videosRes.data.data.map((v) => {
-          const videoData = v.attributes || v;
-          return {
-            id: v.id,
-            title: videoData?.title || "No title",
-            youtubeId: videoData?.youtubeId || ""
-          };
-        });
-        
-        setVideos(fetchedVideos);
+        // Fetch charts/images
+        try {
+          const chartsRes = await axios.get(
+            `${STRAPI_API_URL}/rapport-images?locale=${i18n.language}&populate=*`,
+            { timeout: 5000 }
+          );
+          const charts = chartsRes.data.data.map(img => {
+            const chartData = img.attributes || img;
+            return {
+              id: img.id,
+              title: chartData?.title || "Untitled Chart",
+              image: chartData?.image?.url ||  null
+            };
+          });
+          setChartsData(charts);
+        } catch (chartsError) {
+          console.warn("Could not fetch charts:", chartsError);
+          setChartsData([]);
+        }
 
+        // Fetch page content
+        try {
+          const pageRes = await axios.get(
+            `${STRAPI_API_URL}/rapport-page?locale=${i18n.language}`,
+            { timeout: 5000 }
+          );
+          const pageData = pageRes.data.data || {};
+          
+          setPageContent({
+            title: pageData?.title || t('rapports:title'),
+            description: pageData?.description || t('rapports:description'),
+            chartsTitle: pageData?.latestChartsTitle || t('rapports:latestChartsTitle')
+          });
+        } catch (pageError) {
+          console.warn("Could not fetch rapports page content:", pageError);
+          setPageContent({
+            title: t('rapports:title'),
+            description: t('rapports:description'),
+            chartsTitle: t('rapports:latestChartsTitle')
+          });
+        }
+
+        setRapportsData(formattedRapports);
       } catch (err) {
         console.error("API Error:", err);
         
@@ -126,11 +186,11 @@ export default function Galerie() {
         } else if (err.request) {
           setError(t("common:connection_error") || "Cannot connect to server. Please check if Strapi is running.");
         } else {
-          setError(t("common:api_error") || "Failed to load gallery data");
+          setError(t("common:api_error") || "Failed to load rapports");
         }
         
-        setEvents([]);
-        setVideos([]);
+        setRapportsData([]);
+        setChartsData([]);
       } finally {
         setLoading(false);
       }
@@ -139,44 +199,69 @@ export default function Galerie() {
     fetchData();
   }, [i18n.language, t]);
 
-  const totalPages = Math.ceil(videos.length / videosPerPage);
-  const startIndex = (currentPage - 1) * videosPerPage;
-  const currentVideos = videos.slice(startIndex, startIndex + videosPerPage);
+  // Sort + filter
+  const sortedRapports = [...rapportsData].sort(sortByDate);
+  const filteredRapports = sortedRapports.filter(rapport =>
+    (rapport.title || '').toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+    (rapport.description || '').toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+    (rapport.date || '').toLowerCase().includes(debouncedSearch.toLowerCase())
+  );
 
-  const handleEventClick = useCallback((event) => {
-    setSelectedEvent(event);
-    setCurrentSlide(0);
+  const totalPages = Math.ceil(filteredRapports.length / itemsPerPage);
+  const paginatedRapports = filteredRapports.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalChartPages = Math.ceil(chartsData.length / chartsPerPage);
+  const paginatedCharts = chartsData.slice((chartPage - 1) * chartsPerPage, chartPage * chartsPerPage);
+
+  // Modal handlers
+  const handleOpenModal = useCallback(rapport => setSelectedRapport(rapport), []);
+  const handleOpenChartModal = useCallback(chart => setSelectedChart(chart), []);
+  const handleCloseModal = useCallback(() => { 
+    setSelectedRapport(null); 
+    setSelectedChart(null); 
   }, []);
 
-  const handleNext = useCallback(() => {
-    if (!selectedEvent) return;
-    setCurrentSlide((prev) =>
-      prev === selectedEvent.images.length - 1 ? 0 : prev + 1
-    );
-  }, [selectedEvent]);
+  // Share handler
+  const handleShare = async (platform) => {
+    const item = selectedRapport || selectedChart;
+    if (!item) return;
 
-  const handlePrev = useCallback(() => {
-    if (!selectedEvent) return;
-    setCurrentSlide((prev) =>
-      prev === 0 ? selectedEvent.images.length - 1 : prev - 1
-    );
-  }, [selectedEvent]);
+    const shareUrl = window.location.origin + `/rapports?id=${item.id}`;
+    const shareTitle = item.title;
+    const shareText = item.description || '';
 
-  const handleImageClick = useCallback((imageUrl) => {
-    setSelectedImage(imageUrl);
-    setIsImageModalOpen(true);
-  }, []);
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: shareTitle, text: shareText, url: shareUrl });
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+      return;
+    }
 
-  const handleCloseImageModal = useCallback(() => {
-    setSelectedImage(null);
-    setIsImageModalOpen(false);
-  }, []);
+    let intentUrl = '';
+    switch (platform) {
+      case 'facebook':
+        intentUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'twitter':
+        intentUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`;
+        break;
+      case 'whatsapp':
+        intentUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`;
+        break;
+      case 'email':
+        intentUrl = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareText + '\n\nRead more here: ' + shareUrl)}`;
+        break;
+      default:
+        break;
+    }
 
-  const getThumbnailUrl = useCallback((youtubeId) =>
-    youtubeId
-      ? `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`
-      : "/fallback-thumbnail.jpg"
-  , []);
+    if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
+  };
 
   // Loading + Error states
   if (loading) {
@@ -211,7 +296,7 @@ export default function Galerie() {
           <details>
             <summary className="text-muted">Debug Information</summary>
             <div className="mt-2 p-3 bg-light rounded">
-              <p><strong>API URL:</strong> {STRAPI_API_URL}/events</p>
+              <p><strong>API URL:</strong> {STRAPI_API_URL}/rapports</p>
               <p><strong>Environment:</strong> {import.meta.env.MODE}</p>
               <p><strong>Base URL:</strong> {STRAPI_BASE_URL}</p>
               <p><strong>VITE_STRAPI_API_URL:</strong> {import.meta.env.VITE_STRAPI_API_URL || 'Not set'}</p>
@@ -225,227 +310,129 @@ export default function Galerie() {
   return (
     <motion.div
       className="container my-5"
-      initial={{ opacity: 0, y: 40 }}
+      initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      transition={{ duration: 0.5 }}
     >
-      {/* Page Title & Description from galerie-page */}
-      {pageData && (
-        <div className="text-center mb-4">
-          <h2 className="mb-3" style={{ color: primaryColor }}>
-            <i className="bi bi-images me-2"></i>
-            {pageData.title}
-          </h2>
-          <p className="text-muted mx-auto" style={{ maxWidth: "720px" }}>
-            {pageData.description}
-          </p>
-        </div>
-      )}
+      {/* Page header */}
+      <h2 className="text-center mb-3" style={{ color: primaryColor }}>
+        <i className="bi bi-bar-chart-fill me-2"></i>{pageContent.title}
+      </h2>
+      <p className="text-center text-muted mx-auto" style={{ maxWidth: '720px' }}>
+        {pageContent.description}
+      </p>
 
+      {/* Search + List */}
       <div className="row mt-5">
         <div className="col-lg-8 custom-width-73">
-          <h4
-            className="mb-4 text-center section-title-custom"
-            style={{ color: primaryColor }}
-          >
-            {t("galerie:photos_title")}
-          </h4>
-
-          {/* Events & Slider */}
-          <div className="row d-flex align-items-stretch mb-5">
-            {/* Events list */}
-            <div className="col-md-4 d-flex mb-md-0 mb-3">
-              <div className="card shadow rounded flex-fill">
-                <div
-                  className="card-header text-center fw-bold"
-                  style={{ color: primaryColor }}
-                >
-                  {t("galerie:activities")}
-                </div>
-                <ul
-                  className="list-group list-group-flush flex-grow-1 overflow-auto"
-                  style={{ maxHeight: "300px" }}
-                >
-                  {events.map((event) => (
-                    <li
-                      key={event.id}
-                      className={`list-group-item ${
-                        selectedEvent?.id === event.id ? "active" : ""
-                      }`}
-                      style={{ cursor: "pointer" }}
-                      onClick={() => handleEventClick(event)}
-                    >
-                      {event.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Slider */}
-            <div className="col-md-8 d-flex">
-              <div className="card shadow rounded flex-fill">
-                <div
-                  className="card-header text-center fw-bold"
-                  style={{ color: primaryColor }}
-                >
-                  {selectedEvent?.title || t("galerie:no_event_selected")}
-                </div>
-                <div className="card-body text-center position-relative d-flex justify-content-center align-items-center">
-                  {selectedEvent && selectedEvent.images.length > 0 ? (
-                    <>
-                      <div
-                        className="slider-box"
-                        style={{
-                          width: "100%",
-                          height: "300px",
-                          overflow: "hidden",
-                          borderRadius: "8px",
-                          cursor: "pointer"
-                        }}
-                        onClick={() => handleImageClick(selectedEvent.images[currentSlide])}
-                      >
-                        <img
-                          src={selectedEvent.images[currentSlide]}
-                          alt="Event Slide"
-                          className="img-fluid"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
-                      <button
-                        className="btn btn-sm btn-outline-dark position-absolute top-50 start-0 translate-middle-y"
-                        onClick={handlePrev}
-                      >
-                        ‹
-                      </button>
-                      <button
-                        className="btn btn-sm btn-outline-dark position-absolute top-50 end-0 translate-middle-y"
-                        onClick={handleNext}
-                      >
-                        ›
-                      </button>
-                    </>
-                  ) : (
-                    <div className="text-muted">
-                      {t("galerie:no_images")}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+          <div className="mb-4">
+            <input
+              type="text"
+              placeholder={t('rapports:searchPlaceholder')}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="form-control w-100 mx-auto"
+            />
           </div>
 
-          <hr />
-
-          {/* Videos */}
-          <h4
-            className="mb-4 text-center section-title-custom"
-            style={{ color: primaryColor }}
-          >
-            {t("galerie:videos_title")}
-          </h4>
-
-          <div className="card shadow rounded p-3 mb-5">
-            {videos.length > 0 ? (
-              <>
-                <div
-                  className={
-                    isMobile
-                      ? "video-scroll-container"
-                      : "row g-4 justify-content-center"
-                  }
-                >
-                  {currentVideos.map((video) => (
-                    <div
-                      key={video.id}
-                      className={
-                        isMobile
-                          ? "video-scroll-item"
-                          : "col-lg-4 col-md-6 col-sm-12"
-                      }
-                    >
-                      <a
-                        href={`https://www.youtube.com/watch?v=${video.youtubeId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="card video-card shadow-sm h-100"
-                      >
-                        <img
-                          src={getThumbnailUrl(video.youtubeId)}
-                          className="card-img-top"
-                          alt={video.title}
-                        />
-                        <div className="card-body">
-                          <h6 className="card-title text-center text-truncate">
-                            {video.title}
-                          </h6>
-                        </div>
-                      </a>
+          <div className={`rapports-list-container bg-white rounded p-4 shadow-sm ${isMobile ? 'mobile-scrollable' : ''}`}>
+            {filteredRapports.length > 0 ? (
+              <ul className="list-unstyled mb-0">
+                {paginatedRapports.map(rapport => (
+                  <li key={rapport.id} className="rapport-item py-3">
+                    <div className="d-flex align-items-center flex-grow-1">
+                      <i className="bi bi-file-earmark-bar-graph me-3 rapport-item-icon"></i>
+                      <div>
+                        <h6 className="mb-0 rapport-item-title">{rapport.title}</h6>
+                        <small className="rapport-item-date">
+                          <i className="bi bi-calendar-event me-1"></i>{rapport.date}
+                        </small>
+                      </div>
                     </div>
-                  ))}
-                </div>
-
-                {/* Pagination */}
-                {totalPages > 1 && (
-                  <nav aria-label="Video gallery navigation" className="mt-4">
-                    <ul className="pagination justify-content-center">
-                      <li
-                        className={`page-item ${
-                          currentPage === 1 ? "disabled" : ""
-                        }`}
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => setCurrentPage(currentPage - 1)}
+                    <div className="d-flex align-items-center gap-3 rapport-actions">
+                      <button className="consulter-link" onClick={() => handleOpenModal(rapport)}>
+                        <i className="bi bi-eye"></i>
+                        <span className="ms-1">{t('rapports:consult')}</span>
+                      </button>
+                      {rapport.pdf && (
+                        <button 
+                          onClick={() => handleDownload(rapport.pdf, `${rapport.title}.pdf`)}
+                          className="btn btn-primary-custom btn-sm"
                         >
-                          {t("galerie:previous")}
+                          <i className="bi bi-download me-2"></i>{t('rapports:downloadPdf')}
                         </button>
-                      </li>
-                      {Array.from({ length: totalPages }, (_, i) => (
-                        <li
-                          key={i + 1}
-                          className={`page-item ${
-                            currentPage === i + 1 ? "active" : ""
-                          }`}
-                        >
-                          <button
-                            className="page-link"
-                            onClick={() => setCurrentPage(i + 1)}
-                          >
-                            {i + 1}
-                          </button>
-                        </li>
-                      ))}
-                      <li
-                        className={`page-item ${
-                          currentPage === totalPages ? "disabled" : ""
-                        }`}
-                      >
-                        <button
-                          className="page-link"
-                          onClick={() => setCurrentPage(currentPage + 1)}
-                        >
-                          {t("galerie:next")}
-                        </button>
-                      </li>
-                    </ul>
-                  </nav>
-                )}
-              </>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
             ) : (
-              <div className="alert alert-info text-center">
-                {t("galerie:no_videos")}
+              <div className="alert alert-info text-center mt-4">
+                {t('rapports:noResults')}
               </div>
             )}
           </div>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center mt-4">
+              <ul className="pagination">
+                {[...Array(totalPages)].map((_, i) => (
+                  <li
+                    key={i}
+                    className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+                    onClick={() => setCurrentPage(i + 1)}
+                  >
+                    <button className="page-link">{i + 1}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Charts Section */}
+          {currentPage === 1 && chartsData.length > 0 && (
+            <div className="latest-charts-section">
+              <hr className="chart-section-divider" />
+              <h3 className="mb-4 text-center" style={{ color: primaryColor }}>
+                <i className="bi bi-graph-up-arrow me-2"></i>{pageContent.chartsTitle}
+              </h3>
+              <div className="charts-scroll-wrapper">
+                <div className="row g-4">
+                  {paginatedCharts.map((chart, index) => (
+                    <React.Fragment key={index}>
+                      <div className="col-md-4 chart-slide-item" onClick={() => handleOpenChartModal(chart)}>
+                        <div className="chart-card bg-white p-4 rounded shadow-sm">
+                          <h5 className="chart-title text-center">{chart.title}</h5>
+                          <hr className="chart-divider" />
+                          {chart.image && <img src={chart.image} alt={chart.title} className="chart-card-image img-fluid" />}
+                        </div>
+                      </div>
+                      {(index + 1) % 3 === 0 && <hr className="w-100 my-4 chart-row-divider" />}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+
+              {/* Charts Pagination */}
+              {totalChartPages > 1 && (
+                <div className="d-flex justify-content-center mt-4 chart-pagination">
+                  <ul className="pagination">
+                    {[...Array(totalChartPages)].map((_, i) => (
+                      <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
+                        <button className="page-link">{i + 1}</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              <hr className="chart-section-divider-bottom" />
+            </div>
+          )}
         </div>
 
         {/* Sidebar */}
-        <div className="col-lg-4 custom-width-27 offset-lg-0">
+        <div className="col-lg-4 custom-width-27 mt-4 offset-lg-0">
           <LatestNewsCard />
           <ChantiersCard />
           <StatsCard />
@@ -453,134 +440,105 @@ export default function Galerie() {
         </div>
       </div>
 
-      {/* Image Modal */}
+      {/* Rapport Modal */}
       <AnimatePresence>
-        {isImageModalOpen && selectedImage && (
+        {selectedRapport && (
           <motion.div
             className="custom-modal-overlay"
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 1050,
-              padding: '20px'
-            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={handleCloseImageModal}
+            onClick={handleCloseModal}
           >
             <motion.div
               className="custom-modal"
-              style={{
-                backgroundColor: 'transparent',
-                maxWidth: '90vw',
-                maxHeight: '90vh',
-                position: 'relative'
-              }}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
+              style={{ display: 'flex', flexDirection: 'column', maxHeight: '95vh', maxWidth: '800px' }}
             >
-              {/* Close Button */}
               <button
-                onClick={handleCloseImageModal}
+                onClick={handleCloseModal}
                 className="custom-modal-close-button"
-                style={{
-                  position: 'absolute',
-                  top: '-40px',
-                  right: '0',
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 1060
-                }}
+                style={{ padding: '0.3rem 0.6rem', fontSize: '1rem', zIndex: 20 }}
               >
-                <FaTimes size={20} color="#000" />
+                <i className="bi bi-x-lg" style={{ color: 'black' }}></i>
               </button>
 
-              {/* Image */}
-              <img
-                src={selectedImage}
-                alt="Enlarged view"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  borderRadius: '8px'
-                }}
-              />
+              <div className="modal-header" style={{ position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderBottom: '1px solid #dee2e6' }}>
+                <div style={{ textAlign: 'left' }}>
+                  <h5 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{selectedRapport.title}</h5>
+                  <small className="text-muted d-block" style={{ fontSize: '0.9rem' }}>{selectedRapport.date}</small>
+                </div>
+              </div>
 
-              {/* Navigation Arrows */}
-              {selectedEvent && selectedEvent.images.length > 1 && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrev();
-                      setSelectedImage(selectedEvent.images[currentSlide === 0 ? selectedEvent.images.length - 1 : currentSlide - 1]);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      left: '20px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      fontSize: '24px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNext();
-                      setSelectedImage(selectedEvent.images[currentSlide === selectedEvent.images.length - 1 ? 0 : currentSlide + 1]);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      right: '20px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      fontSize: '24px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    ›
-                  </button>
-                </>
-              )}
+              <div className="modal-body" style={{ flexGrow: 1, overflowY: 'auto', padding: '0.8rem 1rem' }}>
+                <p style={{ textAlign: "justify" }}>{selectedRapport.description}</p>
+              </div>
+              
+              <div className="modal-footer" style={{ position: 'sticky', bottom: 0, backgroundColor: '#ffffff', zIndex: 10, padding: '0.5rem 1rem', borderTop: '1px solid #dee2e6' }}>
+                <div className="d-flex justify-content-between align-items-center w-100">
+                  <div className="d-flex gap-2">
+                    <Button variant="secondary" onClick={handleCloseModal} className="hover-red-btn">
+                      {t('rapports:close')}
+                    </Button>
+                    {selectedRapport.pdf && (
+                      <Button
+                        variant="primary"
+                        onClick={() => handleDownload(selectedRapport.pdf, `${selectedRapport.title}.pdf`)}
+                        className="hover-green-btn"
+                      >
+                        <i className="bi bi-download me-2"></i>
+                        {t('rapports:downloadPdf')}
+                      </Button>
+                    )}
+                  </div>
+                  
+                  <div className="social-share-container d-flex gap-2">
+                    <button onClick={() => handleShare('facebook')} className="share-icon-button" aria-label="Share on Facebook">
+                      <FaFacebookF className="share-icon facebook" />
+                    </button>
+                    <button onClick={() => handleShare('twitter')} className="share-icon-button" aria-label="Share on X">
+                      <FaXTwitter className="share-icon twitter" />
+                    </button>
+                    <button onClick={() => handleShare('whatsapp')} className="share-icon-button" aria-label="Share on WhatsApp">
+                      <FaWhatsapp className="share-icon whatsapp" />
+                    </button>
+                    <button onClick={() => handleShare('email')} className="share-icon-button" aria-label="Share via Email">
+                      <MdEmail className="share-icon email" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Chart Modal */}
+      <AnimatePresence>
+        {selectedChart && (
+          <motion.div className="custom-modal-overlay" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={handleCloseModal}>
+            <motion.div className="custom-modal" initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} onClick={(e) => e.stopPropagation()} style={{ display: 'flex', flexDirection: 'column', maxHeight: '95vh', maxWidth: '800px' }}>
+              
+              <button onClick={handleCloseModal} className="custom-modal-close-button">{t('rapports:close')}</button>
+
+              <div className="modal-header text-center">
+                <h5 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>{selectedChart.title}</h5>
+                <hr className="chart-modal-divider" />
+              </div>
+              
+              <div className="modal-body text-center">
+                {selectedChart.image && <img src={selectedChart.image} alt={selectedChart.title} style={{ maxWidth: '100%', height: 'auto' }} />}
+              </div>
+
+              <div className="modal-footer d-flex justify-content-center gap-2">
+                <button onClick={() => handleShare('facebook')} className="share-icon-button"><FaFacebookF className="share-icon facebook" /></button>
+                <button onClick={() => handleShare('twitter')} className="share-icon-button"><FaXTwitter className="share-icon twitter" /></button>
+                <button onClick={() => handleShare('whatsapp')} className="share-icon-button"><FaWhatsapp className="share-icon whatsapp" /></button>
+                <button onClick={() => handleShare('email')} className="share-icon-button"><MdEmail className="share-icon email" /></button>
+              </div>
             </motion.div>
           </motion.div>
         )}
