@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Button } from 'react-bootstrap';
+import { FaEye, FaDownload } from 'react-icons/fa';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -85,34 +87,43 @@ export default function Rapports() {
               <ul className="list-unstyled">
                 {filteredRapports.map(rapport => (
                   <li key={rapport.id} className="py-3 border-bottom d-flex justify-content-between align-items-center">
-                    <div>
-                      <h5>{rapport.title}</h5>
-                      <p className="mb-1">{rapport.description}</p>
-                      <small className="text-muted">Date: {rapport.date}</small>
+                    <div className="d-flex align-items-center">
+                      <i className="bi bi-file-earmark-bar-graph me-3 fs-4" style={{ color: 'rgb(5, 40, 106)' }}></i>
+                      <div>
+                        <h5 className="mb-1">{rapport.title}</h5>
+                        <small className="text-muted">
+                          <i className="bi bi-calendar-event me-1"></i>
+                          {rapport.date}
+                        </small>
+                      </div>
                     </div>
-                    <div>
-                      <button 
+                    <div className="d-flex gap-2">
+                      <Button 
+                        variant="outline-primary" 
+                        size="sm"
                         onClick={() => handleOpenModal(rapport)}
-                        className="btn btn-outline-primary btn-sm me-2"
                       >
-                        View Details
-                      </button>
+                        <FaEye className="me-1" />
+                        View
+                      </Button>
                       {rapport.pdf && (
-                        <a 
-                          href={rapport.pdf} 
-                          target="_blank" 
+                        <Button 
+                          variant="primary" 
+                          size="sm"
+                          href={rapport.pdf}
+                          target="_blank"
                           rel="noopener noreferrer"
-                          className="btn btn-primary btn-sm"
                         >
-                          View PDF
-                        </a>
+                          <FaDownload className="me-1" />
+                          PDF
+                        </Button>
                       )}
                     </div>
                   </li>
                 ))}
               </ul>
             ) : (
-              <div className="alert alert-info">
+              <div className="alert alert-info text-center">
                 {search ? 'No results found for your search.' : 'No rapports found.'}
               </div>
             )}
@@ -168,21 +179,22 @@ export default function Rapports() {
               
               {selectedRapport.pdf && (
                 <div className="mt-3">
-                  <a 
+                  <Button 
                     href={selectedRapport.pdf} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="btn btn-primary"
+                    variant="primary"
                   >
+                    <FaDownload className="me-1" />
                     Download PDF
-                  </a>
+                  </Button>
                 </div>
               )}
               
               <div className="mt-3">
-                <button onClick={handleCloseModal} className="btn btn-secondary">
+                <Button onClick={handleCloseModal} variant="secondary">
                   Close
-                </button>
+                </Button>
               </div>
             </motion.div>
           </motion.div>
