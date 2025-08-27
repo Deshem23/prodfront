@@ -60,7 +60,7 @@ export default function Galerie() {
 
         // Fetch events
         const eventsRes = await axios.get(
-          `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}&populate=*`,
+          `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}`,
           { timeout: 10000 }
         );
         
