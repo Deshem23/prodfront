@@ -16,7 +16,8 @@ import SocialsCard from '../components/SocialsCard';
 import './Rapports.css';
 
 // Use environment variable for API URL
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:1337';
+const API_BASE = 'https://pretty-novelty-2b255ff22b.strapiapp.com';
+// const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:1337';
 const API_URL = `${API_BASE}/api`;
 
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
@@ -40,12 +41,24 @@ export default function Rapports() {
   const itemsPerPage = 7;
   const chartsPerPage = 6;
 
+  // Debug effects
+  useEffect(() => {
+    console.log('📦 rapportsData updated:', rapportsData);
+  }, [rapportsData]);
+
+  useEffect(() => {
+    console.log('🔍 filteredRapports updated:', filteredRapports);
+  }, [filteredRapports]);
+
   // Fetch data from Strapi
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log('🔄 Starting data fetch from:', API_BASE);
+        
         // Page title + description (single type)
         const pageRes = await axios.get(`${API_URL}/rapport-page?locale=${i18n.language}`);
+        console.log('📄 Page data:', pageRes.data);
         const page = pageRes.data.data || {};
         setPageData({
           title: page.title,
@@ -54,26 +67,39 @@ export default function Rapports() {
         });
 
         // Rapports list
-        const rapportsRes = await axios.get(`${API_URL}/rapports?populate=pdf&locale=${i18n.language}`);
+        console.log('📊 Fetching rapports from:', `${API_URL}/rapports?populate=*&locale=${i18n.language}`);
+        const rapportsRes = await axios.get(`${API_URL}/rapports?populate=*&locale=${i18n.language}`);
+        console.log('✅ Rapports API response:', rapportsRes.data);
+        
         const rapports = rapportsRes.data.data.map(r => ({
           id: r.id,
           title: r.title,
           description: r.description,
           date: r.date,
-          pdf: r.pdf?.url ? `${API_BASE}${r.pdf.url}` : null
+          pdf: r.pdf?.url || null  // Use the full URL directly
         }));
+        
+        console.log('🔄 Processed rapports:', rapports);
+        console.log('📋 Number of rapports:', rapports.length);
         setRapportsData(rapports);
 
         // Charts / Images
-        const chartsRes = await axios.get(`${API_URL}/rapport-images?populate=image&locale=${i18n.language}`);
+        console.log('🖼️ Fetching charts from:', `${API_URL}/rapport-images?populate=*&locale=${i18n.language}`);
+        const chartsRes = await axios.get(`${API_URL}/rapport-images?populate=*&locale=${i18n.language}`);
+        console.log('✅ Charts API response:', chartsRes.data);
+        
         const charts = chartsRes.data.data.map(img => ({
           id: img.id,
           title: img.title,
-          image: img.image?.url ? `${API_BASE}${img.image.url}` : null
+          image: img.image?.url || null  // Use the full URL directly
         }));
+        
+        console.log('🔄 Processed charts:', charts);
         setChartsData(charts);
+
       } catch (err) {
-        console.error("API Error:", err);
+        console.error("❌ API Error:", err);
+        console.error("❌ Error response:", err.response?.data);
       }
     };
     fetchData();
@@ -104,6 +130,13 @@ export default function Rapports() {
 
   const totalChartPages = Math.ceil(chartsData.length / chartsPerPage);
   const paginatedCharts = chartsData.slice((chartPage - 1) * chartsPerPage, chartPage * chartsPerPage);
+
+  // Debug render info
+  console.log('📝 Rendering component:');
+  console.log('   rapportsData:', rapportsData.length, 'items');
+  console.log('   filteredRapports:', filteredRapports.length, 'items');
+  console.log('   paginatedRapports:', paginatedRapports.length, 'items');
+  console.log('   currentPage:', currentPage, 'of', totalPages);
 
   // Modals
   const handleOpenModal = useCallback((rapport) => setSelectedRapport(rapport), []);
@@ -163,12 +196,23 @@ export default function Rapports() {
   return (
     <motion.div className="container my-5" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
       
+      {/* Debug Info */}
+      {filteredRapports.length === 0 && rapportsData.length > 0 && (
+        <div className="alert alert-warning mb-4">
+          <h5>🔍 Debug Info:</h5>
+          <p>Total rapports from API: {rapportsData.length}</p>
+          <p>Filtered rapports: {filteredRapports.length}</p>
+          <p>Search term: "{search}"</p>
+          <p>API_BASE: {API_BASE}</p>
+        </div>
+      )}
+
       {/* Title + Description */}
       <h2 className="text-center mb-3" style={{ color: primaryColor }}>
-        <i className="bi bi-bar-chart-fill me-2"></i>{pageData.title}
+        <i className="bi bi-bar-chart-fill me-2"></i>{pageData.title || t('defaultTitle')}
       </h2>
       <p className="text-center text-muted mx-auto" style={{ maxWidth: '720px' }}>
-        {pageData.description}
+        {pageData.description || t('defaultDescription')}
       </p>
 
       <div className="row mt-5">
@@ -220,27 +264,36 @@ export default function Rapports() {
                 ))}
               </ul>
             ) : (
-              <div className="alert alert-info text-center mt-4">{t('noResults')}</div>
+              <div className="alert alert-info text-center mt-4">
+                {t('noResults')}
+                {rapportsData.length > 0 && (
+                  <div>
+                    <small>Data exists but filtered out. Check search term.</small>
+                  </div>
+                )}
+              </div>
             )}
           </div>
 
           {/* Rapports Pagination */}
-          <div className="d-flex justify-content-center mt-4">
-            <ul className="pagination">
-              {[...Array(totalPages)].map((_, i) => (
-                <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} onClick={() => setCurrentPage(i + 1)}>
-                  <button className="page-link">{i + 1}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {totalPages > 1 && (
+            <div className="d-flex justify-content-center mt-4">
+              <ul className="pagination">
+                {[...Array(totalPages)].map((_, i) => (
+                  <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`} onClick={() => setCurrentPage(i + 1)}>
+                    <button className="page-link">{i + 1}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Charts Section */}
-          {currentPage === 1 && (
+          {currentPage === 1 && chartsData.length > 0 && (
             <div className="latest-charts-section">
               <hr className="chart-section-divider" />
               <h3 className="mb-4 text-center" style={{ color: primaryColor }}>
-                <i className="bi bi-graph-up-arrow me-2"></i>{pageData.chartsTitle}
+                <i className="bi bi-graph-up-arrow me-2"></i>{pageData.chartsTitle || t('latestChartsTitle')}
               </h3>
               <div className="charts-scroll-wrapper">
                 <div className="row g-4">
@@ -260,15 +313,17 @@ export default function Rapports() {
               </div>
 
               {/* Charts Pagination */}
-              <div className="d-flex justify-content-center mt-4 chart-pagination">
-                <ul className="pagination">
-                  {[...Array(totalChartPages)].map((_, i) => (
-                    <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
-                      <button className="page-link">{i + 1}</button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {totalChartPages > 1 && (
+                <div className="d-flex justify-content-center mt-4 chart-pagination">
+                  <ul className="pagination">
+                    {[...Array(totalChartPages)].map((_, i) => (
+                      <li key={i} className={`page-item ${chartPage === i + 1 ? 'active' : ''}`} onClick={() => setChartPage(i + 1)}>
+                        <button className="page-link">{i + 1}</button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <hr className="chart-section-divider-bottom" />
             </div>
           )}
