@@ -129,7 +129,7 @@ export default function Rapports() {
             title: rapportData?.title ?? "Untitled Rapport",
             description: rapportData?.description ?? "No description available",
             date: rapportData?.date ?? "No Date",
-            pdf: pdfUrl ? `${STRAPI_BASE_URL}${pdfUrl}` : null
+            pdf: pdfUrl
           };
         });
 
@@ -144,7 +144,7 @@ export default function Rapports() {
             return {
               id: img.id,
               title: chartData?.title || "Untitled Chart",
-              image: chartData?.image?.url ? `${STRAPI_BASE_URL}${chartData.image.url}` : null
+              image: chartData?.image?.url ||  null
             };
           });
           setChartsData(charts);
