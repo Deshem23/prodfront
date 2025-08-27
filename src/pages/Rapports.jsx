@@ -15,7 +15,9 @@ import SocialsCard from '../components/SocialsCard';
 
 import './Rapports.css';
 
-const API_URL = "http://localhost:1337/api";
+// Use environment variable for API URL
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:1337';
+const API_URL = `${API_BASE}/api`;
 
 const sortByDate = (a, b) => new Date(b.date) - new Date(a.date);
 
@@ -58,7 +60,7 @@ export default function Rapports() {
           title: r.title,
           description: r.description,
           date: r.date,
-          pdf: r.pdf?.url ? `http://localhost:1337${r.pdf.url}` : null
+          pdf: r.pdf?.url ? `${API_BASE}${r.pdf.url}` : null
         }));
         setRapportsData(rapports);
 
@@ -67,7 +69,7 @@ export default function Rapports() {
         const charts = chartsRes.data.data.map(img => ({
           id: img.id,
           title: img.title,
-          image: img.image?.url ? `http://localhost:1337${img.image.url}` : null
+          image: img.image?.url ? `${API_BASE}${img.image.url}` : null
         }));
         setChartsData(charts);
       } catch (err) {
@@ -112,6 +114,9 @@ export default function Rapports() {
   const handleDownload = async (url, filename) => {
     try {
       const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -123,6 +128,7 @@ export default function Rapports() {
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Error downloading the file:', error);
+      alert('Download failed. Please try again.');
     }
   };
 
