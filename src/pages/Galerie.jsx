@@ -58,24 +58,40 @@ export default function Galerie() {
           description: pageData?.description || t('galerie:main_description')
         });
 
- // Fetch events
+// Fetch events
 const eventsRes = await axios.get(
   `${STRAPI_API_URL}/events?populate=images&locale=${i18n.language}`,
   { timeout: 10000 }
 );
 
+console.log("Events API response:", eventsRes.data); // Debug log
+
 const fetchedEvents = eventsRes.data.data.map((e) => {
   const eventData = e.attributes || e;
   
+  // Handle different Strapi response structures
+  let imageUrls = [];
+  
+  if (eventData.images && eventData.images.data) {
+    // New Strapi v4 format: images.data[].attributes.url
+    imageUrls = eventData.images.data.map(img => {
+      const imageAttributes = img.attributes || {};
+      return imageAttributes.url || null;
+    }).filter(url => url !== null);
+  } else if (eventData.images && Array.isArray(eventData.images)) {
+    // Old Strapi v3 format or direct array
+    imageUrls = eventData.images.map(img => {
+      return img.url || img;
+    }).filter(url => url !== null);
+  } else if (eventData.image) {
+    // Single image field
+    imageUrls = [eventData.image.url || eventData.image];
+  }
+
   return {
     id: e.id,
     title: eventData?.title || "No title",
-    images: eventData?.images?.data?.map(img => {
-      const imageData = img.attributes || img;
-      const imageUrl = imageData?.url;
-      // Use the same logic as the carousel component to handle the image URL
-      return imageUrl ? `${STRAPI_BASE_URL}${imageUrl}` : null;
-    }) || []
+    images: imageUrls
   };
 });
 
