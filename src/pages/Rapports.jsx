@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from 'react-bootstrap';
-import { FaEye, FaDownload } from 'react-icons/fa';
+import { FaEye, FaDownload, FaFacebookF, FaWhatsapp } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
+import { MdEmail } from 'react-icons/md';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 
@@ -47,6 +49,32 @@ export default function Rapports() {
 
   const handleOpenModal = (rapport) => setSelectedRapport(rapport);
   const handleCloseModal = () => setSelectedRapport(null);
+
+  // Social share function
+  const handleShare = async (platform) => {
+    if (!selectedRapport) return;
+
+    const shareUrl = window.location.origin;
+    const shareTitle = selectedRapport.title;
+
+    let intentUrl = '';
+    switch (platform) {
+      case 'facebook':
+        intentUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+        break;
+      case 'twitter':
+        intentUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareTitle)}`;
+        break;
+      case 'whatsapp':
+        intentUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareTitle + ' ' + shareUrl)}`;
+        break;
+      case 'email':
+        intentUrl = `mailto:?subject=${encodeURIComponent(shareTitle)}&body=${encodeURIComponent(shareUrl)}`;
+        break;
+      default: break;
+    }
+    if (intentUrl) window.open(intentUrl, '_blank', 'noopener,noreferrer');
+  };
 
   if (loading) {
     return (
@@ -184,12 +212,52 @@ export default function Rapports() {
                     target="_blank" 
                     rel="noopener noreferrer"
                     variant="primary"
+                    className="me-2"
                   >
                     <FaDownload className="me-1" />
                     Download PDF
                   </Button>
                 </div>
               )}
+              
+              {/* Social Share Buttons - Improved Styling */}
+              <div className="mt-3">
+                <h6>Share this rapport:</h6>
+                <div className="d-flex gap-2">
+                  <button 
+                    onClick={() => handleShare('facebook')} 
+                    className="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    style={{ padding: '0.25rem 0.5rem' }}
+                  >
+                    <FaFacebookF size={16} />
+                    <span className="ms-1">Facebook</span>
+                  </button>
+                  <button 
+                    onClick={() => handleShare('twitter')} 
+                    className="btn btn-outline-info btn-sm d-flex align-items-center"
+                    style={{ padding: '0.25rem 0.5rem' }}
+                  >
+                    <FaXTwitter size={16} />
+                    <span className="ms-1">Twitter</span>
+                  </button>
+                  <button 
+                    onClick={() => handleShare('whatsapp')} 
+                    className="btn btn-outline-success btn-sm d-flex align-items-center"
+                    style={{ padding: '0.25rem 0.5rem' }}
+                  >
+                    <FaWhatsapp size={16} />
+                    <span className="ms-1">WhatsApp</span>
+                  </button>
+                  <button 
+                    onClick={() => handleShare('email')} 
+                    className="btn btn-outline-secondary btn-sm d-flex align-items-center"
+                    style={{ padding: '0.25rem 0.5rem' }}
+                  >
+                    <MdEmail size={16} />
+                    <span className="ms-1">Email</span>
+                  </button>
+                </div>
+              </div>
               
               <div className="mt-3">
                 <Button onClick={handleCloseModal} variant="secondary">
