@@ -294,28 +294,28 @@ export default function Galerie() {
                 <div className="card-body text-center position-relative d-flex justify-content-center align-items-center">
                   {selectedEvent && selectedEvent.images.length > 0 ? (
                     <>
-                      <div
-                        className="slider-box"
-                        style={{
-                          width: "100%",
-                          height: "300px",
-                          overflow: "hidden",
-                          borderRadius: "8px",
-                          cursor: "pointer"
-                        }}
-                        onClick={() => handleImageClick(selectedEvent.images[currentSlide])}
-                      >
-                        <img
-                          src={selectedEvent.images[currentSlide]}
-                          alt="Event Slide"
-                          className="img-fluid"
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                          }}
-                        />
-                      </div>
+ <div
+  className="slider-box"
+  style={{
+    width: "100%",
+    height: "300px",
+    overflow: "hidden",
+    borderRadius: "8px",
+    cursor: "pointer"
+  }}
+  onClick={() => selectedEvent.images.length > 0 && handleImageClick(selectedEvent.images[currentSlide])}
+>
+  <img
+    src={selectedEvent.images[currentSlide]}
+    alt="Event Slide"
+    className="img-fluid"
+    style={{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover",
+    }}
+  />
+</div>
                       <button
                         className="btn btn-sm btn-outline-dark position-absolute top-50 start-0 translate-middle-y"
                         onClick={handlePrev}
@@ -454,137 +454,90 @@ export default function Galerie() {
       </div>
 
       {/* Image Modal */}
-      <AnimatePresence>
-        {isImageModalOpen && selectedImage && (
-          <motion.div
-            className="custom-modal-overlay"
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: 'rgba(0, 0, 0, 0.9)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 1050,
-              padding: '20px'
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={handleCloseImageModal}
-          >
-            <motion.div
-              className="custom-modal"
-              style={{
-                backgroundColor: 'transparent',
-                maxWidth: '90vw',
-                maxHeight: '90vh',
-                position: 'relative'
-              }}
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close Button */}
+<AnimatePresence>
+  {isImageModalOpen && selectedImage && (
+    <motion.div
+      className="galerie-modal-overlay"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={handleCloseImageModal}
+    >
+      <motion.div
+        className="galerie-modal"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          onClick={handleCloseImageModal}
+          className="galerie-modal-close-button"
+        >
+          <FaTimes />
+        </button>
+
+        {/* Modal Header */}
+        <div className="galerie-modal-header">
+          <h5>{selectedEvent?.title}</h5>
+        </div>
+
+        {/* Modal Body - Image Container */}
+        <div className="galerie-modal-body">
+          <div className="galerie-modal-image-container">
+            <img
+              src={selectedImage}
+              alt="Enlarged view"
+            />
+          </div>
+        </div>
+
+        {/* Modal Footer with Navigation */}
+        <div className="galerie-modal-footer">
+          {/* Navigation Arrows */}
+          {selectedEvent && selectedEvent.images.length > 1 && (
+            <div className="galerie-modal-navigation">
               <button
-                onClick={handleCloseImageModal}
-                className="custom-modal-close-button"
-                style={{
-                  position: 'absolute',
-                  top: '-40px',
-                  right: '0',
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  border: 'none',
-                  borderRadius: '50%',
-                  width: '40px',
-                  height: '40px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  zIndex: 1060
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                  setSelectedImage(selectedEvent.images[currentSlide === 0 ? selectedEvent.images.length - 1 : currentSlide - 1]);
                 }}
+                className="btn btn-outline-primary"
               >
-                <FaTimes size={20} color="#000" />
+                ‹ Previous
               </button>
-
-              {/* Image */}
-              <img
-                src={selectedImage}
-                alt="Enlarged view"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'contain',
-                  borderRadius: '8px'
+              
+              <span className="galerie-modal-page-counter">
+                {currentSlide + 1} / {selectedEvent.images.length}
+              </span>
+              
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                  setSelectedImage(selectedEvent.images[currentSlide === selectedEvent.images.length - 1 ? 0 : currentSlide + 1]);
                 }}
-              />
+                className="btn btn-outline-primary"
+              >
+                Next ›
+              </button>
+            </div>
+          )}
 
-              {/* Navigation Arrows */}
-              {selectedEvent && selectedEvent.images.length > 1 && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handlePrev();
-                      setSelectedImage(selectedEvent.images[currentSlide === 0 ? selectedEvent.images.length - 1 : currentSlide - 1]);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      left: '20px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      fontSize: '24px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    ‹
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleNext();
-                      setSelectedImage(selectedEvent.images[currentSlide === selectedEvent.images.length - 1 ? 0 : currentSlide + 1]);
-                    }}
-                    style={{
-                      position: 'absolute',
-                      right: '20px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'rgba(255, 255, 255, 0.8)',
-                      border: 'none',
-                      borderRadius: '50%',
-                      width: '50px',
-                      height: '50px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      fontSize: '24px',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    ›
-                  </button>
-                </>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          {/* Close Button */}
+          <button
+            onClick={handleCloseImageModal}
+            className="btn btn-secondary hover-red-btn"
+          >
+            Close
+          </button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
     </motion.div>
   );
 }
