@@ -3,7 +3,9 @@
   "intro": "Créé par décret le 27 septembre 1969 et officialisé dans Le journal officiel de la répubique (Le Moniteur), en date du 30 octobre 1969, le Conseil National des Télécommunications (CONATEL) est l'autorité réglementaire haïtienne en matière de télécommunications. Notre mission principale est de garantir à tous les citoyens d’Haïti un environnement technologique moderne, fiable et accessible. En tant qu’organe de régulation, nous jouons un rôle clé dans le développement et la supervision du secteur, en promouvant une concurrence équitable et en veillant à la protection des droits des consommateurs. Fermement engagé dans l’innovation, le CONATEL travaille à favoriser le progrès technologique et à renforcer la connectivité de qualité sur l’ensemble du territoire national.",
   "news": {
     "title": "Actualités",
-    "desc": "Voir les dernières nouvelles, avis et communiqués."
+    "desc": "Voir les dernières nouvelles, avis et communiqués.",
+      "api_error": "Failed to load content from server",
+      "api_error_404": "Content not found on server"
   },
   "archives": {
     "title": "Archives",
@@ -31,4 +33,5 @@
     "transformation_numerique": "Transformation numérique",
     "qos": "Qualité de service"
   }
+
 }
