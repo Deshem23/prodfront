@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { Button, Pagination } from "react-bootstrap";
@@ -9,97 +9,104 @@ import './Archives.css';
 const STRAPI_BASE_URL = import.meta.env.VITE_STRAPI_API_URL;
 const STRAPI_API_URL = `${STRAPI_BASE_URL}/api`;
 
-const ITEMS_PER_PAGE = 7; // Set the number of items per page
+const ITEMS_PER_PAGE = 7;
+
+// A simple in-memory cache to store fetched data
+const fileCache = new Map();
+
+// Optimized data fetching function with caching
+const fetchArchives = async (language) => {
+  const cacheKey = `archives-${language}`;
+  if (fileCache.has(cacheKey)) {
+    console.log("Serving archives from cache...");
+    return fileCache.get(cacheKey);
+  }
+
+  try {
+    const response = await axios.get(
+      `${STRAPI_API_URL}/archives?locale=${language}&populate=*`
+    );
+    const fetchedFiles = response.data.data.map(item => {
+      const fileData = item.attributes || item;
+      const fileAttr = fileData.file?.data?.attributes || fileData.file || null;
+      const filePath = fileAttr?.url || null;
+      const fileExtension = fileAttr?.ext || ".file";
+
+      return {
+        id: item.id,
+        title: fileData?.title ?? "Untitled",
+        description: fileData?.description ?? "No description available.",
+        date: fileData?.date ?? "No Date",
+        fileUrl: filePath ? `${STRAPI_BASE_URL}${filePath}` : null,
+        fileExt: fileExtension.substring(1).toLowerCase(),
+      };
+    });
+
+    // Store fetched data in the cache before returning
+    fileCache.set(cacheKey, fetchedFiles);
+    return fetchedFiles;
+  } catch (err) {
+    console.error("Failed to fetch archives:", err);
+    throw new Error("Failed to fetch archives. Please check the API URL and permissions.");
+  }
+};
 
 export default function Archives() {
   const { t, i18n } = useTranslation(['archives']);
   const primaryColor = "rgb(5, 40, 106)";
-  
+
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [search, setSearch] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedDate, setSelectedDate] = useState("");
-
   const [modalShow, setModalShow] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
-  
-  // New state for pagination
   const [currentPage, setCurrentPage] = useState(1);
-
-  // New combined filter types
+  
   const fileTypes = ["all", "pdf", "document", "excel", "ppt", "image"];
 
-  // Function to handle programmatic download
-  const handleDownloadClick = async (file) => {
-    if (!file.fileUrl) {
-      return;
-    }
+  // Memoize functions with useCallback for performance
+  const handleDownloadClick = useCallback(async (file) => {
+    if (!file.fileUrl) return;
     try {
-      const response = await axios.get(file.fileUrl, {
-        responseType: 'blob',
-      });
-      
+      const response = await axios.get(file.fileUrl, { responseType: 'blob' });
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement('a');
       link.href = url;
-      link.setAttribute('download', file.title + '.' + file.fileExt); 
-      
+      link.setAttribute('download', file.title + '.' + file.fileExt);
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);
     } catch (err) {
       console.error("Download failed:", err);
     }
-  };
+  }, []);
 
-  const handleViewClick = (file) => {
+  const handleViewClick = useCallback((file) => {
     if (file.fileExt === 'jpg' || file.fileExt === 'jpeg') {
         setSelectedFile(file);
         setModalShow(true);
     } else {
         window.open(file.fileUrl, '_blank');
     }
-  };
+  }, []);
 
+  // Use the optimized fetchArchives function in useEffect
   useEffect(() => {
-    const fetchFiles = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${STRAPI_API_URL}/archives?locale=${i18n.language}&populate=*`
-        );
-
-        const fetchedFiles = response.data.data.map(item => {
-          const fileData = item.attributes || item;
-
-          const fileAttr =
-            fileData.file?.data?.attributes || fileData.file || null;
-
-          const filePath = fileAttr?.url || null;
-          const fileExtension = fileAttr?.ext || ".file";
-
-          return {
-            id: item.id,
-            title: fileData?.title ?? "Untitled",
-            description: fileData?.description ?? "No description available.",
-            date: fileData?.date ?? "No Date",
-            fileUrl: filePath ? `${STRAPI_BASE_URL}${filePath}` : null,
-            fileExt: fileExtension.substring(1).toLowerCase(),
-          };
-        });
-
+    setLoading(true);
+    fetchArchives(i18n.language)
+      .then(fetchedFiles => {
         setFiles(fetchedFiles);
-      } catch (err) {
-        setError("Failed to fetch archives. Please check the API URL and permissions.");
-        console.error(err);
-      } finally {
+        setError(null);
+      })
+      .catch(err => {
+        setError(err.message);
+      })
+      .finally(() => {
         setLoading(false);
-      }
-    };
-
-    fetchFiles();
+      });
   }, [i18n.language]);
 
   const filteredFiles = useMemo(() => {
@@ -107,48 +114,47 @@ export default function Archives() {
       const isDocumentFile = f.fileExt === 'doc' || f.fileExt === 'docx';
       const isExcelFile = f.fileExt === 'xlsx' || f.fileExt === 'xls';
       const isImageFile = f.fileExt === 'jpg' || f.fileExt === 'jpeg';
-
       const matchesType = selectedType === "all" || 
                           (selectedType === "document" && isDocumentFile) ||
                           (selectedType === "excel" && isExcelFile) ||
                           (selectedType === "image" && isImageFile) ||
-                          (f.fileExt === selectedType); // Handles pdf and ppt
-
+                          (f.fileExt === selectedType);
       const matchesSearch = f.title.toLowerCase().includes(search.toLowerCase()) ||
                             f.description.toLowerCase().includes(search.toLowerCase());
-                            
       const matchesDate = !selectedDate || f.date.substring(0, 7) === selectedDate;
 
       return matchesType && matchesSearch && matchesDate;
     });
   }, [files, search, selectedType, selectedDate]);
   
-  // Pagination Logic
   const totalPages = Math.ceil(filteredFiles.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentFiles = filteredFiles.slice(startIndex, endIndex);
 
-  // New function to generate the dynamic title for the list
-  const getListTitle = () => {
+  const getListTitle = useCallback(() => {
     let title = t('archives.list.allArchives');
-
     if (selectedType !== 'all') {
       title = t(`archives.list.${selectedType}Files`);
     }
-
     if (selectedDate) {
       const [year, month] = selectedDate.split('-');
       const monthName = new Date(year, month - 1).toLocaleString(i18n.language, { month: 'long' });
       title += ` ${t('archives.list.from')} ${monthName} ${year}`;
     }
-
     if (search) {
       title = `${t('archives.list.searchResultsFor')} "${search}"`;
     }
-
     return title;
-  };
+  }, [selectedType, selectedDate, search, i18n.language, t]);
+
+  const handlePageChange = useCallback((pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, []);
 
   return (
     <motion.div
@@ -160,13 +166,10 @@ export default function Archives() {
       <h2 className="text-center mb-3" style={{ color: primaryColor }}>
         <i className="bi bi-folder-fill me-2"></i>{t('archives.title')}
       </h2>
-
       <p className="text-center text-muted mx-auto" style={{ maxWidth: "720px" }}>
         {t('archives.subtitle')}
       </p>
-
       <hr className="my-4" style={{ borderTop: "2px solid #ccc", width: "120px", margin: "2rem auto" }} />
-      
       <div className="row">
         <div className="col-12 d-flex flex-column align-items-center">
           <div className="card p-4 mb-3 archive-controls-card">
@@ -178,7 +181,7 @@ export default function Archives() {
                   variant={selectedType === type ? "primary" : "outline-secondary"}
                   onClick={() => {
                     setSelectedType(type);
-                    setCurrentPage(1); // Reset page on filter change
+                    setCurrentPage(1);
                   }}
                   className="rounded-circle btn-icon"
                 >
@@ -201,7 +204,7 @@ export default function Archives() {
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
-                  setCurrentPage(1); // Reset page on search change
+                  setCurrentPage(1);
                 }}
                 className="form-control"
               />
@@ -210,7 +213,7 @@ export default function Archives() {
                 value={selectedDate}
                 onChange={(e) => {
                   setSelectedDate(e.target.value);
-                  setCurrentPage(1); // Reset page on date change
+                  setCurrentPage(1);
                 }}
                 className="form-control"
               />
@@ -221,9 +224,7 @@ export default function Archives() {
           {error && <div className="alert alert-danger">{error}</div>}
           
           {!loading && !error && filteredFiles.length === 0 && (
-            <div className="text-center">
-              {t('archives.noFilesFound')}
-            </div>
+            <div className="text-center">{t('archives.noFilesFound')}</div>
           )}
 
           {!loading && !error && filteredFiles.length > 0 && (
@@ -269,24 +270,23 @@ export default function Archives() {
             </div>
           )}
 
-          {/* Pagination Component */}
           {!loading && !error && totalPages > 1 && (
             <Pagination className="mt-4">
               <Pagination.Prev 
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                onClick={() => handlePageChange(currentPage - 1)} 
                 disabled={currentPage === 1} 
               />
               {Array.from({ length: totalPages }, (_, i) => (
                 <Pagination.Item
                   key={i + 1}
                   active={i + 1 === currentPage}
-                  onClick={() => setCurrentPage(i + 1)}
+                  onClick={() => handlePageChange(i + 1)}
                 >
                   {i + 1}
                 </Pagination.Item>
               ))}
               <Pagination.Next 
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+                onClick={() => handlePageChange(currentPage + 1)} 
                 disabled={currentPage === totalPages} 
               />
             </Pagination>
@@ -294,30 +294,41 @@ export default function Archives() {
         </div>
       </div>
 
-      {/* CUSTOM MODAL for images only */}
-      {modalShow && selectedFile && (selectedFile.fileExt === 'jpg' || selectedFile.fileExt === 'jpeg') && (
-        <div className="custom-modal-overlay">
-          <div className="custom-modal">
-            <button className="custom-modal-close-button" onClick={() => setModalShow(false)}>
-              &times;
-            </button>
-            <div className="modal-header">
-              <h5 className="d-flex align-items-center mb-0">
-                <i className={`bi bi-filetype-${selectedFile?.fileExt} me-2`}></i>
-                {selectedFile?.title}
-              </h5>
-            </div>
-            <div className="modal-image-container">
+      <AnimatePresence>
+        {modalShow && selectedFile && (selectedFile.fileExt === 'jpg' || selectedFile.fileExt === 'jpeg') && (
+          <motion.div
+            className="custom-modal-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setModalShow(false)}
+          >
+            <motion.div
+              className="custom-modal"
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button className="custom-modal-close-button" onClick={() => setModalShow(false)}>&times;</button>
+              <div className="modal-header">
+                <h5 className="d-flex align-items-center mb-0">
+                  <i className={`bi bi-filetype-${selectedFile?.fileExt} me-2`}></i>
+                  {selectedFile?.title}
+                </h5>
+              </div>
+              <div className="modal-image-container">
                 <img src={selectedFile.fileUrl} alt={selectedFile.title} className="modal-image" />
-            </div>
-            <div className="modal-footer justify-content-center">
-              <Button onClick={() => setModalShow(false)}>
-                {t('archives.close')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      )}
+              </div>
+              <div className="modal-footer justify-content-center">
+                <Button onClick={() => setModalShow(false)}>
+                  {t('archives.close')}
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
